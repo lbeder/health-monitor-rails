@@ -12,6 +12,7 @@ Spork.prefork do
   require 'rspec/rails'
   require 'database_cleaner'
   require 'pry'
+  require 'rediska'
 
   Dir[File.expand_path('../support/*.rb', __FILE__)].each{|f| require f }
 

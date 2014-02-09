@@ -2,6 +2,21 @@ require 'spec_helper'
 require 'health_monitor/providers/sidekiq'
 
 describe HealthMonitor::Providers::Sidekiq do
+  before do
+    redis_conn = proc {
+      Redis.new
+    }
+
+    Sidekiq.configure_client do |config|
+      config.redis = ConnectionPool.new(&redis_conn)
+    end
+
+    Sidekiq.configure_server do |config|
+      config.redis = ConnectionPool.new(&redis_conn)
+    end
+
+  end
+
   it 'should succesfully check!' do
     expect {
       subject.check!
