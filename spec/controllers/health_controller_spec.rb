@@ -1,7 +1,7 @@
 require 'spec_helper'
-require './app/controllers/health_controller'
+require './app/controllers/health_monitor/health_controller'
 
-describe HealthController do
+describe HealthMonitor::HealthController do
   describe '#check' do
     it 'should succesfully check!' do
       expect {
