@@ -18,3 +18,4 @@ _yardoc
 doc/
 dump.rdb
 spec/dummy/log
+vendor/bundle
