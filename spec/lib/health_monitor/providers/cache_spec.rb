@@ -16,7 +16,7 @@ describe HealthMonitor::Providers::Cache do
     it 'should fail check!' do
       expect {
         subject.check!
-      }.to raise_error
+      }.to raise_error(HealthMonitor::Providers::CacheException)
     end
   end
 end

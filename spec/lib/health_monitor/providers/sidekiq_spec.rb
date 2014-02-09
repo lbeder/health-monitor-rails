@@ -31,7 +31,7 @@ describe HealthMonitor::Providers::Sidekiq do
     it 'should fail check!' do
       expect {
         subject.check!
-      }.to raise_error
+      }.to raise_error(HealthMonitor::Providers::SidekiqException)
     end
   end
 end

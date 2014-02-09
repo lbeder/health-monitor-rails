@@ -16,7 +16,7 @@ describe HealthMonitor::Providers::Database do
     it 'should fail check!' do
       expect {
         subject.check!
-      }.to raise_error
+      }.to raise_error(HealthMonitor::Providers::DatabaseException)
     end
   end
 end

@@ -7,7 +7,7 @@ module HealthMonitor
     class Sidekiq
       def check!
         ::Sidekiq::Workers.new.size
-      rescue => e
+      rescue Exception => e
         raise SidekiqException.new(e.message)
       end
     end

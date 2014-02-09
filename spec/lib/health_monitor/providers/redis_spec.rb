@@ -16,7 +16,7 @@ describe HealthMonitor::Providers::Redis do
     it 'should fail check!' do
       expect {
         subject.check!
-      }.to raise_error
+      }.to raise_error(HealthMonitor::Providers::RedisException)
     end
   end
 end
