@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'health_monitor/Configuration'
 
 describe HealthMonitor::Configuration do
   describe 'defaults' do
