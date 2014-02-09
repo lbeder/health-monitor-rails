@@ -9,8 +9,8 @@ Gem::Specification.new do |s|
   s.email       = ['leonid.beder@gmail.com']
   s.license     = 'MIT'
   s.homepage    = 'https://github.com/lbeder/health-monitor-rails'
-  s.summary     = 'xxx'
-  s.description = 'xxx.'
+  s.summary     = 'Health monitoring Rails plug-in, which checks various services (db, cache, sidekiq, redis, etc.)'
+  s.description = 'Health monitoring Rails plug-in, which checks various services (db, cache, sidekiq, redis, etc.).'
 
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
   s.test_files = Dir['test/**/*']
