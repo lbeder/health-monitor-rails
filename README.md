@@ -50,7 +50,14 @@ By default, only the database check is enabled. You can add more service provide
 
 ```ruby
 HealthMonitor.configure do |config|
-  config.providers << [:cache, :redis, :sidekiq]
+  config.providers += [:cache, :redis, :sidekiq]
+end
+```
+
+You can also override the list with a custom set of providers:
+```ruby
+HealthMonitor.configure do |config|
+  config.providers = [:sidekiq]
 end
 ```
 

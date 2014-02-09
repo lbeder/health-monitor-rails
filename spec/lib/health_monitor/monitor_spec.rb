@@ -6,21 +6,33 @@ describe HealthMonitor do
   end
 
   describe '#configure' do
-    it 'should configure providers' do
-      expect {
-        subject.configure do |config|
-          config.providers = [:sidekiq, :spec]
-        end
-      }.to change { HealthMonitor.configuration.providers }.to([:sidekiq, :spec])
+    describe 'providers' do
+      it 'should configure' do
+        expect {
+          subject.configure do |config|
+            config.providers = [:sidekiq, :spec]
+          end
+        }.to change { HealthMonitor.configuration.providers }.to([:sidekiq, :spec])
+      end
+
+      it 'should be able to append' do
+        expect {
+          subject.configure do |config|
+            config.providers += [:sidekiq, :spec]
+          end
+        }.to change { HealthMonitor.configuration.providers }.to([:database, :sidekiq, :spec])
+      end
     end
 
-    it 'should configure error_callback' do
-      error_callback = proc { }
-      expect {
-        subject.configure do |config|
-          config.error_callback = error_callback
-        end
-      }.to change { HealthMonitor.configuration.error_callback }.to(error_callback)
+    describe 'error_callback' do
+      it 'should configure' do
+        error_callback = proc { }
+        expect {
+          subject.configure do |config|
+            config.error_callback = error_callback
+          end
+        }.to change { HealthMonitor.configuration.error_callback }.to(error_callback)
+      end
     end
   end
 
