@@ -7,11 +7,6 @@ Spork.prefork do
   require File.expand_path('../dummy/config/environment.rb',  __FILE__)
 
   require 'rspec/rails'
-  require 'rspec/autorun'
-
-  require 'active_record'
-  require 'action_controller'
-  require 'active_support/all'
   require 'database_cleaner'
   require 'pry'
 
