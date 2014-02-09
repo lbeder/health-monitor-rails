@@ -46,7 +46,7 @@ The following services are currently supported:
 ## Configuration
 
 ### Adding providers
-By default, only the database check is enabled. You can add more service providers from an initializer:
+By default, only the database check is enabled. You can add more service providers via an initializer:
 
 ```ruby
 HealthMonitor.configure do |config|
