@@ -42,6 +42,7 @@ The following services are currently supported:
 * Cache
 * Redis
 * Sidekiq
+* Resque
 
 ## Configuration
 

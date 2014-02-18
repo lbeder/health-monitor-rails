@@ -25,4 +25,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rediska'
   s.add_development_dependency 'sidekiq'
+  s.add_development_dependency 'resque'
 end

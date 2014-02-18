@@ -13,6 +13,10 @@ module Providers
     Redis.any_instance.stub(:get).and_return(false)
   end
 
+  def stub_resque_failure
+    Resque.stub(:info).and_raise(Exception)
+  end
+
   def stub_sidekiq_failure
     Sidekiq::Workers.any_instance.stub(:size).and_raise(Exception)
   end

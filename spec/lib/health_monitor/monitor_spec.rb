@@ -18,9 +18,9 @@ describe HealthMonitor do
       it 'should be able to append' do
         expect {
           subject.configure do |config|
-            config.providers += [:sidekiq, :spec]
+            config.providers += [:resque, :spec]
           end
-        }.to change { HealthMonitor.configuration.providers }.to([:database, :sidekiq, :spec])
+        }.to change { HealthMonitor.configuration.providers }.to([:database, :resque, :spec])
       end
     end
 
