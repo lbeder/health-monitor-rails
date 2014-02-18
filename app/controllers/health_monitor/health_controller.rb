@@ -1,20 +1,19 @@
 module HealthMonitor
-  class HealthController < ActionController::Base
-    layout nil
-
+  class HealthController < ActionController::Metal
      # GET /health/check
     def check
       HealthMonitor.check!
 
-      render text: "Health check has passed: #{Time.now.to_s(:db)}\n"
+      self.status = :ok
+      self.response_body = "Health check has passed: #{Time.now.to_s(:db)}\n"
     rescue Exception => e
-      render text: "Health check has failed: #{Time.now.to_s(:db)}, error: #{e.message}\n",
-        :status => :service_unavailable
+      self.status = :service_unavailable
+      self.response_body = "Health check has failed: #{Time.now.to_s(:db)}, error: #{e.message}\n"
     end
 
     private
     def process_with_silence(*args)
-      logger.quietly do
+      Rails.logger.quietly do
         process_without_silence(*args)
       end
     end

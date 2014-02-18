@@ -7,7 +7,9 @@ describe HealthMonitor::HealthController do
       expect {
         get :check, :use_route => :health_monitor
       }.not_to raise_error
+
       response.should be_ok
+      response.body.should include('Health check has passed')
     end
 
     context 'failing' do
@@ -19,7 +21,9 @@ describe HealthMonitor::HealthController do
         expect {
           get :check, :use_route => :health_monitor
         }.not_to raise_error
+
         response.should be_error
+        response.body.should include('Health check has failed')
       end
     end
   end
