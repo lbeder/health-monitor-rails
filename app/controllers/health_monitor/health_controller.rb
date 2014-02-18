@@ -6,9 +6,9 @@ module HealthMonitor
     def check
       HealthMonitor.check!
 
-      render text: "Healh check has passed: #{Time.now.to_s(:db)}\n"
+      render text: "Health check has passed: #{Time.now.to_s(:db)}\n"
     rescue Exception => e
-      render text: "Healh check has failed: #{Time.now.to_s(:db)}, error: #{e.message}\n",
+      render text: "Health check has failed: #{Time.now.to_s(:db)}, error: #{e.message}\n",
         :status => :service_unavailable
     end
 
