@@ -14,7 +14,6 @@ describe HealthMonitor::Providers::Sidekiq do
     Sidekiq.configure_server do |config|
       config.redis = ConnectionPool.new(&redis_conn)
     end
-
   end
 
   it 'should succesfully check!' do
