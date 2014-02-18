@@ -5,8 +5,7 @@ module HealthMonitor
     class Database
       def check!
         # Check connection to the DB:
-        query = 'SELECT version FROM schema_migrations'
-        ActiveRecord::Base.connection.select_value(query).to_i
+        ActiveRecord::Migrator.current_version
       rescue Exception => e
         raise DatabaseException.new(e.message)
       end

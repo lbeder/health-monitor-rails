@@ -6,7 +6,7 @@ module Providers
   end
 
   def stub_database_failure
-    ActiveRecord::Base.connection.stub(:select_value).and_raise(Exception)
+    ActiveRecord::Migrator.stub(:current_version).and_raise(Exception)
   end
 
   def stub_redis_failure
