@@ -24,6 +24,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'coveralls'
   s.add_development_dependency 'rake'
   s.add_development_dependency 'rediska'
-  s.add_development_dependency 'sidekiq'
+  s.add_development_dependency 'sidekiq', '>= 3.0'
   s.add_development_dependency 'resque'
 end
