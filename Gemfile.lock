@@ -91,7 +91,7 @@ GEM
     redis (3.0.7)
     redis-namespace (1.4.1)
       redis (~> 3.0.4)
-    rediska (0.0.10)
+    rediska (0.0.11)
       redis (~> 3.0.0)
     resque (1.25.2)
       mono_logger (~> 1.0)
@@ -146,7 +146,7 @@ GEM
     thread_safe (0.3.3)
     tilt (1.4.1)
     timers (1.1.0)
-    tins (1.1.0)
+    tins (1.2.0)
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
