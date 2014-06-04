@@ -86,8 +86,8 @@ describe HealthMonitor do
     context 'with error callback' do
       test = false
       let(:error_callback) { proc do |e|
-          e.should be_present
-          e.should be_is_a(Exception)
+          expect(e).to be_present
+          expect(e).to be_is_a(Exception)
 
           test = true
         end
@@ -106,7 +106,7 @@ describe HealthMonitor do
           subject.check!
         }.to raise_error
 
-        test.should be_true
+        expect(test).to be_truthy
       end
     end
   end

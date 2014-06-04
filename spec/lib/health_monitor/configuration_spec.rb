@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe HealthMonitor::Configuration do
   describe 'defaults' do
-    it { subject.providers.should =~ [:database] }
-    it { subject.error_callback.should be_nil }
+    it { expect(subject.providers).to match_array([:database]) }
+    it { expect(subject.error_callback).to be_nil }
   end
 end

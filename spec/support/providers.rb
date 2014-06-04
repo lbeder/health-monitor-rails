@@ -1,23 +1,27 @@
+require 'spec_helper'
+
 module Providers
+  include RSpec::Mocks::ExampleMethods
+
   extend self
 
   def stub_cache_failure
-    Rails.cache.stub(:read).and_return(false)
+    allow(Rails.cache).to receive(:read).and_return(false)
   end
 
   def stub_database_failure
-    ActiveRecord::Migrator.stub(:current_version).and_raise(Exception)
+    allow(ActiveRecord::Migrator).to receive(:current_version).and_raise(Exception)
   end
 
   def stub_redis_failure
-    Redis.any_instance.stub(:get).and_return(false)
+    allow_any_instance_of(Redis).to receive(:get).and_return(false)
   end
 
   def stub_resque_failure
-    Resque.stub(:info).and_raise(Exception)
+    allow(Resque).to receive(:info).and_raise(Exception)
   end
 
   def stub_sidekiq_failure
-    Sidekiq::Workers.any_instance.stub(:size).and_raise(Exception)
+    allow_any_instance_of(Sidekiq::Workers).to receive(:size).and_raise(Exception)
   end
 end
