@@ -72,7 +72,7 @@ describe HealthMonitor do
 
       context 'sidekiq fails' do
         before do
-          Providers.stub_sidekiq_failure
+          Providers.stub_sidekiq_workers_failure
         end
 
         it 'should succesfully check!' do
