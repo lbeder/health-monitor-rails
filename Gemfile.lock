@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    health-monitor-rails (0.0.9)
+    health-monitor-rails (0.0.10)
       rails (>= 3.2)
 
 GEM
