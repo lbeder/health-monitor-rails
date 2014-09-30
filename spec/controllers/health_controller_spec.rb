@@ -2,9 +2,9 @@ require 'spec_helper'
 require './app/controllers/health_monitor/health_controller'
 
 describe HealthMonitor::HealthController, :type => :controller do
-  describe "Basic authentication" do
-    let(:username) { "Some-Username" }
-    let(:password) { "Some-Password" }
+  describe 'Basic authentication' do
+    let(:username) { 'Some-Username' }
+    let(:password) { 'Some-Password' }
 
     before(:each) do
       HealthMonitor.configure do |config|
@@ -12,7 +12,7 @@ describe HealthMonitor::HealthController, :type => :controller do
       end
     end
 
-    context "valid credentials provided" do
+    context 'valid credentials provided' do
       before(:each) do
         request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(username, password)
       end
@@ -27,9 +27,9 @@ describe HealthMonitor::HealthController, :type => :controller do
       end
     end
 
-    context "invalid credentials provided" do
+    context 'invalid credentials provided' do
       before(:each) do
-        request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials("", "")
+        request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials('', '')
       end
 
       it 'should fail' do

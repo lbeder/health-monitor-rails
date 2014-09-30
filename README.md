@@ -81,8 +81,8 @@ By default, the `/check` endpoint is not authenticated and is available to any u
 ```ruby
 HealthMonitor.configure do |config|
   config.basic_auth_credentials = {
-    username: "SECRET_NAME",
-    password: "Shhhhh!!!"
+    username: 'SECRET_NAME',
+    password: 'Shhhhh!!!'
   }
 end
 ```
