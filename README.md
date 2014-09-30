@@ -75,6 +75,18 @@ HealthMonitor.configure do |config|
 end
 ```
 
+### Adding authentication credentials
+By default, the `/check` endpoint is not authenticated and is available to any user. You can authenticate using HTTP Basic Auth by providing authentication credentials:
+
+```ruby
+HealthMonitor.configure do |config|
+  config.basic_auth_credentials = {
+    username: "SECRET_NAME",
+    password: "Shhhhh!!!"
+  }
+end
+```
+
 ## License
 
 The MIT License (MIT)
