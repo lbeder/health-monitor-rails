@@ -34,6 +34,21 @@ describe HealthMonitor do
         }.to change { HealthMonitor.configuration.error_callback }.to(error_callback)
       end
     end
+
+    describe 'basic_auth_credentials' do
+      it 'should configure' do
+        expected = {
+          username: 'Some-Username',
+          password: 'Some-Password'
+        }
+
+        expect {
+          subject.configure do |config|
+            config.basic_auth_credentials = expected
+          end
+        }.to change { HealthMonitor.configuration.basic_auth_credentials }.to(expected)
+      end
+    end
   end
 
   describe '#check!' do
