@@ -19,7 +19,7 @@ module HealthMonitor
       private
 
       def key
-        @key ||= ['health', request.try(:remote_ip)].join('_')
+        @key ||= ['health', request.try(:remote_ip)].join(':')
       end
     end
   end
