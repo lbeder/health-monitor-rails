@@ -52,7 +52,7 @@ GEM
     hike (1.2.3)
     i18n (0.6.11)
     json (1.8.1)
-    mail (2.6.1)
+    mail (2.6.3)
       mime-types (>= 1.16, < 3)
     method_source (0.8.2)
     mime-types (2.4.3)
