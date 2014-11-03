@@ -1,10 +1,11 @@
+require 'health_monitor/providers/base'
 require 'sidekiq/api'
 
 module HealthMonitor
   module Providers
     class SidekiqException < StandardError; end
 
-    class Sidekiq
+    class Sidekiq < Base
       def check!
         check_workers!
         check_redis!

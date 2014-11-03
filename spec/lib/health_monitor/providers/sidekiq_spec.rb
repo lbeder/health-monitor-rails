@@ -2,6 +2,8 @@ require 'spec_helper'
 require 'health_monitor/providers/sidekiq'
 
 describe HealthMonitor::Providers::Sidekiq do
+  subject { described_class.new(request: ActionController::TestRequest.new) }
+
   before do
     redis_conn = proc { Redis.new }
 
@@ -14,34 +16,36 @@ describe HealthMonitor::Providers::Sidekiq do
     end
   end
 
-  it 'should succesfully check!' do
-    expect {
-      subject.check!
-    }.not_to raise_error
-  end
-
-  context 'failing' do
-    context 'workers' do
-      before do
-        Providers.stub_sidekiq_workers_failure
-      end
-
-      it 'should fail check!' do
-        expect {
-          subject.check!
-        }.to raise_error(HealthMonitor::Providers::SidekiqException)
-      end
+  describe '#check!' do
+    it 'should succesfully check!' do
+      expect {
+        subject.check!
+      }.not_to raise_error
     end
 
-    context 'redis' do
-      before do
-        Providers.stub_sidekiq_redis_failure
+    context 'failing' do
+      context 'workers' do
+        before do
+          Providers.stub_sidekiq_workers_failure
+        end
+
+        it 'should fail check!' do
+          expect {
+            subject.check!
+          }.to raise_error(HealthMonitor::Providers::SidekiqException)
+        end
       end
 
-      it 'should fail check!' do
-        expect {
-          subject.check!
-        }.to raise_error(HealthMonitor::Providers::SidekiqException)
+      context 'redis' do
+        before do
+          Providers.stub_sidekiq_redis_failure
+        end
+
+        it 'should fail check!' do
+          expect {
+            subject.check!
+          }.to raise_error(HealthMonitor::Providers::SidekiqException)
+        end
       end
     end
   end

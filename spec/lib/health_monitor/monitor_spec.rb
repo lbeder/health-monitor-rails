@@ -5,6 +5,8 @@ describe HealthMonitor do
     HealthMonitor.configuration = HealthMonitor::Configuration.new
   end
 
+  let(:request) { ActionController::TestRequest.new }
+
   describe '#configure' do
     describe 'providers' do
       it 'should configure' do
@@ -55,7 +57,7 @@ describe HealthMonitor do
     context 'default providers' do
       it 'should succesfully check!' do
         expect {
-          subject.check!
+          subject.check!(request: request)
         }.not_to raise_error
       end
     end
@@ -69,7 +71,7 @@ describe HealthMonitor do
 
       it 'should succesfully check!' do
         expect {
-          subject.check!
+          subject.check!(request: request)
         }.not_to raise_error
       end
 
@@ -80,7 +82,7 @@ describe HealthMonitor do
 
         it 'should fail check!' do
           expect {
-            subject.check!
+            subject.check!(request: request)
           }.to raise_error
         end
       end
@@ -92,7 +94,7 @@ describe HealthMonitor do
 
         it 'should succesfully check!' do
           expect {
-            subject.check!
+            subject.check!(request: request)
           }.not_to raise_error
         end
       end
@@ -118,7 +120,7 @@ describe HealthMonitor do
 
       it 'calls error_callback' do
         expect {
-          subject.check!
+          subject.check!(request: request)
         }.to raise_error
 
         expect(test).to be_truthy

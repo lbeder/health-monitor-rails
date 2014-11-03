@@ -7,7 +7,7 @@ module HealthMonitor
 
     # GET /health/check
     def check
-      HealthMonitor.check!
+      HealthMonitor.check!(request: request)
 
       self.status = :ok
       self.response_body = "Health check has passed: #{Time.now.to_s(:db)}\n"
