@@ -2,9 +2,9 @@ require 'spec_helper'
 require './app/controllers/health_monitor/health_controller'
 
 describe HealthMonitor::HealthController, :type => :controller do
-  describe 'Basic authentication' do
-    let(:username) { 'Some-Username' }
-    let(:password) { 'Some-Password' }
+  describe 'basic authentication' do
+    let(:username) { 'username' }
+    let(:password) { 'password' }
 
     before(:each) do
       HealthMonitor.configure do |config|
