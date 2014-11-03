@@ -19,11 +19,6 @@ Spork.prefork do
   RSpec.configure do |config|
     config.mock_with :rspec
 
-    # Exclude broken tests.
-    config.filter_run_excluding :broken => true
-    config.filter_run :focus => true
-    config.run_all_when_everything_filtered = true
-
     config.before(:suite) do
       DatabaseCleaner.strategy = :transaction
       DatabaseCleaner.clean_with(:truncation)
@@ -41,7 +36,4 @@ Spork.prefork do
       FileUtils.rm_rf(File.expand_path('../test.sqlite3', __FILE__))
     end
   end
-end
-
-Spork.each_run do
 end
