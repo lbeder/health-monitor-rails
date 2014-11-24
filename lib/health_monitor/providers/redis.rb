@@ -9,13 +9,15 @@ module HealthMonitor
       def check!
         time = Time.now.to_s(:db)
 
-        r = ::Redis.new
-        r.set(key, time)
-        fetched = r.get(key)
+        redis = ::Redis.new
+        redis.set(key, time)
+        fetched = redis.get(key)
 
         raise "different values (now: #{time}, fetched: #{fetched}" if fetched != time
       rescue => e
         raise RedisException.new(e.message)
+      ensure
+        redis.client.disconnect
       end
 
       private
