@@ -36,6 +36,18 @@ describe HealthMonitor::Providers::Sidekiq do
         end
       end
 
+      context 'latency' do
+        before do
+          Providers.stub_sidekiq_latency_failure
+        end
+
+        it 'should fail check!' do
+          expect {
+            subject.check!
+          }.to raise_error(HealthMonitor::Providers::SidekiqException)
+        end
+      end
+
       context 'redis' do
         before do
           Providers.stub_sidekiq_redis_failure
