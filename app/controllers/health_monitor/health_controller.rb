@@ -1,8 +1,5 @@
 module HealthMonitor
-  class HealthController < ActionController::Metal
-    include AbstractController::Callbacks
-    include ActionController::HttpAuthentication::Basic::ControllerMethods
-
+  class HealthController < ActionController::Base
     before_action :authenticate_with_basic_auth
 
     # GET /health/check
@@ -17,9 +14,12 @@ module HealthMonitor
     end
 
     private
+
     def process_with_silence(*args)
-      Rails.logger.quietly do
-        process_without_silence(*args)
+      Rails.logger.silence_stream(STDOUT) do
+        Rails.logger.silence_stream(STDERR) do
+          process_without_silence(*args)
+        end
       end
     end
 

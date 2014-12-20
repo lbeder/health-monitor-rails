@@ -2,6 +2,8 @@ require 'spec_helper'
 require './app/controllers/health_monitor/health_controller'
 
 describe HealthMonitor::HealthController, :type => :controller do
+  routes { HealthMonitor::Engine.routes }
+
   describe 'basic authentication' do
     let(:username) { 'username' }
     let(:password) { 'password' }
@@ -19,7 +21,7 @@ describe HealthMonitor::HealthController, :type => :controller do
 
       it 'should successfully check!' do
         expect {
-          get :check, :use_route => :health_monitor
+          get :check
         }.not_to raise_error
 
         expect(response).to be_ok
@@ -34,7 +36,7 @@ describe HealthMonitor::HealthController, :type => :controller do
 
       it 'should fail' do
         expect {
-          get :check, :use_route => :health_monitor
+          get :check
         }.not_to raise_error
 
         expect(response).not_to be_ok
@@ -52,7 +54,7 @@ describe HealthMonitor::HealthController, :type => :controller do
 
     it 'should succesfully check!' do
       expect {
-        get :check, :use_route => :health_monitor
+        get :check
       }.not_to raise_error
 
       expect(response).to be_ok
@@ -66,7 +68,7 @@ describe HealthMonitor::HealthController, :type => :controller do
 
       it 'should fail' do
         expect {
-          get :check, :use_route => :health_monitor
+          get :check
         }.not_to raise_error
 
         expect(response).to be_error
