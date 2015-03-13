@@ -1,6 +1,10 @@
 module HealthMonitor
   class HealthController < ActionController::Base
-    before_action :authenticate_with_basic_auth
+    if Rails.version.starts_with? '3'
+      before_filter :authenticate_with_basic_auth
+    else
+      before_action :authenticate_with_basic_auth
+    end
 
     # GET /health/check
     def check
