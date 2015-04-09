@@ -70,4 +70,16 @@ describe HealthMonitor::Providers::Sidekiq do
   describe '#configurable?' do
     it { expect(described_class).to be_configurable }
   end
+
+  describe '#configure' do
+    it 'latency can be configured' do
+      latency = 123
+
+      expect {
+        described_class.configure do |config|
+          config.latency = latency
+        end
+      }.to change { described_class.configuration.latency }.to(latency)
+    end
+  end
 end
