@@ -47,20 +47,33 @@ The following services are currently supported:
 ## Configuration
 
 ### Adding providers
-By default, only the database check is enabled. You can add more service providers via an initializer:
+By default, only the database check is enabled. You can add more service providers by explicitly enabling them via an initializer:
 
 ```ruby
 HealthMonitor.configure do |config|
-  config.providers += [:cache, :redis, :sidekiq]
+  config.cache
+  config.redis
+  config.sidekiq
 end
 ```
 
-You can also override the list with a custom set of providers:
+### Providers configuration
+
+Some of the providers can also accept additional configuration:
+
 ```ruby
 HealthMonitor.configure do |config|
-  config.providers = [:sidekiq]
+  config.sidekiq.configure do |sidekiq_config|
+    sidekiq_config.latency = 3.hours
+  end
 end
 ```
+
+The currently supported settings are:
+
+#### Sidekiq
+
+* `latency`: the latency (in seconds) of a queue (now - when the oldest job was enqueued) which is considered unhealthy (the default is 30 seconds, but larger processing queue should have a larger latency value).
 
 ### Adding a custom error callback
 If you need to perform any additional error handling (for example, for additional error reporting), you can configure a custom error callback:
