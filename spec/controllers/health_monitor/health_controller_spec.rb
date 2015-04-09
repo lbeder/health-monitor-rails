@@ -19,7 +19,7 @@ describe HealthMonitor::HealthController, :type => :controller do
         request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(username, password)
       end
 
-      it 'should successfully check!' do
+      it 'succesfully checks' do
         expect {
           get :check
         }.not_to raise_error
@@ -34,7 +34,7 @@ describe HealthMonitor::HealthController, :type => :controller do
         request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials('', '')
       end
 
-      it 'should fail' do
+      it 'fails' do
         expect {
           get :check
         }.not_to raise_error
@@ -52,7 +52,7 @@ describe HealthMonitor::HealthController, :type => :controller do
       end
     end
 
-    it 'should succesfully check!' do
+    it 'succesfully checks' do
       expect {
         get :check
       }.not_to raise_error

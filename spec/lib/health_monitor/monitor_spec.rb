@@ -9,26 +9,36 @@ describe HealthMonitor do
 
   describe '#configure' do
     describe 'providers' do
-      it 'should configure' do
+      it 'configures a single provider' do
         expect {
           subject.configure do |config|
-            config.providers = [:sidekiq, :spec]
+            config.redis
           end
-        }.to change { HealthMonitor.configuration.providers }.to([:sidekiq, :spec])
+        }.to change { HealthMonitor.configuration.providers }.to(Set.new([:database, :redis]))
       end
 
-      it 'should be able to append' do
+      it 'configures a multiple providers' do
         expect {
           subject.configure do |config|
-            config.providers += [:resque, :spec]
+            config.redis
+            config.sidekiq
           end
-        }.to change { HealthMonitor.configuration.providers }.to([:database, :resque, :spec])
+        }.to change { HealthMonitor.configuration.providers }.to(Set.new([:database, :redis, :sidekiq]))
+      end
+
+      it 'appends new providers' do
+        expect {
+          subject.configure do |config|
+            config.resque
+          end
+        }.to change { HealthMonitor.configuration.providers }.to(Set.new([:database, :resque]))
       end
     end
 
     describe 'error_callback' do
-      it 'should configure' do
+      it 'configures' do
         error_callback = proc { }
+
         expect {
           subject.configure do |config|
             config.error_callback = error_callback
@@ -38,10 +48,10 @@ describe HealthMonitor do
     end
 
     describe 'basic_auth_credentials' do
-      it 'should configure' do
+      it 'configures' do
         expected = {
-          username: 'Some-Username',
-          password: 'Some-Password'
+          username: 'username',
+          password: 'password'
         }
 
         expect {
@@ -55,7 +65,7 @@ describe HealthMonitor do
 
   describe '#check!' do
     context 'default providers' do
-      it 'should succesfully check!' do
+      it 'succesfully checks' do
         expect {
           subject.check!(request: request)
         }.not_to raise_error
@@ -65,11 +75,12 @@ describe HealthMonitor do
     context 'db and redis providers' do
       before do
         subject.configure do |config|
-          config.providers = [:database, :redis]
+          config.database
+          config.redis
         end
       end
 
-      it 'should succesfully check!' do
+      it 'succesfully checks' do
         expect {
           subject.check!(request: request)
         }.not_to raise_error
@@ -80,7 +91,7 @@ describe HealthMonitor do
           Providers.stub_redis_failure
         end
 
-        it 'should fail check!' do
+        it 'fails check!' do
           expect {
             subject.check!(request: request)
           }.to raise_error
@@ -92,7 +103,7 @@ describe HealthMonitor do
           Providers.stub_sidekiq_workers_failure
         end
 
-        it 'should succesfully check!' do
+        it 'succesfully checks' do
           expect {
             subject.check!(request: request)
           }.not_to raise_error
@@ -102,7 +113,9 @@ describe HealthMonitor do
 
     context 'with error callback' do
       test = false
-      let(:error_callback) { proc do |e|
+
+      let(:callback) {
+        proc do |e|
           expect(e).to be_present
           expect(e).to be_is_a(Exception)
 
@@ -112,7 +125,9 @@ describe HealthMonitor do
 
       before do
         subject.configure do |config|
-          config.error_callback = error_callback
+          config.database
+
+          config.error_callback = callback
         end
 
         Providers.stub_database_failure

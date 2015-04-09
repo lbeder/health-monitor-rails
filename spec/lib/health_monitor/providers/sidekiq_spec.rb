@@ -1,7 +1,12 @@
 require 'spec_helper'
-require 'health_monitor/providers/sidekiq'
 
 describe HealthMonitor::Providers::Sidekiq do
+  describe HealthMonitor::Providers::Sidekiq::Configuration do
+    describe 'defaults' do
+      it { expect(described_class.new.latency).to eq(HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_LATENCY_TIMEOUT) }
+    end
+  end
+
   subject { described_class.new(request: ActionController::TestRequest.new) }
 
   before do
@@ -17,7 +22,7 @@ describe HealthMonitor::Providers::Sidekiq do
   end
 
   describe '#check!' do
-    it 'should succesfully check!' do
+    it 'succesfully checks' do
       expect {
         subject.check!
       }.not_to raise_error
@@ -29,7 +34,7 @@ describe HealthMonitor::Providers::Sidekiq do
           Providers.stub_sidekiq_workers_failure
         end
 
-        it 'should fail check!' do
+        it 'fails check!' do
           expect {
             subject.check!
           }.to raise_error(HealthMonitor::Providers::SidekiqException)
@@ -41,7 +46,7 @@ describe HealthMonitor::Providers::Sidekiq do
           Providers.stub_sidekiq_latency_failure
         end
 
-        it 'should fail check!' do
+        it 'fails check!' do
           expect {
             subject.check!
           }.to raise_error(HealthMonitor::Providers::SidekiqException)
@@ -53,12 +58,16 @@ describe HealthMonitor::Providers::Sidekiq do
           Providers.stub_sidekiq_redis_failure
         end
 
-        it 'should fail check!' do
+        it 'fails check!' do
           expect {
             subject.check!
           }.to raise_error(HealthMonitor::Providers::SidekiqException)
         end
       end
     end
+  end
+
+  describe '#configurable?' do
+    it { expect(described_class).to be_configurable }
   end
 end
