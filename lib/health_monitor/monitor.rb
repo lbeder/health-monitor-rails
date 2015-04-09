@@ -13,8 +13,6 @@ module HealthMonitor
 
   def check!(request: nil)
     configuration.providers.each do |provider|
-      require "health_monitor/providers/#{provider}"
-
       monitor = "HealthMonitor::Providers::#{provider.capitalize}".constantize.new(request: request)
       monitor.check!
     end

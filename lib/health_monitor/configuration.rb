@@ -11,6 +11,8 @@ module HealthMonitor
 
     PROVIDERS.each do |provider|
       define_method provider do |&block|
+        require "health_monitor/providers/#{provider}"
+
         @providers << provider
 
         "HealthMonitor::Providers::#{provider.capitalize}".constantize
