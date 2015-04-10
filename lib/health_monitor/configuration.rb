@@ -6,14 +6,14 @@ module HealthMonitor
     attr_reader :providers
 
     def initialize
-      @providers = Set.new([:database])
+      database
     end
 
     PROVIDERS.each do |provider|
       define_method provider do |&block|
         require "health_monitor/providers/#{provider}"
 
-        @providers << provider
+        (@providers ||= Set.new) << provider
 
         "HealthMonitor::Providers::#{provider.capitalize}".constantize
       end
