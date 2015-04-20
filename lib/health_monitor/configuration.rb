@@ -9,14 +9,28 @@ module HealthMonitor
       database
     end
 
-    PROVIDERS.each do |provider|
-      define_method provider do |&block|
-        require "health_monitor/providers/#{provider}"
+    PROVIDERS.each do |provider_name|
+      define_method provider_name do |&block|
+        require "health_monitor/providers/#{provider_name}"
 
-        (@providers ||= Set.new) << provider
-
-        "HealthMonitor::Providers::#{provider.capitalize}".constantize
+        add_provider("HealthMonitor::Providers::#{provider_name.capitalize}".constantize)
       end
+    end
+
+    def add_custom_provider(custom_provider_class)
+      unless custom_provider_class < HealthMonitor::Providers::Base
+        raise ArgumentError.new('custom provider class must implement HealthMonitor::Providers::Base')
+      end
+
+      add_provider(custom_provider_class)
+    end
+
+    private
+
+    def add_provider(provider_class)
+      (@providers ||= Set.new) << provider_class
+
+      provider_class
     end
   end
 end

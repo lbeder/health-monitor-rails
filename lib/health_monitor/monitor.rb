@@ -13,7 +13,7 @@ module HealthMonitor
 
   def check!(request: nil)
     configuration.providers.each do |provider|
-      monitor = "HealthMonitor::Providers::#{provider.capitalize}".constantize.new(request: request)
+      monitor = provider.new(request: request)
       monitor.check!
     end
   rescue Exception => e

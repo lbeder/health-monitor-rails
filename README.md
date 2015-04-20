@@ -75,6 +75,28 @@ The currently supported settings are:
 
 * `latency`: the latency (in seconds) of a queue (now - when the oldest job was enqueued) which is considered unhealthy (the default is 30 seconds, but larger processing queue should have a larger latency value).
 
+### Adding a custom provider
+It's also possible to add custom health check providers suited for your needs (of course, it's highly appreciated and encouraged if you'd contribute useful providers to the project).
+
+In order to add a custom provider, you'd need to:
+
+* Implement the `HealthMonitor::Providers::Base` class and its `check!` method (a check is considered as failed if it raises an exception):
+
+```ruby
+class CustomProvider < HealthMonitor::Providers::Base
+  def check!
+    raise 'Oh oh!'
+  end
+end
+```
+* Add its class to the configuration:
+
+```ruby
+HealthMonitor.configure do |config|
+  config.add_custom_provider(CustomProvider)
+end
+```
+
 ### Adding a custom error callback
 If you need to perform any additional error handling (for example, for additional error reporting), you can configure a custom error callback:
 

@@ -14,7 +14,8 @@ describe HealthMonitor do
           subject.configure do |config|
             config.redis
           end
-        }.to change { HealthMonitor.configuration.providers }.to(Set.new([:database, :redis]))
+        }.to change { HealthMonitor.configuration.providers }.
+          to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis]))
       end
 
       it 'configures a multiple providers' do
@@ -23,7 +24,9 @@ describe HealthMonitor do
             config.redis
             config.sidekiq
           end
-        }.to change { HealthMonitor.configuration.providers }.to(Set.new([:database, :redis, :sidekiq]))
+        }.to change { HealthMonitor.configuration.providers }.
+          to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis,
+            HealthMonitor::Providers::Sidekiq]))
       end
 
       it 'appends new providers' do
@@ -31,7 +34,8 @@ describe HealthMonitor do
           subject.configure do |config|
             config.resque
           end
-        }.to change { HealthMonitor.configuration.providers }.to(Set.new([:database, :resque]))
+        }.to change { HealthMonitor.configuration.providers }.
+          to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Resque]))
       end
     end
 
