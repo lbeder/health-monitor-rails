@@ -20,7 +20,7 @@ module HealthMonitor
         check_workers!
         check_latency!
         check_redis!
-      rescue Exception => e
+      rescue => e
         raise SidekiqException.new(e.message)
       end
 
@@ -37,13 +37,13 @@ module HealthMonitor
       def check_latency!
         latency = ::Sidekiq::Queue.new.latency
 
-        if latency > self.configuration.latency
-          raise "latency #{latency} is greater than #{self.configuration.latency}"
-        end
+        return unless latency > configuration.latency
+
+        raise "latency #{latency} is greater than #{configuration.latency}"
       end
 
       def check_redis!
-        ::Sidekiq.redis { |conn| conn.info }
+        ::Sidekiq.redis(&:info)
       end
     end
   end

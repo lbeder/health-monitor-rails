@@ -11,8 +11,8 @@ module HealthMonitor
       HealthMonitor.check!(request: request)
 
       self.status = :ok
-      self.response_body = "Health check has passed: #{Time.now.to_s(:db)}\n"
-    rescue Exception => e
+      self.response_body = "Health check has passed: r#{Time.now.to_s(:db)}\n"
+    rescue => e
       self.status = :service_unavailable
       self.response_body = "Health check has failed: #{Time.now.to_s(:db)}, error: #{e.message}\n"
     end

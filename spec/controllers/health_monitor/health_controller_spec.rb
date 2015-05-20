@@ -10,13 +10,14 @@ describe HealthMonitor::HealthController, :type => :controller do
 
     before(:each) do
       HealthMonitor.configure do |config|
-        config.basic_auth_credentials = {username: username, password: password}
+        config.basic_auth_credentials = { username: username, password: password }
       end
     end
 
     context 'valid credentials provided' do
       before(:each) do
-        request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials(username, password)
+        request.env['HTTP_AUTHORIZATION'] =
+          ActionController::HttpAuthentication::Basic.encode_credentials(username, password)
       end
 
       it 'succesfully checks' do
@@ -31,7 +32,8 @@ describe HealthMonitor::HealthController, :type => :controller do
 
     context 'invalid credentials provided' do
       before(:each) do
-        request.env['HTTP_AUTHORIZATION'] = ActionController::HttpAuthentication::Basic.encode_credentials('', '')
+        request.env['HTTP_AUTHORIZATION'] =
+          ActionController::HttpAuthentication::Basic.encode_credentials('', '')
       end
 
       it 'fails' do

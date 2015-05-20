@@ -10,7 +10,7 @@ module HealthMonitor
     end
 
     PROVIDERS.each do |provider_name|
-      define_method provider_name do |&block|
+      define_method provider_name do |&_block|
         require "health_monitor/providers/#{provider_name}"
 
         add_provider("HealthMonitor::Providers::#{provider_name.capitalize}".constantize)
@@ -19,7 +19,8 @@ module HealthMonitor
 
     def add_custom_provider(custom_provider_class)
       unless custom_provider_class < HealthMonitor::Providers::Base
-        raise ArgumentError.new('custom provider class must implement HealthMonitor::Providers::Base')
+        raise ArgumentError.new 'custom provider class must implement '\
+          'HealthMonitor::Providers::Base'
       end
 
       add_provider(custom_provider_class)

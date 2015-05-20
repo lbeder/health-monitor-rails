@@ -23,8 +23,6 @@ module HealthMonitor
         raise NotImplementedError
       end
 
-      private
-
       def self.configurable?
         configuration_class
       end

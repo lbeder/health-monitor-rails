@@ -11,11 +11,9 @@ describe HealthMonitor do
     describe 'providers' do
       it 'configures a single provider' do
         expect {
-          subject.configure do |config|
-            config.redis
-          end
-        }.to change { HealthMonitor.configuration.providers }.
-          to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis]))
+          subject.configure(&:redis)
+        }.to change { HealthMonitor.configuration.providers }
+          .to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis]))
       end
 
       it 'configures a multiple providers' do
@@ -24,24 +22,22 @@ describe HealthMonitor do
             config.redis
             config.sidekiq
           end
-        }.to change { HealthMonitor.configuration.providers }.
-          to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis,
+        }.to change { HealthMonitor.configuration.providers }
+          .to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis,
             HealthMonitor::Providers::Sidekiq]))
       end
 
       it 'appends new providers' do
         expect {
-          subject.configure do |config|
-            config.resque
-          end
-        }.to change { HealthMonitor.configuration.providers }.
-          to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Resque]))
+          subject.configure(&:resque)
+        }.to change { HealthMonitor.configuration.providers }.to(
+          Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Resque]))
       end
     end
 
     describe 'error_callback' do
       it 'configures' do
-        error_callback = proc { }
+        error_callback = proc {}
 
         expect {
           subject.configure do |config|
@@ -118,14 +114,14 @@ describe HealthMonitor do
     context 'with error callback' do
       test = false
 
-      let(:callback) {
+      let(:callback) do
         proc do |e|
           expect(e).to be_present
           expect(e).to be_is_a(Exception)
 
           test = true
         end
-      }
+      end
 
       before do
         subject.configure do |config|

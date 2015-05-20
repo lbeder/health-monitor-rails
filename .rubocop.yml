@@ -1,0 +1,39 @@
+# Custom config for RuboCop static code analysis
+Metrics/LineLength:
+  Max: 100
+  Exclude:
+    - 'spec/**/*'
+
+Style/SignalException:
+  EnforcedStyle: only_raise
+
+Style/RaiseArgs:
+  Enabled: false
+
+Style/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+Style/HashSyntax:
+  UseHashRocketsWithSymbolValues: true
+
+Style/AlignHash:
+  Enabled: false
+
+Style/AlignArray:
+  Enabled: false
+
+Style/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+Style/IndentHash:
+  EnforcedStyle: consistent
+
+Style/Documentation:
+  Enabled: false
+
+Style/BlockDelimiters:
+  Exclude:
+    - 'spec/**/*'
+
+Style/ModuleFunction:
+  Enabled: false

@@ -46,7 +46,7 @@ describe HealthMonitor::Configuration do
         }.to change { subject.providers }.to(Set.new([CustomProvider]))
       end
 
-      it "returns CustomProvider class" do
+      it 'returns CustomProvider class' do
         expect(subject.add_custom_provider(CustomProvider)).to eq(CustomProvider)
       end
     end

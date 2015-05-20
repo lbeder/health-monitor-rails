@@ -16,7 +16,7 @@ module HealthMonitor
       monitor = provider.new(request: request)
       monitor.check!
     end
-  rescue Exception => e
+  rescue => e
     configuration.error_callback.call(e) if configuration.error_callback
     raise
   end
