@@ -14,7 +14,7 @@ module HealthMonitor
         fetched = redis.get(key)
 
         raise "different values (now: #{time}, fetched: #{fetched}" if fetched != time
-      rescue => e
+      rescue Exception => e
         raise RedisException.new(e.message)
       ensure
         redis.client.disconnect

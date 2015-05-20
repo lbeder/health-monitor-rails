@@ -20,7 +20,7 @@ module HealthMonitor
         check_workers!
         check_latency!
         check_redis!
-      rescue => e
+      rescue Exception => e
         raise SidekiqException.new(e.message)
       end
 

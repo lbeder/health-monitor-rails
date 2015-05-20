@@ -12,7 +12,7 @@ module HealthMonitor
         fetched = Rails.cache.read(key)
 
         raise "different values (now: #{time}, fetched: #{fetched}" if fetched != time
-      rescue => e
+      rescue Exception => e
         raise CacheException.new(e.message)
       end
 

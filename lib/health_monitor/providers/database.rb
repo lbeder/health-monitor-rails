@@ -8,7 +8,7 @@ module HealthMonitor
       def check!
         # Check connection to the DB:
         ActiveRecord::Migrator.current_version
-      rescue => e
+      rescue Exception => e
         raise DatabaseException.new(e.message)
       end
     end

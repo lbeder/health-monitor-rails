@@ -37,3 +37,7 @@ Style/BlockDelimiters:
 
 Style/ModuleFunction:
   Enabled: false
+
+Lint/RescueException:
+  Exclude:
+    - 'lib/health_monitor/providers/**/*'
