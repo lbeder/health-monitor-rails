@@ -18,6 +18,7 @@ module HealthMonitor
     end
   rescue => e
     configuration.error_callback.call(e) if configuration.error_callback
+
     raise
   end
 end
