@@ -13,7 +13,7 @@ module HealthMonitor
         redis.set(key, time)
         fetched = redis.get(key)
 
-        raise "different values (now: #{time}, fetched: #{fetched}" if fetched != time
+        raise "different values (now: #{time}, fetched: #{fetched})" if fetched != time
       rescue Exception => e
         raise RedisException.new(e.message)
       ensure
