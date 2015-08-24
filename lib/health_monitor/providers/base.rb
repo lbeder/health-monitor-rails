@@ -4,6 +4,10 @@ module HealthMonitor
       attr_reader :request
       cattr_accessor :configuration
 
+      def self.provider_name
+        @name ||= name.demodulize.downcase
+      end
+
       def self.configure
         return unless configurable?
 

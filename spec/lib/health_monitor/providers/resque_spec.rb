@@ -3,6 +3,10 @@ require 'spec_helper'
 describe HealthMonitor::Providers::Resque do
   subject { described_class.new(request: ActionController::TestRequest.new) }
 
+  describe '#provider_name' do
+    it { expect(described_class.provider_name).to eq('resque') }
+  end
+
   describe '#check!' do
     it 'succesfully checks' do
       expect {

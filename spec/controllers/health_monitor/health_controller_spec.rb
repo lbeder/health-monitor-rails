@@ -1,21 +1,32 @@
 require 'spec_helper'
+require 'timecop'
 require './app/controllers/health_monitor/health_controller'
 
 describe HealthMonitor::HealthController, :type => :controller do
   routes { HealthMonitor::Engine.routes }
 
+  let(:time) { Time.local(1990) }
+
+  before do
+    Timecop.freeze(time)
+  end
+
+  after do
+    Timecop.return
+  end
+
   describe 'basic authentication' do
     let(:username) { 'username' }
     let(:password) { 'password' }
 
-    before(:each) do
+    before do
       HealthMonitor.configure do |config|
         config.basic_auth_credentials = { username: username, password: password }
       end
     end
 
     context 'valid credentials provided' do
-      before(:each) do
+      before do
         request.env['HTTP_AUTHORIZATION'] =
           ActionController::HttpAuthentication::Basic.encode_credentials(username, password)
       end
@@ -26,12 +37,18 @@ describe HealthMonitor::HealthController, :type => :controller do
         }.not_to raise_error
 
         expect(response).to be_ok
-        expect(response.body).to include('Health check has passed')
+        expect(JSON.parse(response.body)).to eq([{
+          'database' => {
+            'message' => '',
+            'status' => 'OK',
+            'timestamp' => time.to_s(:db)
+          }
+        }])
       end
     end
 
     context 'invalid credentials provided' do
-      before(:each) do
+      before do
         request.env['HTTP_AUTHORIZATION'] =
           ActionController::HttpAuthentication::Basic.encode_credentials('', '')
       end
@@ -60,7 +77,13 @@ describe HealthMonitor::HealthController, :type => :controller do
       }.not_to raise_error
 
       expect(response).to be_ok
-      expect(response.body).to include('Health check has passed')
+      expect(JSON.parse(response.body)).to eq([{
+        'database' => {
+          'message' => '',
+          'status' => 'OK',
+          'timestamp' => time.to_s(:db)
+        }
+      }])
     end
 
     context 'failing' do
@@ -74,7 +97,13 @@ describe HealthMonitor::HealthController, :type => :controller do
         }.not_to raise_error
 
         expect(response).to be_error
-        expect(response.body).to include('Health check has failed')
+        expect(JSON.parse(response.body)).to eq([{
+          'database' => {
+            'message' => 'Exception',
+            'status' => 'ERROR',
+            'timestamp' => time.to_s(:db)
+          }
+        }])
       end
     end
   end

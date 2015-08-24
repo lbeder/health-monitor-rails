@@ -1,8 +1,14 @@
 # Custom config for RuboCop static code analysis
 Metrics/LineLength:
-  Max: 100
+  Max: 120
   Exclude:
     - 'spec/**/*'
+
+Metrics/MethodLength:
+  Max: 20
+
+Metrics/AbcSize:
+  Max: 20
 
 Style/SignalException:
   EnforcedStyle: only_raise

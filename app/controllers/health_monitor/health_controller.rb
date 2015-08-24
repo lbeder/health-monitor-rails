@@ -8,13 +8,11 @@ module HealthMonitor
 
     # GET /health/check
     def check
-      HealthMonitor.check!(request: request)
+      res = HealthMonitor.check(request: request)
 
-      self.status = :ok
-      self.response_body = "Health check has passed: r#{Time.now.to_s(:db)}\n"
-    rescue => e
-      self.status = :service_unavailable
-      self.response_body = "Health check has failed: #{Time.now.to_s(:db)}, error: #{e.message}\n"
+      self.content_type = Mime::JSON
+      self.status = res[:status]
+      self.response_body = ActiveSupport::JSON.encode(res[:results])
     end
 
     private

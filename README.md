@@ -7,7 +7,7 @@
 
 This is a health monitoring Rails mountable plug-in, which checks various services (db, cache, sidekiq, redis, etc.).
 
-Mounting this gem will add a '/check' route to your application, which can be used for health monitoring the application and its various services.
+Mounting this gem will add a '/check' route to your application, which can be used for health monitoring the application and its various services. The method will return an appropriate HTTP status as well as a JSON array representing the state of each provider.
 
 ## Setup
 

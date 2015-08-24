@@ -1,11 +1,19 @@
 require 'spec_helper'
 
 describe HealthMonitor do
+  let(:time) { Time.local(1990) }
+
   before do
     HealthMonitor.configuration = HealthMonitor::Configuration.new
+
+    Timecop.freeze(time)
   end
 
   let(:request) { ActionController::TestRequest.new }
+
+  after do
+    Timecop.return
+  end
 
   describe '#configure' do
     describe 'providers' do
@@ -63,12 +71,19 @@ describe HealthMonitor do
     end
   end
 
-  describe '#check!' do
+  describe '#check' do
     context 'default providers' do
       it 'succesfully checks' do
-        expect {
-          subject.check!(request: request)
-        }.not_to raise_error
+        expect(subject.check(request: request)).to eq(
+          :results => [
+            'database' => {
+              message: '',
+              status: 'OK',
+              timestamp: time.to_s(:db)
+            }
+          ],
+          :status => :ok
+        )
       end
     end
 
@@ -81,9 +96,25 @@ describe HealthMonitor do
       end
 
       it 'succesfully checks' do
-        expect {
-          subject.check!(request: request)
-        }.not_to raise_error
+        expect(subject.check(request: request)).to eq(
+          :results => [
+            {
+              'database' => {
+                message: '',
+                status: 'OK',
+                timestamp: time.to_s(:db)
+              }
+            },
+            {
+              'redis' => {
+                message: '',
+                status: 'OK',
+                timestamp: time.to_s(:db)
+              }
+            }
+          ],
+          :status => :ok
+        )
       end
 
       context 'redis fails' do
@@ -91,10 +122,26 @@ describe HealthMonitor do
           Providers.stub_redis_failure
         end
 
-        it 'fails check!' do
-          expect {
-            subject.check!(request: request)
-          }.to raise_error
+        it 'fails check' do
+          expect(subject.check(request: request)).to eq(
+            :results => [
+              {
+                'database' => {
+                  message: '',
+                  status: 'OK',
+                  timestamp: time.to_s(:db)
+                }
+              },
+              {
+                'redis' => {
+                  message: "different values (now: #{time.to_s(:db)}, fetched: false)",
+                  status: 'ERROR',
+                  timestamp: time.to_s(:db)
+                }
+              }
+            ],
+            :status => :service_unavailable
+          )
         end
       end
 
@@ -104,9 +151,54 @@ describe HealthMonitor do
         end
 
         it 'succesfully checks' do
-          expect {
-            subject.check!(request: request)
-          }.not_to raise_error
+          expect(subject.check(request: request)).to eq(
+            :results => [
+              {
+                'database' => {
+                  message: '',
+                  status: 'OK',
+                  timestamp: time.to_s(:db)
+                }
+              },
+              {
+                'redis' => {
+                  message: '',
+                  status: 'OK',
+                  timestamp: time.to_s(:db)
+                }
+              }
+            ],
+            :status => :ok
+          )
+        end
+      end
+
+      context 'both redis and db fail' do
+        before do
+          Providers.stub_database_failure
+          Providers.stub_redis_failure
+        end
+
+        it 'fails check' do
+          expect(subject.check(request: request)).to eq(
+            :results => [
+              {
+                'database' => {
+                  message: 'Exception',
+                  status: 'ERROR',
+                  timestamp: time.to_s(:db)
+                }
+              },
+              {
+                'redis' => {
+                  message: "different values (now: #{time.to_s(:db)}, fetched: false)",
+                  status: 'ERROR',
+                  timestamp: time.to_s(:db)
+                }
+              }
+            ],
+            :status => :service_unavailable
+          )
         end
       end
     end
@@ -134,9 +226,18 @@ describe HealthMonitor do
       end
 
       it 'calls error_callback' do
-        expect {
-          subject.check!(request: request)
-        }.to raise_error
+        expect(subject.check(request: request)).to eq(
+          :results => [
+            {
+              'database' => {
+                message: 'Exception',
+                status: 'ERROR',
+                timestamp: time.to_s(:db)
+              }
+            }
+          ],
+          :status => :service_unavailable
+        )
 
         expect(test).to be_truthy
       end
