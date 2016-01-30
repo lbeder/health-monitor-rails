@@ -26,8 +26,12 @@ module HealthMonitor
 
       private
 
-      def self.configuration_class
-        Configuration
+      class << self
+        private
+
+        def configuration_class
+          Configuration
+        end
       end
 
       def check_workers!
