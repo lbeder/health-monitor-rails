@@ -122,6 +122,18 @@ HealthMonitor.configure do |config|
 end
 ```
 
+### Adding environmet variables
+By default, environmet variables is nil, you need to provide a Hash with your custom environmet variables:
+
+```ruby
+HealthMonitor.configure do |config|
+  config.environmet_variables = {
+    build_number: "BUILD_NUMBER",
+    git_sha: "GIT_SHA"
+  }
+end
+```
+
 ## License
 
 The MIT License (MIT)
