@@ -128,8 +128,8 @@ By default, environmet variables is nil, you need to provide a Hash with your cu
 ```ruby
 HealthMonitor.configure do |config|
   config.environmet_variables = {
-    build_number: "BUILD_NUMBER",
-    git_sha: "GIT_SHA"
+    build_number: 'BUILD_NUMBER',
+    git_sha: 'GIT_SHA'
   }
 end
 ```
