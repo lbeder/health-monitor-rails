@@ -7,7 +7,7 @@ module HealthMonitor
 
     class Sidekiq < Base
       class Configuration
-        DEFAULT_LATENCY_TIMEOUT = 30.freeze
+        DEFAULT_LATENCY_TIMEOUT = 30
 
         attr_accessor :latency
 

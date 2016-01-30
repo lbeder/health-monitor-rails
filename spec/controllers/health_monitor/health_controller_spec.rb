@@ -66,7 +66,7 @@ describe HealthMonitor::HealthController, :type => :controller do
   end
 
   describe 'environmet variables' do
-    let(:environmet_variables) { { build_number: "12", git_sha: "example_sha" } }
+    let(:environmet_variables) { { build_number: '12', git_sha: 'example_sha' } }
 
     before do
       HealthMonitor.configure do |config|
@@ -82,20 +82,23 @@ describe HealthMonitor::HealthController, :type => :controller do
         }.not_to raise_error
 
         expect(response).to be_ok
-        expect(JSON.parse(response.body)).to eq([
-          {
-            'environmet_variables' => {
-              'build_number' => '12',
-              'git_sha' => 'example_sha'
+        expect(JSON.parse(response.body)).to eq(
+          [
+            {
+              'environmet_variables' => {
+                'build_number' => '12',
+                'git_sha' => 'example_sha'
+              }
+            },
+            {
+              'database' => {
+                'message' => '',
+                'status' => 'OK',
+                'timestamp' => time.to_s(:db)
+              }
             }
-          },
-          {
-          'database' => {
-            'message' => '',
-            'status' => 'OK',
-            'timestamp' => time.to_s(:db)
-          }
-        }])
+          ]
+        )
       end
     end
   end
