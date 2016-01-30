@@ -22,6 +22,7 @@ describe HealthMonitor::HealthController, :type => :controller do
     before do
       HealthMonitor.configure do |config|
         config.basic_auth_credentials = { username: username, password: password }
+        config.environmet_variables = nil
       end
     end
 
@@ -64,10 +65,49 @@ describe HealthMonitor::HealthController, :type => :controller do
     end
   end
 
+  describe 'environmet variables' do
+    let(:environmet_variables) { { build_number: '12', git_sha: 'example_sha' } }
+
+    before do
+      HealthMonitor.configure do |config|
+        config.basic_auth_credentials = nil
+        config.environmet_variables = environmet_variables
+      end
+    end
+
+    context 'valid environmet variables synatx provided' do
+      it 'succesfully checks' do
+        expect {
+          get :check
+        }.not_to raise_error
+
+        expect(response).to be_ok
+        expect(JSON.parse(response.body)).to eq(
+          [
+            {
+              'environmet_variables' => {
+                'build_number' => '12',
+                'git_sha' => 'example_sha'
+              }
+            },
+            {
+              'database' => {
+                'message' => '',
+                'status' => 'OK',
+                'timestamp' => time.to_s(:db)
+              }
+            }
+          ]
+        )
+      end
+    end
+  end
+
   describe '#check' do
     before do
       HealthMonitor.configure do |config|
         config.basic_auth_credentials = nil
+        config.environmet_variables = nil
       end
     end
 

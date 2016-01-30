@@ -10,6 +10,11 @@ module HealthMonitor
     def check
       res = HealthMonitor.check(request: request)
 
+      unless HealthMonitor.configuration.environmet_variables.nil?
+        env_vars = [environmet_variables: HealthMonitor.configuration.environmet_variables]
+        res[:results] = env_vars + res[:results]
+      end
+
       self.content_type = Mime::JSON
       self.status = res[:status]
       self.response_body = ActiveSupport::JSON.encode(res[:results])

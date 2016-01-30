@@ -6,3 +6,4 @@ rvm:
   - ruby-head
 script:
   - bundle exec rake rubocop
+  - bundle exec rspec
