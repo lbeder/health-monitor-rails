@@ -6,6 +6,8 @@ module HealthMonitor
       before_action :authenticate_with_basic_auth
     end
 
+    force_ssl except: :check
+
     # GET /health/check
     def check
       res = HealthMonitor.check(request: request)
