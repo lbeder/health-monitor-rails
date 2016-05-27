@@ -9,7 +9,7 @@ describe HealthMonitor do
     Timecop.freeze(time)
   end
 
-  let(:request) { ActionController::TestRequest.new }
+  let(:request) { test_request }
 
   after do
     Timecop.return

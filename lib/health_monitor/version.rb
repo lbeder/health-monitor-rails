@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 module HealthMonitor
-  VERSION = '4.1.0'.freeze
+  VERSION = '5.0.0.rc1'.freeze
 end

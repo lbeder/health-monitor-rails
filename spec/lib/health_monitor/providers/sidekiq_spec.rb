@@ -7,7 +7,7 @@ describe HealthMonitor::Providers::Sidekiq do
     end
   end
 
-  subject { described_class.new(request: ActionController::TestRequest.new) }
+  subject { described_class.new(request: test_request) }
 
   before do
     redis_conn = proc { Redis.new }

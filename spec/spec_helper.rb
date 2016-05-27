@@ -38,3 +38,11 @@ Spork.prefork do
     end
   end
 end
+
+def test_request
+  if ActionController::TestRequest.respond_to?(:create)
+    ActionController::TestRequest.create
+  else
+    ActionController::TestRequest.new
+  end
+end

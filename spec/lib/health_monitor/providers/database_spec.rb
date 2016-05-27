@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe HealthMonitor::Providers::Database do
-  subject { described_class.new(request: ActionController::TestRequest.new) }
+  subject { described_class.new(request: test_request) }
 
   describe '#provider_name' do
     it { expect(described_class.provider_name).to eq('database') }
