@@ -10,15 +10,15 @@ gemfile:
   - gemfiles/rails_4.0.gemfile
   - gemfiles/rails_4.1.gemfile
   - gemfiles/rails_4.2.gemfile
-  - gemfiles/rails_5.0.0.rc1.gemfile
+  - gemfiles/rails_5.0.0
 matrix:
   allow_failures:
     - rvm: ruby-head
   exclude:
     - rvm: 2.0.0
-      gemfile: gemfiles/rails_5.0.0.rc1.gemfile
+      gemfile: gemfiles/rails_5.0.0
     - rvm: 2.1.10
-      gemfile: gemfiles/rails_5.0.0.rc1.gemfile
+      gemfile: gemfiles/rails_5.0.0
 script:
   - bundle exec rake rubocop
   - bundle exec rspec
