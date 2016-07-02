@@ -16,9 +16,9 @@ matrix:
     - rvm: ruby-head
   exclude:
     - rvm: 2.0.0
-      gemfile: gemfiles/rails_5.0.0
+      gemfile: gemfiles/rails_5.0.0.gemfile
     - rvm: 2.1.10
-      gemfile: gemfiles/rails_5.0.0
+      gemfile: gemfiles/rails_5.0.0.gemfile
 script:
   - bundle exec rake rubocop
   - bundle exec rspec
