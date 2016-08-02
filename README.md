@@ -122,8 +122,8 @@ HealthMonitor.configure do |config|
 end
 ```
 
-### Adding environmet variables
-By default, environmet variables is nil, you need to provide a Hash with your custom environmet variables:
+### Adding environment variables
+By default, environment variables is `nil`, so if you'd want to include additional parameters in the results JSON, all you need is to provide a `Hash` with your custom environment variables:
 
 ```ruby
 HealthMonitor.configure do |config|
