@@ -10,10 +10,10 @@ module HealthMonitor
     def check
       res = HealthMonitor.check(request: request)
 
-      unless HealthMonitor.configuration.environmet_variables.nil?
-        env_vars = [environmet_variables: HealthMonitor.configuration.environmet_variables]
-        res[:results] = env_vars + res[:results]
-      end
+      HealthMonitor.configuration.environmet_variables ||= {}
+      v = HealthMonitor.configuration.environmet_variables.merge(time: Time.now.to_s(:db))
+      env_vars = [environmet_variables: v]
+      res[:results] = env_vars + res[:results]
 
       self.content_type = Mime[:json]
       self.status = res[:status]
