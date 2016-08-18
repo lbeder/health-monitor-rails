@@ -10,6 +10,7 @@ module HealthMonitor
     def check
       res = HealthMonitor.check(request: request)
 
+      HealthMonitor.configuration.environmet_variables ||= {}
       v = HealthMonitor.configuration.environmet_variables.merge(time: Time.now.to_s(:db))
       env_vars = [environmet_variables: v]
       res[:results] = env_vars + res[:results]
