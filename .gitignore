@@ -3,3 +3,4 @@ pkg
 tmp
 coverage
 spec/dummy/log
+gemfiles/*gemfile.lock

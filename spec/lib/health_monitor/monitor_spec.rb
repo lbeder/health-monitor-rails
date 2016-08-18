@@ -9,7 +9,7 @@ describe HealthMonitor do
     Timecop.freeze(time)
   end
 
-  let(:request) { ActionController::TestRequest.new }
+  let(:request) { test_request }
 
   after do
     Timecop.return
@@ -38,8 +38,8 @@ describe HealthMonitor do
       it 'appends new providers' do
         expect {
           subject.configure(&:resque)
-        }.to change { HealthMonitor.configuration.providers }.to(
-          Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Resque]))
+        }.to change { HealthMonitor.configuration.providers }.to(Set.new([HealthMonitor::Providers::Database,
+          HealthMonitor::Providers::Resque]))
       end
     end
 

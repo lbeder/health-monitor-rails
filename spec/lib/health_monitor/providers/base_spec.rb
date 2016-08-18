@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe HealthMonitor::Providers::Base do
-  let(:request) { ActionController::TestRequest.new }
+  let(:request) { test_request }
 
   subject { described_class.new(request: request) }
 
