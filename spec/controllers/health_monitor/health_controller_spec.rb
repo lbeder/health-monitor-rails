@@ -38,7 +38,11 @@ describe HealthMonitor::HealthController, :type => :controller do
         }.not_to raise_error
 
         expect(response).to be_ok
-        expect(JSON.parse(response.body)).to eq([{
+        expect(JSON.parse(response.body)).to eq([
+          {
+            "environmet_variables"=>{"time"=>"1990-01-01 00:00:00"}
+          },
+          {
           'database' => {
             'message' => '',
             'status' => 'OK',
@@ -87,7 +91,8 @@ describe HealthMonitor::HealthController, :type => :controller do
             {
               'environmet_variables' => {
                 'build_number' => '12',
-                'git_sha' => 'example_sha'
+                'git_sha' => 'example_sha',
+                'time'=>'1990-01-01 00:00:00'
               }
             },
             {
@@ -117,7 +122,11 @@ describe HealthMonitor::HealthController, :type => :controller do
       }.not_to raise_error
 
       expect(response).to be_ok
-      expect(JSON.parse(response.body)).to eq([{
+      expect(JSON.parse(response.body)).to eq([
+        {
+            "environmet_variables"=>{"time"=>"1990-01-01 00:00:00"}
+        },
+        {
         'database' => {
           'message' => '',
           'status' => 'OK',
@@ -137,13 +146,18 @@ describe HealthMonitor::HealthController, :type => :controller do
         }.not_to raise_error
 
         expect(response).to be_error
-        expect(JSON.parse(response.body)).to eq([{
-          'database' => {
-            'message' => 'Exception',
-            'status' => 'ERROR',
-            'timestamp' => time.to_s(:db)
+        expect(JSON.parse(response.body)).to eq([
+          {
+            "environmet_variables"=>{"time"=>"1990-01-01 00:00:00"}
+          },
+          {
+            'database' => {
+              'message' => 'Exception',
+              'status' => 'ERROR',
+              'timestamp' => time.to_s(:db)
+            }
           }
-        }])
+        ])
       end
     end
   end
