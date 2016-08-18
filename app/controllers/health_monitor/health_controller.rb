@@ -10,27 +10,16 @@ module HealthMonitor
     def check
       res = HealthMonitor.check(request: request)
 
-      unless HealthMonitor.configuration.environmet_variables.nil?
-        env_vars = [environmet_variables: HealthMonitor.configuration.environmet_variables]
-        res[:results] = env_vars + res[:results]
-      end
+      v = HealthMonitor.configuration.environmet_variables.merge({ 'time' => Time.now.to_s(:db) })
+      env_vars = [environmet_variables: v]
+      res[:results] = env_vars + res[:results]
 
-      self.content_type = Mime::JSON
+      self.content_type = Mime[:json]
       self.status = res[:status]
       self.response_body = ActiveSupport::JSON.encode(res[:results])
     end
 
     private
-
-    def process_with_silence(*args)
-      Rails.logger.silence_stream(STDOUT) do
-        Rails.logger.silence_stream(STDERR) do
-          process_without_silence(*args)
-        end
-      end
-    end
-
-    alias_method_chain :process, :silence
 
     def authenticate_with_basic_auth
       return true unless HealthMonitor.configuration.basic_auth_credentials
