@@ -1,5 +1,4 @@
 require 'health_monitor/providers/base'
-require 'redis/namespace'
 
 module HealthMonitor
   module Providers
