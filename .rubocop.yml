@@ -10,6 +10,9 @@ Metrics/MethodLength:
 Metrics/AbcSize:
   Max: 20
 
+Metrics/BlockLength:
+  Max: 30
+
 Style/SignalException:
   EnforcedStyle: only_raise
 
