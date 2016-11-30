@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'spork'
+require 'sidekiq'
 
 require 'coveralls'
 Coveralls.wear!
