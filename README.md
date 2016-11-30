@@ -57,6 +57,15 @@ HealthMonitor.configure do |config|
 end
 ```
 
+We believe that having the database check enabled by default is very important, but if you still want to disable it
+(e.g., if you use a database that isn't covered by the check) - you can do that by calling the `no_database` method:
+
+```ruby
+HealthMonitor.configure do |config|
+  config.no_database
+end
+```
+
 ### Providers configuration
 
 Some of the providers can also accept additional configuration:

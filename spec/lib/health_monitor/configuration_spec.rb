@@ -1,8 +1,10 @@
 require 'spec_helper'
 
 describe HealthMonitor::Configuration do
+  let(:default_configuration) { Set.new([HealthMonitor::Providers::Database]) }
+
   describe 'defaults' do
-    it { expect(subject.providers).to eq(Set.new([HealthMonitor::Providers::Database])) }
+    it { expect(subject.providers).to eq(default_configuration) }
     it { expect(subject.error_callback).to be_nil }
     it { expect(subject.basic_auth_credentials).to be_nil }
   end
@@ -60,6 +62,14 @@ describe HealthMonitor::Configuration do
           subject.add_custom_provider(TestClass)
         }.to raise_error(ArgumentError)
       end
+    end
+  end
+
+  describe '#no_database' do
+    it 'removes the default database check' do
+      expect {
+          subject.no_database
+      }.to change { subject.providers }.from(default_configuration).to(Set.new())
     end
   end
 end
