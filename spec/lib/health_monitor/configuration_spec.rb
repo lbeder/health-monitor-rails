@@ -68,8 +68,8 @@ describe HealthMonitor::Configuration do
   describe '#no_database' do
     it 'removes the default database check' do
       expect {
-          subject.no_database
-      }.to change { subject.providers }.from(default_configuration).to(Set.new())
+        subject.no_database
+      }.to change { subject.providers }.from(default_configuration).to(Set.new)
     end
   end
 end
