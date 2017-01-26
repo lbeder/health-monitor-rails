@@ -3,6 +3,6 @@
 source "http://rubygems.org"
 
 gem "rdoc"
-gem "rails", "~> 5.0.0"
+gem "rails", "~> 5.0.1"
 
 gemspec :path => "../"
