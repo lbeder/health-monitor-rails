@@ -22,7 +22,7 @@ describe HealthMonitor::HealthController, :type => :controller do
     before do
       HealthMonitor.configure do |config|
         config.basic_auth_credentials = { username: username, password: password }
-        config.environmet_variables = nil
+        config.environment_variables = nil
       end
     end
 
@@ -39,7 +39,7 @@ describe HealthMonitor::HealthController, :type => :controller do
 
         expect(response).to be_ok
         expect(JSON.parse(response.body)).to eq([{
-          'environmet_variables' => { 'time' => '1990-01-01 00:00:00' }
+          'environment_variables' => { 'time' => '1990-01-01 00:00:00' }
         },
         {
           'database' => {
@@ -68,17 +68,17 @@ describe HealthMonitor::HealthController, :type => :controller do
     end
   end
 
-  describe 'environmet variables' do
-    let(:environmet_variables) { { build_number: '12', git_sha: 'example_sha' } }
+  describe 'environment variables' do
+    let(:environment_variables) { { build_number: '12', git_sha: 'example_sha' } }
 
     before do
       HealthMonitor.configure do |config|
         config.basic_auth_credentials = nil
-        config.environmet_variables = environmet_variables
+        config.environment_variables = environment_variables
       end
     end
 
-    context 'valid environmet variables synatx provided' do
+    context 'valid environment variables synatx provided' do
       it 'succesfully checks' do
         expect {
           get :check
@@ -88,7 +88,7 @@ describe HealthMonitor::HealthController, :type => :controller do
         expect(JSON.parse(response.body)).to eq(
           [
             {
-              'environmet_variables' => {
+              'environment_variables' => {
                 'build_number' => '12',
                 'git_sha' => 'example_sha',
                 'time' => '1990-01-01 00:00:00'
@@ -111,7 +111,7 @@ describe HealthMonitor::HealthController, :type => :controller do
     before do
       HealthMonitor.configure do |config|
         config.basic_auth_credentials = nil
-        config.environmet_variables = nil
+        config.environment_variables = nil
       end
     end
 
@@ -122,7 +122,7 @@ describe HealthMonitor::HealthController, :type => :controller do
 
       expect(response).to be_ok
       expect(JSON.parse(response.body)).to eq([{
-        'environmet_variables' => { 'time' => '1990-01-01 00:00:00' }
+        'environment_variables' => { 'time' => '1990-01-01 00:00:00' }
       },
       {
         'database' => {
@@ -145,7 +145,7 @@ describe HealthMonitor::HealthController, :type => :controller do
 
         expect(response).to be_error
         expect(JSON.parse(response.body)).to eq([{
-          'environmet_variables' => { 'time' => '1990-01-01 00:00:00' }
+          'environment_variables' => { 'time' => '1990-01-01 00:00:00' }
         },
         {
           'database' => {
