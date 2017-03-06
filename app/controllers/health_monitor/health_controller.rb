@@ -11,12 +11,12 @@ module HealthMonitor
 
       respond_to do |format|
         format.html
-        format.json {
+        format.json do
           render json: statuses
-        }
-        format.xml {
+        end
+        format.xml do
           render xml: statuses
-        }
+        end
       end
     end
 

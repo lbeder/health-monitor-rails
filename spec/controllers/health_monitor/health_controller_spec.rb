@@ -34,22 +34,20 @@ describe HealthMonitor::HealthController, :type => :controller do
 
       it 'succesfully checks' do
         expect {
-          get :check, format: :json
+          get :check, :format => :json
         }.not_to raise_error
 
         expect(response).to be_ok
         expect(JSON.parse(response.body)).to eq(
-          {
-            'results' => [
-              {
-                'name' => 'Database',
-                'message' => '',
-                'status' => 'OK',
-              }
-            ],
-            'status' => 'ok',
-            'timestamp' => '1990-01-01T00:00:00.000+01:00',
-          }
+          'results' => [
+            {
+              'name' => 'Database',
+              'message' => '',
+              'status' => 'OK'
+            }
+          ],
+          'status' => 'ok',
+          'timestamp' => '1990-01-01T00:00:00.000+01:00'
         )
       end
     end
@@ -62,7 +60,7 @@ describe HealthMonitor::HealthController, :type => :controller do
 
       it 'fails' do
         expect {
-          get :check, format: :json
+          get :check, :format => :json
         }.not_to raise_error
 
         expect(response).not_to be_ok
@@ -84,25 +82,23 @@ describe HealthMonitor::HealthController, :type => :controller do
     context 'valid environment variables synatx provided' do
       it 'succesfully checks' do
         expect {
-          get :check, format: :json
+          get :check, :format => :json
         }.not_to raise_error
 
         expect(response).to be_ok
         expect(JSON.parse(response.body)).to eq(
-          {
-            'results' => [
-              {
-                'name' => 'Database',
-                'message' => '',
-                'status' => 'OK',
-              }
-            ],
-            'status' => 'ok',
-            'timestamp' => '1990-01-01T00:00:00.000+01:00',
-            'environment_variables' => {
-              'build_number' => '12',
-              'git_sha' => 'example_sha',
+          'results' => [
+            {
+              'name' => 'Database',
+              'message' => '',
+              'status' => 'OK'
             }
+          ],
+          'status' => 'ok',
+          'timestamp' => '1990-01-01T00:00:00.000+01:00',
+          'environment_variables' => {
+            'build_number' => '12',
+            'git_sha' => 'example_sha'
           }
         )
       end
@@ -119,22 +115,20 @@ describe HealthMonitor::HealthController, :type => :controller do
 
     it 'succesfully checks' do
       expect {
-        get :check, format: :json
+        get :check, :format => :json
       }.not_to raise_error
 
       expect(response).to be_ok
       expect(JSON.parse(response.body)).to eq(
-        {
-          'results' => [
-            {
-              'name' => 'Database',
-              'message' => '',
-              'status' => 'OK',
-            }
-          ],
-          'status' => 'ok',
-          'timestamp' => '1990-01-01T00:00:00.000+01:00'
-        }
+        'results' => [
+          {
+            'name' => 'Database',
+            'message' => '',
+            'status' => 'OK'
+          }
+        ],
+        'status' => 'ok',
+        'timestamp' => '1990-01-01T00:00:00.000+01:00'
       )
     end
 
@@ -145,22 +139,20 @@ describe HealthMonitor::HealthController, :type => :controller do
 
       it 'should fail' do
         expect {
-          get :check, format: :json
+          get :check, :format => :json
         }.not_to raise_error
 
         expect(response).to be_ok
         expect(JSON.parse(response.body)).to eq(
-          {
-            'results' => [
-              {
-                'name' => 'Database',
-                'message' => 'Exception',
-                'status' => 'ERROR',
-              }
-            ],
-            'status' => 'service_unavailable',
-            'timestamp' => '1990-01-01T00:00:00.000+01:00'
-          }
+          'results' => [
+            {
+              'name' => 'Database',
+              'message' => 'Exception',
+              'status' => 'ERROR'
+            }
+          ],
+          'status' => 'service_unavailable',
+          'timestamp' => '1990-01-01T00:00:00.000+01:00'
         )
       end
     end

@@ -79,11 +79,11 @@ describe HealthMonitor do
             {
               name: 'Database',
               message: '',
-              status: 'OK',
+              status: 'OK'
             }
           ],
-          status: :ok,
-          timestamp: time
+          :status => :ok,
+          :timestamp => time
         )
       end
     end
@@ -102,16 +102,16 @@ describe HealthMonitor do
             {
               name: 'Database',
               message: '',
-              status: 'OK',
+              status: 'OK'
             },
             {
               name: 'Redis',
               message: '',
-              status: 'OK',
+              status: 'OK'
             }
           ],
-          status: :ok,
-          timestamp: time
+          :status => :ok,
+          :timestamp => time
         )
       end
 
@@ -126,16 +126,16 @@ describe HealthMonitor do
               {
                 name: 'Database',
                 message: '',
-                status: 'OK',
+                status: 'OK'
               },
               {
                 name: 'Redis',
                 message: "different values (now: #{time.to_s(:db)}, fetched: false)",
-                status: 'ERROR',
+                status: 'ERROR'
               }
             ],
-            status: :service_unavailable,
-            timestamp: time
+            :status => :service_unavailable,
+            :timestamp => time
           )
         end
       end
@@ -151,16 +151,16 @@ describe HealthMonitor do
               {
                 name: 'Database',
                 message: '',
-                status: 'OK',
+                status: 'OK'
               },
               {
                 name: 'Redis',
                 message: '',
-                status: 'OK',
+                status: 'OK'
               }
             ],
-            status: :ok,
-            timestamp: time
+            :status => :ok,
+            :timestamp => time
           )
         end
       end
@@ -177,16 +177,16 @@ describe HealthMonitor do
               {
                 name: 'Database',
                 message: 'Exception',
-                status: 'ERROR',
+                status: 'ERROR'
               },
               {
                 name: 'Redis',
                 message: "different values (now: #{time.to_s(:db)}, fetched: false)",
-                status: 'ERROR',
+                status: 'ERROR'
               }
             ],
-            status: :service_unavailable,
-            timestamp: time
+            :status => :service_unavailable,
+            :timestamp => time
           )
         end
       end
@@ -220,11 +220,11 @@ describe HealthMonitor do
             {
               name: 'Database',
               message: 'Exception',
-              status: 'ERROR',
+              status: 'ERROR'
             }
           ],
-          status: :service_unavailable,
-          timestamp: time
+          :status => :service_unavailable,
+          :timestamp => time
         )
 
         expect(test).to be_truthy
