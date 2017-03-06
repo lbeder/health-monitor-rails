@@ -4,7 +4,7 @@ describe HealthMonitor::Providers::Redis do
   subject { described_class.new(request: test_request) }
 
   describe '#provider_name' do
-    it { expect(described_class.provider_name).to eq('redis') }
+    it { expect(described_class.provider_name).to eq('Redis') }
   end
 
   describe '#check!' do

@@ -76,13 +76,14 @@ describe HealthMonitor do
       it 'succesfully checks' do
         expect(subject.check(request: request)).to eq(
           :results => [
-            'database' => {
+            {
+              name: 'Database',
               message: '',
               status: 'OK',
-              timestamp: time.to_s(:db)
             }
           ],
-          :status => :ok
+          status: :ok,
+          timestamp: time
         )
       end
     end
@@ -99,21 +100,18 @@ describe HealthMonitor do
         expect(subject.check(request: request)).to eq(
           :results => [
             {
-              'database' => {
-                message: '',
-                status: 'OK',
-                timestamp: time.to_s(:db)
-              }
+              name: 'Database',
+              message: '',
+              status: 'OK',
             },
             {
-              'redis' => {
-                message: '',
-                status: 'OK',
-                timestamp: time.to_s(:db)
-              }
+              name: 'Redis',
+              message: '',
+              status: 'OK',
             }
           ],
-          :status => :ok
+          status: :ok,
+          timestamp: time
         )
       end
 
@@ -126,21 +124,18 @@ describe HealthMonitor do
           expect(subject.check(request: request)).to eq(
             :results => [
               {
-                'database' => {
-                  message: '',
-                  status: 'OK',
-                  timestamp: time.to_s(:db)
-                }
+                name: 'Database',
+                message: '',
+                status: 'OK',
               },
               {
-                'redis' => {
-                  message: "different values (now: #{time.to_s(:db)}, fetched: false)",
-                  status: 'ERROR',
-                  timestamp: time.to_s(:db)
-                }
+                name: 'Redis',
+                message: "different values (now: #{time.to_s(:db)}, fetched: false)",
+                status: 'ERROR',
               }
             ],
-            :status => :service_unavailable
+            status: :service_unavailable,
+            timestamp: time
           )
         end
       end
@@ -154,21 +149,18 @@ describe HealthMonitor do
           expect(subject.check(request: request)).to eq(
             :results => [
               {
-                'database' => {
-                  message: '',
-                  status: 'OK',
-                  timestamp: time.to_s(:db)
-                }
+                name: 'Database',
+                message: '',
+                status: 'OK',
               },
               {
-                'redis' => {
-                  message: '',
-                  status: 'OK',
-                  timestamp: time.to_s(:db)
-                }
+                name: 'Redis',
+                message: '',
+                status: 'OK',
               }
             ],
-            :status => :ok
+            status: :ok,
+            timestamp: time
           )
         end
       end
@@ -183,21 +175,18 @@ describe HealthMonitor do
           expect(subject.check(request: request)).to eq(
             :results => [
               {
-                'database' => {
-                  message: 'Exception',
-                  status: 'ERROR',
-                  timestamp: time.to_s(:db)
-                }
+                name: 'Database',
+                message: 'Exception',
+                status: 'ERROR',
               },
               {
-                'redis' => {
-                  message: "different values (now: #{time.to_s(:db)}, fetched: false)",
-                  status: 'ERROR',
-                  timestamp: time.to_s(:db)
-                }
+                name: 'Redis',
+                message: "different values (now: #{time.to_s(:db)}, fetched: false)",
+                status: 'ERROR',
               }
             ],
-            :status => :service_unavailable
+            status: :service_unavailable,
+            timestamp: time
           )
         end
       end
@@ -229,14 +218,13 @@ describe HealthMonitor do
         expect(subject.check(request: request)).to eq(
           :results => [
             {
-              'database' => {
-                message: 'Exception',
-                status: 'ERROR',
-                timestamp: time.to_s(:db)
-              }
+              name: 'Database',
+              message: 'Exception',
+              status: 'ERROR',
             }
           ],
-          :status => :service_unavailable
+          status: :service_unavailable,
+          timestamp: time
         )
 
         expect(test).to be_truthy

@@ -12,7 +12,7 @@ describe HealthMonitor::Providers::Base do
   end
 
   describe '#provider_name' do
-    it { expect(described_class.provider_name).to eq('base') }
+    it { expect(described_class.provider_name).to eq('Base') }
   end
 
   describe '#check!' do

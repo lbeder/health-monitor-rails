@@ -4,7 +4,7 @@ describe HealthMonitor::Providers::Cache do
   subject { described_class.new(request: test_request) }
 
   describe '#provider_name' do
-    it { expect(described_class.provider_name).to eq('cache') }
+    it { expect(described_class.provider_name).to eq('Cache') }
   end
 
   describe '#check!' do
