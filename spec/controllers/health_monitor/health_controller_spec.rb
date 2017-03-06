@@ -113,31 +113,8 @@ describe HealthMonitor::HealthController, :type => :controller do
       end
     end
 
-    it 'succesfully checks' do
-      expect {
-        get :check, :format => :json
-      }.not_to raise_error
-
-      expect(response).to be_ok
-      expect(JSON.parse(response.body)).to eq(
-        'results' => [
-          {
-            'name' => 'Database',
-            'message' => '',
-            'status' => 'OK'
-          }
-        ],
-        'status' => 'ok',
-        'timestamp' => time.to_s(:rfc2822)
-      )
-    end
-
-    context 'failing' do
-      before do
-        Providers.stub_database_failure
-      end
-
-      it 'should fail' do
+    context 'json rendering' do
+      it 'succesfully checks' do
         expect {
           get :check, :format => :json
         }.not_to raise_error
@@ -147,13 +124,84 @@ describe HealthMonitor::HealthController, :type => :controller do
           'results' => [
             {
               'name' => 'Database',
-              'message' => 'Exception',
-              'status' => 'ERROR'
+              'message' => '',
+              'status' => 'OK'
             }
           ],
-          'status' => 'service_unavailable',
+          'status' => 'ok',
           'timestamp' => time.to_s(:rfc2822)
         )
+      end
+
+      context 'failing' do
+        before do
+          Providers.stub_database_failure
+        end
+
+        it 'should fail' do
+          expect {
+            get :check, :format => :json
+          }.not_to raise_error
+
+          expect(response).to be_ok
+          expect(JSON.parse(response.body)).to eq(
+            'results' => [
+              {
+                'name' => 'Database',
+                'message' => 'Exception',
+                'status' => 'ERROR'
+              }
+            ],
+            'status' => 'service_unavailable',
+            'timestamp' => time.to_s(:rfc2822)
+          )
+        end
+      end
+    end
+
+    context 'xml rendering' do
+      it 'succesfully checks' do
+        expect {
+          get :check, :format => :xml
+        }.not_to raise_error
+
+        expect(response).to be_ok
+        expect(parse_xml(response)).to eq(
+          'results' => [
+            {
+              'name' => 'Database',
+              'message' => nil,
+              'status' => 'OK'
+            }
+          ],
+          'status' => 'ok',
+          'timestamp' => time.to_s(:rfc2822)
+        )
+      end
+
+      context 'failing' do
+        before do
+          Providers.stub_database_failure
+        end
+
+        it 'should fail' do
+          expect {
+            get :check, :format => :xml
+          }.not_to raise_error
+
+          expect(response).to be_ok
+          expect(parse_xml(response)).to eq(
+            'results' => [
+              {
+                'name' => 'Database',
+                'message' => 'Exception',
+                'status' => 'ERROR'
+              }
+            ],
+            'status' => 'service_unavailable',
+            'timestamp' => time.to_s(:rfc2822)
+          )
+        end
       end
     end
   end

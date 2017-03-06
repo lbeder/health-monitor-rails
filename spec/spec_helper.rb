@@ -47,3 +47,8 @@ def test_request
     ActionController::TestRequest.new
   end
 end
+
+def parse_xml(response)
+  xml = response.body.gsub("type=\"symbol\"", "")
+  Hash.from_xml(xml)['hash']
+end
