@@ -47,7 +47,11 @@ module HealthMonitor
       end
 
       def check_redis!
-        ::Sidekiq.redis(&:info)
+        if ::Sidekiq.respond_to?(:redis_info)
+          ::Sidekiq.redis_info
+        else
+          ::Sidekiq.redis(&:info)
+        end
       end
     end
   end
