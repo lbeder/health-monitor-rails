@@ -6,21 +6,31 @@ module HealthMonitor
       before_action :authenticate_with_basic_auth
     end
 
-    # GET /health/check
     def check
-      res = HealthMonitor.check(request: request)
+      @statuses = statuses
 
-      HealthMonitor.configuration.environment_variables ||= {}
-      v = HealthMonitor.configuration.environment_variables.merge(time: Time.now.to_s(:db))
-      env_vars = [environment_variables: v]
-      res[:results] = env_vars + res[:results]
-
-      self.content_type = Mime[:json]
-      self.status = res[:status]
-      self.response_body = ActiveSupport::JSON.encode(res[:results])
+      respond_to do |format|
+        format.html
+        format.json {
+          render json: statuses
+        }
+        format.xml {
+          render xml: statuses
+        }
+      end
     end
 
     private
+
+    def statuses
+      res = HealthMonitor.check(request: request)
+      res.merge(env_vars)
+    end
+
+    def env_vars
+      v = HealthMonitor.configuration.environment_variables || {}
+      v.empty? ? {} : { environment_variables: v }
+    end
 
     def authenticate_with_basic_auth
       return true unless HealthMonitor.configuration.basic_auth_credentials
