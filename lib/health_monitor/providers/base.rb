@@ -5,7 +5,7 @@ module HealthMonitor
       cattr_accessor :configuration
 
       def self.provider_name
-        @name ||= name.demodulize.downcase
+        @name ||= name.demodulize
       end
 
       def self.configure

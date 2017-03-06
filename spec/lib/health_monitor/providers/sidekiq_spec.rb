@@ -22,7 +22,7 @@ describe HealthMonitor::Providers::Sidekiq do
   end
 
   describe '#provider_name' do
-    it { expect(described_class.provider_name).to eq('sidekiq') }
+    it { expect(described_class.provider_name).to eq('Sidekiq') }
   end
 
   describe '#check!' do
