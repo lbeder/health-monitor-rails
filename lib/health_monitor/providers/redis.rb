@@ -6,7 +6,7 @@ module HealthMonitor
 
     class Redis < Base
       def check!
-        time = Time.now.to_s(:db)
+        time = Time.now.to_s(:rfc2822)
 
         redis = ::Redis.new
         redis.set(key, time)

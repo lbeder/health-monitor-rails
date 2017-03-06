@@ -83,7 +83,7 @@ describe HealthMonitor do
             }
           ],
           :status => :ok,
-          :timestamp => time
+          :timestamp => time.to_s(:rfc2822)
         )
       end
     end
@@ -111,7 +111,7 @@ describe HealthMonitor do
             }
           ],
           :status => :ok,
-          :timestamp => time
+          :timestamp => time.to_s(:rfc2822)
         )
       end
 
@@ -130,12 +130,12 @@ describe HealthMonitor do
               },
               {
                 name: 'Redis',
-                message: "different values (now: #{time.to_s(:db)}, fetched: false)",
+                message: "different values (now: #{time}, fetched: false)",
                 status: 'ERROR'
               }
             ],
             :status => :service_unavailable,
-            :timestamp => time
+            :timestamp => time.to_s(:rfc2822)
           )
         end
       end
@@ -160,7 +160,7 @@ describe HealthMonitor do
               }
             ],
             :status => :ok,
-            :timestamp => time
+            :timestamp => time.to_s(:rfc2822)
           )
         end
       end
@@ -181,12 +181,12 @@ describe HealthMonitor do
               },
               {
                 name: 'Redis',
-                message: "different values (now: #{time.to_s(:db)}, fetched: false)",
+                message: "different values (now: #{time}, fetched: false)",
                 status: 'ERROR'
               }
             ],
             :status => :service_unavailable,
-            :timestamp => time
+            :timestamp => time.to_s(:rfc2822)
           )
         end
       end
@@ -224,7 +224,7 @@ describe HealthMonitor do
             }
           ],
           :status => :service_unavailable,
-          :timestamp => time
+          :timestamp => time.to_s(:rfc2822)
         )
 
         expect(test).to be_truthy

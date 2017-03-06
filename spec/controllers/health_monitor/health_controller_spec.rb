@@ -47,7 +47,7 @@ describe HealthMonitor::HealthController, :type => :controller do
             }
           ],
           'status' => 'ok',
-          'timestamp' => '1990-01-01T00:00:00.000+01:00'
+          'timestamp' => time.to_s(:rfc2822)
         )
       end
     end
@@ -95,7 +95,7 @@ describe HealthMonitor::HealthController, :type => :controller do
             }
           ],
           'status' => 'ok',
-          'timestamp' => '1990-01-01T00:00:00.000+01:00',
+          'timestamp' => time.to_s(:rfc2822),
           'environment_variables' => {
             'build_number' => '12',
             'git_sha' => 'example_sha'
@@ -128,7 +128,7 @@ describe HealthMonitor::HealthController, :type => :controller do
           }
         ],
         'status' => 'ok',
-        'timestamp' => '1990-01-01T00:00:00.000+01:00'
+        'timestamp' => time.to_s(:rfc2822)
       )
     end
 
@@ -152,7 +152,7 @@ describe HealthMonitor::HealthController, :type => :controller do
             }
           ],
           'status' => 'service_unavailable',
-          'timestamp' => '1990-01-01T00:00:00.000+01:00'
+          'timestamp' => time.to_s(:rfc2822)
         )
       end
     end
