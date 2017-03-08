@@ -5,10 +5,28 @@ module HealthMonitor
     class RedisException < StandardError; end
 
     class Redis < Base
+      class Configuration
+        DEFAULT_URL = nil
+
+        attr_accessor :url
+
+        def initialize
+          @url = DEFAULT_URL
+        end
+      end
+
+      class << self
+        private
+
+        def configuration_class
+          ::HealthMonitor::Providers::Redis::Configuration
+        end
+      end
+
       def check!
         time = Time.now.to_s(:rfc2822)
 
-        redis = ::Redis.new
+        redis = configuration.url ? ::Redis.new(url: configuration.url) : ::Redis.new
         redis.set(key, time)
         fetched = redis.get(key)
 
