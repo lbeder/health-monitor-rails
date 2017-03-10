@@ -1,3 +1,7 @@
+## 7.0.0 (2017-03-10)
+
+  - Added HTML status page and overall refactoring (thanks to @n-rodriguez).
+
 ## 6.0.1 (2017-03-05)
 
   - Added tests for rails 5.0.2

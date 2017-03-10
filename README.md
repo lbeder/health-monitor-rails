@@ -7,7 +7,82 @@
 
 This is a health monitoring Rails mountable plug-in, which checks various services (db, cache, sidekiq, redis, etc.).
 
-Mounting this gem will add a '/check' route to your application, which can be used for health monitoring the application and its various services. The method will return an appropriate HTTP status as well as a JSON array representing the state of each provider.
+Mounting this gem will add a '/check' route to your application, which can be used for health monitoring the application and its various services. The method will return an appropriate HTTP status as well as an HTML/JSON/XML response representing the state of each provider.
+
+## Examples
+
+### HTML Status Page
+
+### JSON response
+
+```bash
+>> curl -s http://localhost:3000/check.json | json_pp
+```
+
+```json
+{
+   "timestamp" : "2017-03-10 17:07:52 +0200",
+   "status" : "ok",
+   "results" : [
+      {
+         "name" : "Database",
+         "message" : "",
+         "status" : "OK"
+      },
+      {
+         "status" : "OK",
+         "message" : "",
+         "name" : "Cache"
+      },
+      {
+         "status" : "OK",
+         "message" : "",
+         "name" : "Redis"
+      },
+      {
+         "status" : "OK",
+         "message" : "",
+         "name" : "Sidekiq"
+      }
+   ]
+}
+```
+
+### XML response
+
+```bash
+>> curl -s http://localhost:3000/check.xml
+```
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<hash>
+  <results type="array">
+    <result>
+      <name>Database</name>
+      <message></message>
+      <status>OK</status>
+    </result>
+    <result>
+      <name>Cache</name>
+      <message></message>
+      <status>OK</status>
+    </result>
+    <result>
+      <name>Redis</name>
+      <message></message>
+      <status>OK</status>
+    </result>
+    <result>
+      <name>Sidekiq</name>
+      <message></message>
+      <status>OK</status>
+    </result>
+  </results>
+  <status type="symbol">ok</status>
+  <timestamp>2017-03-10 17:08:50 +0200</timestamp>
+</hash>
+```
 
 ## Setup
 
