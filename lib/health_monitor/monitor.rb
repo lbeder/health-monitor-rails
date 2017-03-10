@@ -21,7 +21,8 @@ module HealthMonitor
 
     {
       results: results,
-      status: results.all? { |res| res.values.first[:status] == STATUSES[:ok] } ? :ok : :service_unavailable
+      status: results.all? { |res| res[:status] == STATUSES[:ok] } ? :ok : :service_unavailable,
+      timestamp: Time.now.to_s(:rfc2822)
     }
   end
 
@@ -32,21 +33,17 @@ module HealthMonitor
     monitor.check!
 
     {
-      provider.provider_name => {
-        message: '',
-        status: STATUSES[:ok],
-        timestamp: Time.now.to_s(:db)
-      }
+      name: provider.provider_name,
+      message: '',
+      status: STATUSES[:ok]
     }
   rescue => e
     configuration.error_callback.call(e) if configuration.error_callback
 
     {
-      provider.provider_name => {
-        message: e.message,
-        status: STATUSES[:error],
-        timestamp: Time.now.to_s(:db)
-      }
+      name: provider.provider_name,
+      message: e.message,
+      status: STATUSES[:error]
     }
   end
 end

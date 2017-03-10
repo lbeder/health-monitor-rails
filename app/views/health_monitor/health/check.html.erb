@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Status</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <style type="text/css" media="screen">
+  body {
+    line-height: 2rem;
+    font-family: sans;
+    font-size: 14px;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    color: #000;
+    text-align: center;
+  }
+
+  a { color: #333; }
+
+  .container {
+    width: 960px;
+    margin: 20px auto;
+    text-align: left;
+  }
+
+  h1 {
+    font-weight: normal;
+    line-height: 2.8rem;
+    font-size: 30px;
+    letter-spacing: -1px;
+    text-align: center;
+    color: #333;
+  }
+
+  .container {
+    width: 960px;
+    margin:40px auto;
+    overflow: hidden;
+  }
+
+  .statuses {
+    background: #FFF;
+    width: 100%;
+    border-radius: 5px;
+  }
+  .statuses h1 { border-radius: 5px 5px 0 0; background: #f9f9f9; padding: 10px; border-bottom: 1px solid #eee;}
+  .statuses .status { font-size: 14px; border-bottom: 1px solid #eee; padding: 15px; }
+  .statuses .status:last-child { border-bottom: 0px; }
+  .statuses .name { font-size: 20px; margin-right: 20px; min-width: 100px; font-weight: bold; color: #555; }
+  .statuses .state { font-size: 14px; float: right; width: 80px; color: #45b81d; }
+  .statuses .message { color: #666; }
+  .statuses .timestamp { width: 130px; color: #999; }
+  .statuses .status-error .state { color: red; }
+
+  .powered { text-align: center; margin-top: 10px; color: #aaa; }
+  .powered a { color: #666; }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="statuses">
+      <h1>Status Page</h1>
+      <% @statuses[:results].each do |status| %>
+      <div class="status status-<%= status[:status].downcase %>">
+        <div class="status-heading">
+          <span class="name"><%= status[:name]  %></span>
+          <span class="state"><%= status[:status] %></span>
+        </div>
+        <div class="message"><%= status[:message] %></div>
+      </div>
+      <% end %>
+    </div>
+    <div class="powered">
+      Powered by <a href="https://github.com/lbeder/health-monitor-rails" target="_blank">health-monitor-rails</a>
+    </div>
+  </div>
+</body>

@@ -4,7 +4,7 @@ describe HealthMonitor::Providers::Resque do
   subject { described_class.new(request: test_request) }
 
   describe '#provider_name' do
-    it { expect(described_class.provider_name).to eq('resque') }
+    it { expect(described_class.provider_name).to eq('Resque') }
   end
 
   describe '#check!' do

@@ -34,20 +34,21 @@ describe HealthMonitor::HealthController, :type => :controller do
 
       it 'succesfully checks' do
         expect {
-          get :check
+          get :check, :format => :json
         }.not_to raise_error
 
         expect(response).to be_ok
-        expect(JSON.parse(response.body)).to eq([{
-          'environment_variables' => { 'time' => '1990-01-01 00:00:00' }
-        },
-        {
-          'database' => {
-            'message' => '',
-            'status' => 'OK',
-            'timestamp' => time.to_s(:db)
-          }
-        }])
+        expect(JSON.parse(response.body)).to eq(
+          'results' => [
+            {
+              'name' => 'Database',
+              'message' => '',
+              'status' => 'OK'
+            }
+          ],
+          'status' => 'ok',
+          'timestamp' => time.to_s(:rfc2822)
+        )
       end
     end
 
@@ -59,7 +60,7 @@ describe HealthMonitor::HealthController, :type => :controller do
 
       it 'fails' do
         expect {
-          get :check
+          get :check, :format => :json
         }.not_to raise_error
 
         expect(response).not_to be_ok
@@ -81,27 +82,24 @@ describe HealthMonitor::HealthController, :type => :controller do
     context 'valid environment variables synatx provided' do
       it 'succesfully checks' do
         expect {
-          get :check
+          get :check, :format => :json
         }.not_to raise_error
 
         expect(response).to be_ok
         expect(JSON.parse(response.body)).to eq(
-          [
+          'results' => [
             {
-              'environment_variables' => {
-                'build_number' => '12',
-                'git_sha' => 'example_sha',
-                'time' => '1990-01-01 00:00:00'
-              }
-            },
-            {
-              'database' => {
-                'message' => '',
-                'status' => 'OK',
-                'timestamp' => time.to_s(:db)
-              }
+              'name' => 'Database',
+              'message' => '',
+              'status' => 'OK'
             }
-          ]
+          ],
+          'status' => 'ok',
+          'timestamp' => time.to_s(:rfc2822),
+          'environment_variables' => {
+            'build_number' => '12',
+            'git_sha' => 'example_sha'
+          }
         )
       end
     end
@@ -115,45 +113,95 @@ describe HealthMonitor::HealthController, :type => :controller do
       end
     end
 
-    it 'succesfully checks' do
-      expect {
-        get :check
-      }.not_to raise_error
-
-      expect(response).to be_ok
-      expect(JSON.parse(response.body)).to eq([{
-        'environment_variables' => { 'time' => '1990-01-01 00:00:00' }
-      },
-      {
-        'database' => {
-          'message' => '',
-          'status' => 'OK',
-          'timestamp' => time.to_s(:db)
-        }
-      }])
-    end
-
-    context 'failing' do
-      before do
-        Providers.stub_database_failure
-      end
-
-      it 'should fail' do
+    context 'json rendering' do
+      it 'succesfully checks' do
         expect {
-          get :check
+          get :check, :format => :json
         }.not_to raise_error
 
-        expect(response).to be_error
-        expect(JSON.parse(response.body)).to eq([{
-          'environment_variables' => { 'time' => '1990-01-01 00:00:00' }
-        },
-        {
-          'database' => {
-            'message' => 'Exception',
-            'status' => 'ERROR',
-            'timestamp' => time.to_s(:db)
-          }
-        }])
+        expect(response).to be_ok
+        expect(JSON.parse(response.body)).to eq(
+          'results' => [
+            {
+              'name' => 'Database',
+              'message' => '',
+              'status' => 'OK'
+            }
+          ],
+          'status' => 'ok',
+          'timestamp' => time.to_s(:rfc2822)
+        )
+      end
+
+      context 'failing' do
+        before do
+          Providers.stub_database_failure
+        end
+
+        it 'should fail' do
+          expect {
+            get :check, :format => :json
+          }.not_to raise_error
+
+          expect(response).to be_ok
+          expect(JSON.parse(response.body)).to eq(
+            'results' => [
+              {
+                'name' => 'Database',
+                'message' => 'Exception',
+                'status' => 'ERROR'
+              }
+            ],
+            'status' => 'service_unavailable',
+            'timestamp' => time.to_s(:rfc2822)
+          )
+        end
+      end
+    end
+
+    context 'xml rendering' do
+      it 'succesfully checks' do
+        expect {
+          get :check, :format => :xml
+        }.not_to raise_error
+
+        expect(response).to be_ok
+        expect(parse_xml(response)).to eq(
+          'results' => [
+            {
+              'name' => 'Database',
+              'message' => nil,
+              'status' => 'OK'
+            }
+          ],
+          'status' => 'ok',
+          'timestamp' => time.to_s(:rfc2822)
+        )
+      end
+
+      context 'failing' do
+        before do
+          Providers.stub_database_failure
+        end
+
+        it 'should fail' do
+          expect {
+            get :check, :format => :xml
+          }.not_to raise_error
+
+          expect(response).to be_ok
+          expect(parse_xml(response)).to eq(
+            'results' => [
+              {
+                'name' => 'Database',
+                'message' => 'Exception',
+                'status' => 'ERROR'
+              }
+            ],
+            'status' => 'service_unavailable',
+            'timestamp' => time.to_s(:rfc2822)
+          )
+        end
       end
     end
   end

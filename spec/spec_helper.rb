@@ -21,6 +21,8 @@ Spork.prefork do
   RSpec.configure do |config|
     config.mock_with :rspec
 
+    config.include Capybara::DSL
+
     config.before(:suite) do
       DatabaseCleaner.strategy = :transaction
       DatabaseCleaner.clean_with(:truncation)
@@ -46,4 +48,9 @@ def test_request
   else
     ActionController::TestRequest.new
   end
+end
+
+def parse_xml(response)
+  xml = response.body.gsub('type="symbol"', '')
+  Hash.from_xml(xml)['hash']
 end
