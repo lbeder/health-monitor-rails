@@ -13,6 +13,8 @@ Mounting this gem will add a '/check' route to your application, which can be us
 
 ### HTML Status Page
 
+![alt example](/docs/screenshots/example.png "HTML Status Page")
+
 ### JSON response
 
 ```bash
