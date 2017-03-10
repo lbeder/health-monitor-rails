@@ -11,9 +11,9 @@ module HealthMonitor
       def self.configure
         return unless configurable?
 
-        self.configuration ||= configuration_class.new
+        self.configuration = configuration_class.new
 
-        yield self.configuration if block_given?
+        yield configuration if block_given?
       end
 
       def initialize(request: nil)
