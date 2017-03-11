@@ -11,18 +11,21 @@ require 'json'
 require 'optparse'
 require 'net/http'
 require 'yaml'
+require 'English'
 
-VERSION = '1.0.0'
-MANDATORY_PARAMS = [:uri]
+VERSION = '1.0.0'.freeze
+MANDATORY_PARAMS = [:uri].freeze
 
 # Configure options parser
 options = {}
 
 parser =
   OptionParser.new do |opts|
-    opts.banner = "Usage: check_rails.rb -u uri"
+    opts.banner = 'Usage: check_rails.rb -u uri'
 
-    opts.on('-u', '--uri URI', 'The URI to check (https://nagios:nagios@example.com/check.json)') { |n| options[:uri] = n }
+    opts.on('-u', '--uri URI', 'The URI to check (https://nagios:nagios@example.com/check.json)') do |n|
+      options[:uri] = n
+    end
 
     opts.on_tail('-v', '--version', 'Displays Version') do
       puts "Version : #{VERSION}"
@@ -46,7 +49,7 @@ begin
   missing = MANDATORY_PARAMS.select { |p| options[p].nil? }
   raise OptionParser::MissingArgument.new(missing.join(', ')) unless missing.empty?
 rescue OptionParser::InvalidOption, OptionParser::MissingArgument
-  puts $!.to_s
+  puts $ERROR_INFO.to_s
   puts ''
   puts parser
   exit 1
@@ -60,19 +63,13 @@ req = Net::HTTP::Get.new(uri)
 req.basic_auth(uri.user, uri.password)
 
 # Send request
-res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: (uri.scheme == 'https')) { |http|
-  http.request(req)
-}
+res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: (uri.scheme == 'https')) { |http| http.request(req) }
 
 # Check response
 if res.code == '200'
-  data = JSON.load(res.body)
+  data = JSON.parse(res.body)
 
-  if data['status'] == 'ok'
-    ret_val = 0
-  else
-    ret_val = 2
-  end
+  ret_val = data['status'] == 'ok' ? 0 : 2
 
   puts "Rails application : #{data['status'].upcase}"
   puts ''
