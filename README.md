@@ -220,11 +220,57 @@ HealthMonitor.configure do |config|
 end
 ```
 
+### Monitoring script
+
+A Nagios/Shinken/Icinga/Icinga2 plugin is available in `extra` directory.
+
+It takes one argument : `-u` or `--uri`
+
+```sh
+nicolas@desktop:$ ./check_rails.rb
+missing argument: uri
+
+Usage: check_rails.rb -u uri
+    -u, --uri URI                    The URI to check (https://nagios:nagios@example.com/check.json)
+
+Common options:
+    -v, --version                    Displays Version
+    -h, --help                       Displays Help
+```
+
+And it generates an output with the right status code for your monitoring system :
+
+```sh
+nicolas@desktop:$ ./check_rails.rb -u http://admin:admin@localhost:5000/check.json
+Rails application : OK
+
+Database : OK
+Cache : OK
+Redis : OK
+Sidekiq : OK
+
+nicolas@desktop:$ echo $?
+0
+```
+
+```sh
+nicolas@desktop:$ ./check_rails.rb -u http://admin:admin@localhost:5000/check.json
+Rails application : ERROR
+
+Database : OK
+Cache : OK
+Redis : ERROR (Error connecting to Redis on 127.0.0.1:6379 (Errno::ECONNREFUSED))
+Sidekiq : ERROR (Error connecting to Redis on 127.0.0.1:6379 (Errno::ECONNREFUSED))
+
+nicolas@desktop:$ echo $?
+2
+```
+
 ## License
 
 The MIT License (MIT)
 
-Copyright (c) 2014
+Copyright (c) 2017
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
