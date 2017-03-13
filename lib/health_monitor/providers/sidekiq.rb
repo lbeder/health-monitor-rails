@@ -30,7 +30,7 @@ module HealthMonitor
         private
 
         def configuration_class
-          Configuration
+          ::HealthMonitor::Providers::Sidekiq::Configuration
         end
       end
 

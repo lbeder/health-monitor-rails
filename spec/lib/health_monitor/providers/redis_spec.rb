@@ -1,6 +1,12 @@
 require 'spec_helper'
 
 describe HealthMonitor::Providers::Redis do
+  describe HealthMonitor::Providers::Redis::Configuration do
+    describe 'defaults' do
+      it { expect(described_class.new.url).to eq(HealthMonitor::Providers::Redis::Configuration::DEFAULT_URL) }
+    end
+  end
+
   subject { described_class.new(request: test_request) }
 
   describe '#provider_name' do
@@ -28,7 +34,19 @@ describe HealthMonitor::Providers::Redis do
   end
 
   describe '#configurable?' do
-    it { expect(described_class).not_to be_configurable }
+    it { expect(described_class).to be_configurable }
+  end
+
+  describe '#configure' do
+    it 'url can be configured' do
+      url = 'redis://user:password@fake.redis.com:9121/'
+
+      expect {
+        described_class.configure do |config|
+          config.url = url
+        end
+      }.to change { described_class.configuration.url }.to(url)
+    end
   end
 
   describe '#key' do

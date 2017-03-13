@@ -155,11 +155,24 @@ HealthMonitor.configure do |config|
 end
 ```
 
+```ruby
+HealthMonitor.configure do |config|
+  config.redis.configure do |redis_config|
+    redis_config.url = 'redis://user:pass@example.redis.com:90210/'
+  end
+end
+```
+
 The currently supported settings are:
 
 #### Sidekiq
 
 * `latency`: the latency (in seconds) of a queue (now - when the oldest job was enqueued) which is considered unhealthy (the default is 30 seconds, but larger processing queue should have a larger latency value).
+
+#### Redis
+
+* `url`: the url used to connect to your Redis instance - note, this is an optional configuration and will use the default connection if not specified
+
 
 ### Adding a custom provider
 It's also possible to add custom health check providers suited for your needs (of course, it's highly appreciated and encouraged if you'd contribute useful providers to the project).
