@@ -113,7 +113,7 @@ You can mount this inside your app routes by adding this to config/routes.rb:
 mount HealthMonitor::Engine, at: '/'
 ```
 
-## Supported service providers
+## Supported Service Providers
 The following services are currently supported:
 * DB
 * Cache
@@ -123,7 +123,7 @@ The following services are currently supported:
 
 ## Configuration
 
-### Adding providers
+### Adding Providers
 By default, only the database check is enabled. You can add more service providers by explicitly enabling them via an initializer:
 
 ```ruby
@@ -143,7 +143,7 @@ HealthMonitor.configure do |config|
 end
 ```
 
-### Providers configuration
+### Provider Configuration
 
 Some of the providers can also accept additional configuration:
 
@@ -174,7 +174,7 @@ The currently supported settings are:
 * `url`: the url used to connect to your Redis instance - note, this is an optional configuration and will use the default connection if not specified
 
 
-### Adding a custom provider
+### Adding a Custom Provider
 It's also possible to add custom health check providers suited for your needs (of course, it's highly appreciated and encouraged if you'd contribute useful providers to the project).
 
 In order to add a custom provider, you'd need to:
@@ -196,7 +196,7 @@ HealthMonitor.configure do |config|
 end
 ```
 
-### Adding a custom error callback
+### Adding a Custom Error Callback
 If you need to perform any additional error handling (for example, for additional error reporting), you can configure a custom error callback:
 
 ```ruby
@@ -209,7 +209,7 @@ HealthMonitor.configure do |config|
 end
 ```
 
-### Adding authentication credentials
+### Adding Authentication Credentials
 By default, the `/check` endpoint is not authenticated and is available to any user. You can authenticate using HTTP Basic Auth by providing authentication credentials:
 
 ```ruby
@@ -221,7 +221,7 @@ HealthMonitor.configure do |config|
 end
 ```
 
-### Adding environment variables
+### Adding Environment Variables
 By default, environment variables is `nil`, so if you'd want to include additional parameters in the results JSON, all you need is to provide a `Hash` with your custom environment variables:
 
 ```ruby
@@ -233,7 +233,7 @@ HealthMonitor.configure do |config|
 end
 ```
 
-### Monitoring script
+### Monitoring Script
 
 A Nagios/Shinken/Icinga/Icinga2 plugin is available in `extra` directory.
 
