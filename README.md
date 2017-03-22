@@ -15,7 +15,7 @@ Mounting this gem will add a '/check' route to your application, which can be us
 
 ![alt example](/docs/screenshots/example.png "HTML Status Page")
 
-### JSON response
+### JSON Response
 
 ```bash
 >> curl -s http://localhost:3000/check.json | json_pp
@@ -50,7 +50,7 @@ Mounting this gem will add a '/check' route to your application, which can be us
 }
 ```
 
-### XML response
+### XML Response
 
 ```bash
 >> curl -s http://localhost:3000/check.xml
