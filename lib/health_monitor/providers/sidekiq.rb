@@ -35,7 +35,7 @@ module HealthMonitor
       end
 
       def check_workers!
-        ::Sidekiq::Workers.new.size
+        ::Sidekiq::Workers.new.size > 0
       end
 
       def check_latency!
