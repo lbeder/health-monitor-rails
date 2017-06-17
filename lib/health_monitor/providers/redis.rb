@@ -15,14 +15,6 @@ module HealthMonitor
         end
       end
 
-      class << self
-        private
-
-        def configuration_class
-          ::HealthMonitor::Providers::Redis::Configuration
-        end
-      end
-
       def check!
         time = Time.now.to_s(:rfc2822)
 
@@ -38,6 +30,10 @@ module HealthMonitor
       end
 
       private
+
+      def configuration_class
+        ::HealthMonitor::Providers::Redis::Configuration
+      end
 
       def key
         @key ||= ['health', request.try(:remote_ip)].join(':')

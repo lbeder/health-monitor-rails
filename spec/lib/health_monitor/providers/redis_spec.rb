@@ -10,7 +10,7 @@ describe HealthMonitor::Providers::Redis do
   subject { described_class.new(request: test_request) }
 
   describe '#provider_name' do
-    it { expect(described_class.provider_name).to eq('Redis') }
+    it { expect(subject.provider_name).to eq('Redis') }
   end
 
   describe '#check!' do
@@ -34,17 +34,30 @@ describe HealthMonitor::Providers::Redis do
   end
 
   describe '#configurable?' do
-    it { expect(described_class).to be_configurable }
+    it { expect(subject).to be_configurable }
   end
 
   describe '#configure' do
     let(:url) { 'redis://user:password@fake.redis.com:9121/' }
+
     it 'url can be configured' do
       expect {
-        described_class.configure do |config|
+        subject.configure do |config|
           config.url = url
         end
-      }.to change { described_class.configuration.url }.to(url)
+      }.to change { subject.configuration.url }.to(url)
+    end
+
+    it 'url configuration is persistent' do
+      expect {
+        subject.configure do |config|
+          config.url = url
+        end
+
+        HealthMonitor::Providers::Sidekiq.new(request: test_request).configure do |config|
+          config.latency = 123
+        end
+      }.to change { subject.configuration.url }.to(url)
     end
   end
 

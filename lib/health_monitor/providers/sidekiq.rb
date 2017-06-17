@@ -26,12 +26,8 @@ module HealthMonitor
 
       private
 
-      class << self
-        private
-
-        def configuration_class
-          ::HealthMonitor::Providers::Sidekiq::Configuration
-        end
+      def configuration_class
+        ::HealthMonitor::Providers::Sidekiq::Configuration
       end
 
       def check_workers!
