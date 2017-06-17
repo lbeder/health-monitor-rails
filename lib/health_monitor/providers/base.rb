@@ -32,8 +32,7 @@ module HealthMonitor
       end
 
       # @abstract
-      def configuration_class
-      end
+      def configuration_class; end
     end
   end
 end
