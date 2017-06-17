@@ -76,9 +76,9 @@ describe HealthMonitor::Providers::Sidekiq do
   end
 
   describe '#configure' do
-    it 'latency can be configured' do
-      latency = 123
+    let(:latency) { 123 }
 
+    it 'latency can be configured' do
       expect {
         described_class.configure do |config|
           config.latency = latency
