@@ -38,9 +38,8 @@ describe HealthMonitor::Providers::Redis do
   end
 
   describe '#configure' do
+    let(:url) { 'redis://user:password@fake.redis.com:9121/' }
     it 'url can be configured' do
-      url = 'redis://user:password@fake.redis.com:9121/'
-
       expect {
         described_class.configure do |config|
           config.url = url
