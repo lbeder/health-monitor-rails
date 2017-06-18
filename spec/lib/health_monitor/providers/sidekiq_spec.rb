@@ -83,7 +83,7 @@ describe HealthMonitor::Providers::Sidekiq do
         described_class.configure do |config|
           config.latency = latency
         end
-      }.to change { described_class.configuration.latency }.to(latency)
+      }.to change { subject.configuration.latency }.to(latency)
     end
   end
 end

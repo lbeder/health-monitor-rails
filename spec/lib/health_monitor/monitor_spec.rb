@@ -24,6 +24,15 @@ describe HealthMonitor do
           .to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis]))
       end
 
+      it 'configures a single provider with custom configuration' do
+        expect {
+          subject.configure(&:redis).configure do |redis_config|
+            redis_config.url = 'redis://user:pass@example.redis.com:90210/'
+          end
+        }.to change { HealthMonitor.configuration.providers }
+          .to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis]))
+      end
+
       it 'configures a multiple providers' do
         expect {
           subject.configure do |config|

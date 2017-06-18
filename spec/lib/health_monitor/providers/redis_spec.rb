@@ -44,7 +44,19 @@ describe HealthMonitor::Providers::Redis do
         described_class.configure do |config|
           config.url = url
         end
-      }.to change { described_class.configuration.url }.to(url)
+      }.to change { subject.configuration.url }.to(url)
+    end
+
+    it 'url configuration is persistent' do
+      expect {
+        described_class.configure do |config|
+          config.url = url
+        end
+
+        HealthMonitor::Providers::Sidekiq.configure do |config|
+          config.latency = 123
+        end
+      }.to change { subject.configuration.url }.to(url)
     end
   end
 
