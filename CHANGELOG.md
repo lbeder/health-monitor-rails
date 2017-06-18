@@ -1,3 +1,7 @@
+## 7.2.1 (2017-06-18)
+
+  - Fixed configuration memoization issue (#19).
+
 ## 7.1.0 (2017-03-13)
 
   - Added support for configuring Redis' URL (thanks to @ETetzlaff).
