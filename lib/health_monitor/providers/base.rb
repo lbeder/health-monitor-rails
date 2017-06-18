@@ -22,7 +22,7 @@ module HealthMonitor
       end
 
       def configuration
-        self.class.instance_variable_get("@configuration")
+        self.class.instance_variable_get('@configuration')
       end
 
       # @abstract
