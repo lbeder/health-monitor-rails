@@ -22,7 +22,7 @@ describe HealthMonitor::Providers::Sidekiq do
   end
 
   describe '#provider_name' do
-    it { expect(subject.provider_name).to eq('Sidekiq') }
+    it { expect(described_class.provider_name).to eq('Sidekiq') }
   end
 
   describe '#check!' do
@@ -72,7 +72,7 @@ describe HealthMonitor::Providers::Sidekiq do
   end
 
   describe '#configurable?' do
-    it { expect(subject).to be_configurable }
+    it { expect(described_class).to be_configurable }
   end
 
   describe '#configure' do
@@ -80,10 +80,10 @@ describe HealthMonitor::Providers::Sidekiq do
 
     it 'latency can be configured' do
       expect {
-        subject.configure do |config|
+        described_class.configure do |config|
           config.latency = latency
         end
-      }.to change { subject.configuration.latency }.to(latency)
+      }.to change { described_class.configuration.latency }.to(latency)
     end
   end
 end

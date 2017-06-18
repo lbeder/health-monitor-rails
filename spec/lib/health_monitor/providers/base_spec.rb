@@ -12,7 +12,7 @@ describe HealthMonitor::Providers::Base do
   end
 
   describe '#provider_name' do
-    it { expect(subject.provider_name).to eq('Base') }
+    it { expect(described_class.provider_name).to eq('Base') }
   end
 
   describe '#check!' do
@@ -24,12 +24,12 @@ describe HealthMonitor::Providers::Base do
   end
 
   describe '#configurable?' do
-    it { expect(subject).not_to be_configurable }
+    it { expect(described_class).not_to be_configurable }
   end
 
   describe '#configuration_class' do
     it 'abstract' do
-      expect(subject.send(:configuration_class)).to be_nil
+      expect(described_class.send(:configuration_class)).to be_nil
     end
   end
 end

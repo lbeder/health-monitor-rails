@@ -2,16 +2,16 @@ module HealthMonitor
   module Providers
     class Base
       attr_reader :request
-      attr_accessor :configuration
+      cattr_accessor :configuration
 
-      def provider_name
-        @name ||= self.class.name.demodulize
+      def self.provider_name
+        @name ||= name.demodulize
       end
 
-      def configure
+      def self.configure
         return unless configurable?
 
-        @configuration = configuration_class.new
+        self.configuration = configuration_class.new
 
         yield configuration if block_given?
       end
@@ -19,7 +19,7 @@ module HealthMonitor
       def initialize(request: nil)
         @request = request
 
-        configure
+        self.class.configure
       end
 
       # @abstract
@@ -27,12 +27,13 @@ module HealthMonitor
         raise NotImplementedError
       end
 
-      def configurable?
+      def self.configurable?
         configuration_class
       end
 
       # @abstract
-      def configuration_class; end
+      def self.configuration_class
+      end
     end
   end
 end

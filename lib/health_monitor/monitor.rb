@@ -33,7 +33,7 @@ module HealthMonitor
     monitor.check!
 
     {
-      name: monitor.provider_name,
+      name: provider.provider_name,
       message: '',
       status: STATUSES[:ok]
     }
@@ -41,7 +41,7 @@ module HealthMonitor
     configuration.error_callback.call(e) if configuration.error_callback
 
     {
-      name: monitor.provider_name,
+      name: provider.provider_name,
       message: e.message,
       status: STATUSES[:error]
     }

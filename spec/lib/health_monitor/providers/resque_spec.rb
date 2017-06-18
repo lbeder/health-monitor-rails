@@ -4,7 +4,7 @@ describe HealthMonitor::Providers::Resque do
   subject { described_class.new(request: test_request) }
 
   describe '#provider_name' do
-    it { expect(subject.provider_name).to eq('Resque') }
+    it { expect(described_class.provider_name).to eq('Resque') }
   end
 
   describe '#check!' do
@@ -28,6 +28,6 @@ describe HealthMonitor::Providers::Resque do
   end
 
   describe '#configurable?' do
-    it { expect(subject).not_to be_configurable }
+    it { expect(described_class).not_to be_configurable }
   end
 end
