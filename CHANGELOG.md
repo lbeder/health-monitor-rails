@@ -1,3 +1,7 @@
+## 7.2.2 (2017-06-21)
+
+  - Improved fix to issue (#19).
+
 ## 7.2.1 (2017-06-18)
 
   - Fixed configuration memoization issue (#19).
