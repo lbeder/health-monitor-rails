@@ -76,6 +76,10 @@ describe HealthMonitor::Providers::Sidekiq do
   end
 
   describe '#configure' do
+    before do
+      described_class.configure
+    end
+
     let(:latency) { 123 }
 
     it 'latency can be configured' do
@@ -83,7 +87,7 @@ describe HealthMonitor::Providers::Sidekiq do
         described_class.configure do |config|
           config.latency = latency
         end
-      }.to change { subject.configuration.latency }.to(latency)
+      }.to change { described_class.new.configuration.latency }.to(latency)
     end
   end
 end

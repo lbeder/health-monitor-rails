@@ -2,6 +2,7 @@ module HealthMonitor
   module Providers
     class Base
       attr_reader :request
+      attr_accessor :configuration
 
       def self.provider_name
         @name ||= name.demodulize
@@ -10,19 +11,16 @@ module HealthMonitor
       def self.configure
         return unless configurable?
 
-        @configuration = configuration_class.new
+        @global_configuration = configuration_class.new
 
-        yield @configuration if block_given?
+        yield @global_configuration if block_given?
       end
 
       def initialize(request: nil)
         @request = request
 
-        self.class.configure
-      end
-
-      def configuration
-        self.class.instance_variable_get('@configuration')
+        return unless self.class.configurable?
+        self.configuration = self.class.instance_variable_get('@global_configuration')
       end
 
       # @abstract
