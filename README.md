@@ -168,6 +168,7 @@ The currently supported settings are:
 #### Sidekiq
 
 * `latency`: the latency (in seconds) of a queue (now - when the oldest job was enqueued) which is considered unhealthy (the default is 30 seconds, but larger processing queue should have a larger latency value).
+* `error_latency` & `warning_latency` : optionally, you can provide both the error latency and the warning latency (still in seconds) to provide divide between a concerning sidekiq queue, and one that should instill panic.
 
 #### Redis
 
@@ -208,6 +209,21 @@ HealthMonitor.configure do |config|
   end
 end
 ```
+
+### Adding a Warning threshold
+If you want to be alerted to something concerning, but don't consider it an error you can raise an optional inherited exception to get back a warning:
+
+```ruby
+class ExampleMonitor < HealthMonitor::Providers::Base
+  class ExampleWarning < HealthMonitor::HealthWarning; end
+  class ExampleError < HealthMonitor::HealthError; end
+  def check!
+    raise ExampleError if things_are_bad
+    raise ExampleWarning if things_are_ok_but_not_great
+  end
+end
+```
+
 
 ### Adding Authentication Credentials
 By default, the `/check` endpoint is not authenticated and is available to any user. You can authenticate using HTTP Basic Auth by providing authentication credentials:
