@@ -57,7 +57,7 @@ describe HealthMonitor::Providers::Sidekiq do
         end
       end
       context 'sidekiq warns' do
-        before do
+        before(:each) do
           Providers.stub_sidekiq_latency_warning
           described_class.configure do |config|
             config.warning_latency = 10
