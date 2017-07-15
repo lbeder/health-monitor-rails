@@ -174,8 +174,6 @@ describe HealthMonitor do
         end
       end
 
-      
-
       context 'both redis and db fail' do
         before do
           Providers.stub_database_failure

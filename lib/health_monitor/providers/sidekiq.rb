@@ -15,22 +15,24 @@ module HealthMonitor
         def initialize
           @latency = DEFAULT_LATENCY_TIMEOUT
         end
+
         def error_latency
           @error_latency || @latency
         end
 
+        def warn_latency
+          @warning_latency || Float::INFINITY
+        end
       end
 
       def check!
         check_workers!
         check_latency!
         check_redis!
+      rescue HealthWarning => e
+        raise e
       rescue Exception => e
-        if e.class.superclass == HealthWarning
-          raise e
-        else 
-          raise SidekiqException.new(e.message) 
-        end
+        raise SidekiqException.new(e.message)
       end
 
       private
@@ -49,15 +51,15 @@ module HealthMonitor
 
       def check_latency!
         latency = ::Sidekiq::Queue.new.latency
-
-        raise LatencyError.new(
-          "latency #{latency} is greater than #{configuration.error_latency}"
-          ) if latency > configuration.error_latency
-        raise LatencyWarning.new(
-          "latency #{latency} is greater than #{configuration.warning_latency}"
-          ) if configuration.warning_latency and latency > configuration.warning_latency
-
-        
+        if latency > configuration.error_latency
+          raise LatencyError.new(
+            "latency #{latency} is greater than #{configuration.error_latency}"
+          )
+        elsif latency > configuration.warn_latency
+          raise LatencyWarning.new(
+            "latency #{latency} is greater than #{configuration.warn_latency}"
+          )
+        end
       end
 
       def check_redis!

@@ -1,12 +1,12 @@
 require 'health_monitor/configuration'
 
 module HealthMonitor
-class HealthError < StandardError; end
-class HealthWarning < StandardError; end
+  class HealthError < StandardError; end
+  class HealthWarning < StandardError; end
   STATUSES = {
     ok: 'OK',
     error: 'ERROR',
-    warn: 'Warning'
+    warn: 'WARN'
   }.freeze
 
   extend self
@@ -34,28 +34,24 @@ class HealthWarning < StandardError; end
   def provider_result(provider, request)
     monitor = provider.new(request: request)
     monitor.check!
-
     {
       name: provider.provider_name,
       message: '',
       status: STATUSES[:ok]
     }
+  rescue HealthWarning => e
+    {
+      name: provider.provider_name,
+      message: e.message,
+      status: STATUSES[:warn]
+    }
   rescue => e
-    
     configuration.error_callback.call(e) if configuration.error_callback
-    if e.class.superclass == HealthWarning
-      {
-        name: provider.provider_name,
-        message: e.message,
-        status: STATUSES[:warn]
-      } 
-    else
-      {
-        name: provider.provider_name,
-        message: e.message,
-        status: STATUSES[:error]
-      } 
-    end
+    {
+      name: provider.provider_name,
+      message: e.message,
+      status: STATUSES[:error]
+    }
   end
 end
 
