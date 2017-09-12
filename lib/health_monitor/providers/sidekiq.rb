@@ -17,6 +17,7 @@ module HealthMonitor
       end
 
       def check!
+        check_availability!
         check_workers!
         check_latency!
         check_redis!
@@ -52,6 +53,13 @@ module HealthMonitor
         else
           ::Sidekiq.redis(&:info)
         end
+      end
+
+      def check_availability!
+        process_set = ::Sidekiq::ProcessSet.new
+        pids = process_set.map {|p| p['pid']}
+        return if pids.present?
+        raise 'Sidekiq is not running'
       end
     end
   end
