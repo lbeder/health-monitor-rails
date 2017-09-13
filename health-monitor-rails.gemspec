@@ -32,6 +32,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'timecop'
   s.add_development_dependency 'rediska'
   s.add_development_dependency 'sidekiq', '>= 3.0'
+  s.add_development_dependency 'hutch'
   s.add_development_dependency 'resque'
   s.add_development_dependency 'capybara'
   s.add_development_dependency 'capybara-screenshot'
