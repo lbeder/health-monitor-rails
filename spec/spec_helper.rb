@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'spork'
 require 'sidekiq'
+require 'hutch'
 
 require 'coveralls'
 Coveralls.wear!

@@ -33,6 +33,10 @@ module Providers
     allow(Sidekiq).to receive(:redis).and_raise(Redis::CannotConnectError)
   end
 
+  def stub_hutch_failure
+    allow(Hutch).to receive(:connect).and_raise(Exception)
+  end
+
   def stub_memcached_failure
     allow(ActiveSupport::Cache).to receive(:lookup_store).and_raise(Exception)
   end
