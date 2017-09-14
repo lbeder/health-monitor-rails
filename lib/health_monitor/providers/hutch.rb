@@ -1,4 +1,5 @@
 require 'health_monitor/providers/base'
+require 'hutch'
 
 module HealthMonitor
   module Providers

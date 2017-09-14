@@ -34,7 +34,7 @@ module Providers
   end
 
   def stub_hutch_failure
-    allow(Hutch).to receive(:connect).and_raise(Exception)
+    allow(Hutch).to receive(:connect).and_raise(Hutch::ConnectionError)
   end
 
   def stub_memcached_failure
