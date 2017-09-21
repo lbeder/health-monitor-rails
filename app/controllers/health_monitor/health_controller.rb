@@ -14,7 +14,7 @@ module HealthMonitor
       respond_to do |format|
         format.html
         format.json do
-          render json: statuses
+          render json: statuses.to_json
         end
         format.xml do
           render xml: statuses
