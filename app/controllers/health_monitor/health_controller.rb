@@ -17,7 +17,7 @@ module HealthMonitor
           render json: statuses.to_json
         end
         format.xml do
-          render xml: statuses
+          render xml: statuses.to_xml
         end
       end
     end
