@@ -1,3 +1,7 @@
+## 7.2.3 (2017-06-22)
+
+  - Improved compatibility with `active_model_serializers` (thanks to @tsaifi9).
+
 ## 7.2.2 (2017-06-21)
 
   - Improved fix to issue (#19).
