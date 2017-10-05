@@ -6,7 +6,7 @@ module HealthMonitor
 
     class Memcached < Base
       def check!
-        return unless ActiveSupport::Cache.lookup_store(:mem_cache_store).stats.values.include? nil
+        return unless Rails.cache.stats.values.include? nil
 
         raise 'Memcached is not running'
       rescue Exception => e
