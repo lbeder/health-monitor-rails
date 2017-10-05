@@ -8,7 +8,7 @@ module HealthMonitor
       def check!
         return unless Rails.cache.stats.values.include? nil
 
-        # raise 'Memcached is not running'
+        raise 'Memcached is not running'
       rescue Exception => e
         raise MemcachedException.new(e.message)
       end
