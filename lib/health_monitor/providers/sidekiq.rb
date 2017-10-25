@@ -18,6 +18,7 @@ module HealthMonitor
 
       def check!
         check_workers!
+        check_processes!
         check_latency!
         check_redis!
       rescue Exception => e
@@ -36,6 +37,13 @@ module HealthMonitor
 
       def check_workers!
         ::Sidekiq::Workers.new.size
+      end
+
+      def check_processes!
+        sidekiq_stats = ::Sidekiq::Stats.new
+        if sidekiq_stats.processes_size == 0
+          raise 'Sidekiq alive processes number is 0!'
+        end
       end
 
       def check_latency!

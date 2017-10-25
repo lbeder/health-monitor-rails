@@ -26,6 +26,10 @@ describe HealthMonitor::Providers::Sidekiq do
   end
 
   describe '#check!' do
+    before do
+      Providers.stub_sidekiq
+    end
+
     it 'succesfully checks' do
       expect {
         subject.check!
@@ -36,6 +40,18 @@ describe HealthMonitor::Providers::Sidekiq do
       context 'workers' do
         before do
           Providers.stub_sidekiq_workers_failure
+        end
+
+        it 'fails check!' do
+          expect {
+            subject.check!
+          }.to raise_error(HealthMonitor::Providers::SidekiqException)
+        end
+      end
+
+      context 'processes' do
+        before do
+          Providers.stub_sidekiq_no_processes_failure
         end
 
         it 'fails check!' do

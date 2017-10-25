@@ -21,8 +21,16 @@ module Providers
     allow(Resque).to receive(:info).and_raise(Exception)
   end
 
+  def stub_sidekiq
+    allow_any_instance_of(Sidekiq::Stats).to receive(:processes_size).and_return(10)
+  end
+
   def stub_sidekiq_workers_failure
     allow_any_instance_of(Sidekiq::Workers).to receive(:size).and_raise(Exception)
+  end
+
+  def stub_sidekiq_no_processes_failure
+    allow_any_instance_of(Sidekiq::Stats).to receive(:processes_size).and_return(0)
   end
 
   def stub_sidekiq_latency_failure
