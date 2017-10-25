@@ -41,7 +41,7 @@ module HealthMonitor
 
       def check_processes!
         sidekiq_stats = ::Sidekiq::Stats.new
-        if sidekiq_stats.processes_size == 0
+        if sidekiq_stats.processes_size.zero?
           raise 'Sidekiq alive processes number is 0!'
         end
       end
