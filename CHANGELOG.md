@@ -1,3 +1,7 @@
+## 7.3.0 (2017-10-25)
+
+  - Added Sidekiq live process check (thanks to @noto-alex-j).
+
 ## 7.2.3 (2017-06-22)
 
   - Improved compatibility with `active_model_serializers` (thanks to @tsaifi9).
