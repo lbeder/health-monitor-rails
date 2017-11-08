@@ -38,6 +38,6 @@ module Providers
   end
 
   def stub_memcached_failure
-    allow(ActiveSupport::Cache).to receive(:lookup_store).and_raise(Exception)
+    allow_any_instance_of(Dalli::Client).to receive(:get).and_raise(Exception)
   end
 end
