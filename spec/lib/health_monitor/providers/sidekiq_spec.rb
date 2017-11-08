@@ -26,10 +26,16 @@ describe HealthMonitor::Providers::Sidekiq do
   end
 
   describe '#check!' do
-    it 'succesfully checks' do
-      expect {
-        subject.check!
-      }.not_to raise_error
+    context 'sidekiq is running' do
+      before do
+        Providers.stub_sidekiq_is_running
+      end
+
+      it 'succesfully checks' do
+        expect {
+          subject.check!
+        }.not_to raise_error
+      end
     end
 
     context 'failing' do
