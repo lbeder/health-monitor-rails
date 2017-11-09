@@ -38,6 +38,10 @@ module Providers
   end
 
   def stub_memcached_failure
-    allow(ActiveSupport::Cache).to receive(:lookup_store).and_raise(Exception)
+    allow_any_instance_of(Dalli::Client).to receive(:get).and_raise(Exception)
+  end
+
+  def stub_sidekiq_is_running
+    allow_any_instance_of(Sidekiq::ProcessSet).to receive(:map).and_return([1])
   end
 end
