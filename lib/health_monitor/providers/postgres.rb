@@ -1,6 +1,4 @@
 require 'health_monitor/providers/base'
-# require 'mongo'
-# Mongo::Logger.logger.level = ::Logger::DEBUG
 
 module HealthMonitor
   module Providers
