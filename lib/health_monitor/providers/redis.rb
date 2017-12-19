@@ -34,7 +34,7 @@ module HealthMonitor
       rescue Exception => e
         raise RedisException.new(e.message)
       ensure
-        redis.client.disconnect
+        redis.close
       end
 
       private
