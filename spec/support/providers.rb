@@ -37,6 +37,10 @@ module Providers
     allow_any_instance_of(Sidekiq::Queue).to receive(:latency).and_return(Float::INFINITY)
   end
 
+  def stub_sidekiq_latency_warning
+    allow_any_instance_of(Sidekiq::Queue).to receive(:latency).and_return(29)
+  end
+
   def stub_sidekiq_redis_failure
     allow(Sidekiq).to receive(:redis).and_raise(Redis::CannotConnectError)
   end

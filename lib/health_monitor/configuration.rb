@@ -2,7 +2,7 @@ module HealthMonitor
   class Configuration
     PROVIDERS = [:cache, :database, :redis, :resque, :sidekiq].freeze
 
-    attr_accessor :error_callback, :basic_auth_credentials, :environment_variables
+    attr_accessor :error_callback, :basic_auth_credentials, :environment_variables, :warning_callback
     attr_reader :providers
 
     def initialize

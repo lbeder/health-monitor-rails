@@ -3,16 +3,25 @@ require 'sidekiq/api'
 
 module HealthMonitor
   module Providers
-    class SidekiqException < StandardError; end
-
+    class SidekiqException < HealthError; end
+    class LatencyError < HealthError; end
+    class LatencyWarning < HealthWarning; end
     class Sidekiq < Base
       class Configuration
         DEFAULT_LATENCY_TIMEOUT = 30
 
-        attr_accessor :latency
+        attr_accessor :error_latency, :warning_latency, :latency
 
         def initialize
           @latency = DEFAULT_LATENCY_TIMEOUT
+        end
+
+        def error_latency
+          @error_latency || @latency
+        end
+
+        def warn_latency
+          @warning_latency || Float::INFINITY
         end
       end
 
@@ -21,6 +30,8 @@ module HealthMonitor
         check_processes!
         check_latency!
         check_redis!
+      rescue HealthWarning => e
+        raise e
       rescue Exception => e
         raise SidekiqException.new(e.message)
       end
@@ -48,10 +59,15 @@ module HealthMonitor
 
       def check_latency!
         latency = ::Sidekiq::Queue.new.latency
-
-        return unless latency > configuration.latency
-
-        raise "latency #{latency} is greater than #{configuration.latency}"
+        if latency > configuration.error_latency
+          raise LatencyError.new(
+            "latency #{latency} is greater than #{configuration.error_latency}"
+          )
+        elsif latency > configuration.warn_latency
+          raise LatencyWarning.new(
+            "latency #{latency} is greater than #{configuration.warn_latency}"
+          )
+        end
       end
 
       def check_redis!
