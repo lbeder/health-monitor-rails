@@ -27,8 +27,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'pry'
   s.add_development_dependency 'coveralls'
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'rainbow', '~> 2.1.0' # Work around https://github.com/sickill/rainbow/issues/44
-  s.add_development_dependency 'rubocop', '~> 0.46.0'
+  s.add_development_dependency 'rubocop'
   s.add_development_dependency 'timecop'
   s.add_development_dependency 'rediska'
   s.add_development_dependency 'sidekiq', '>= 3.0'
