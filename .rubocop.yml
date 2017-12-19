@@ -6,12 +6,18 @@ Metrics/LineLength:
 
 Metrics/MethodLength:
   Max: 20
+  Exclude:
+    - 'spec/**/*'
 
 Metrics/AbcSize:
   Max: 20
+  Exclude:
+    - 'spec/**/*'
 
 Metrics/BlockLength:
   Max: 30
+  Exclude:
+    - 'spec/**/*'
 
 Style/SignalException:
   EnforcedStyle: only_raise
@@ -19,22 +25,22 @@ Style/SignalException:
 Style/RaiseArgs:
   Enabled: false
 
-Style/AlignParameters:
+Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
 Style/HashSyntax:
   UseHashRocketsWithSymbolValues: true
 
-Style/AlignHash:
+Layout/AlignHash:
   Enabled: false
 
-Style/AlignArray:
+Layout/AlignArray:
   Enabled: false
 
-Style/MultilineOperationIndentation:
+Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
 
-Style/IndentHash:
+Layout/IndentHash:
   EnforcedStyle: consistent
 
 Style/Documentation:
@@ -45,6 +51,9 @@ Style/BlockDelimiters:
     - 'spec/**/*'
 
 Style/ModuleFunction:
+  Enabled: false
+
+Style/ExtendSelf:
   Enabled: false
 
 Lint/RescueException:

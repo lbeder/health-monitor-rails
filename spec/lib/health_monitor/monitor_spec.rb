@@ -54,7 +54,7 @@ describe HealthMonitor do
 
     describe 'error_callback' do
       it 'configures' do
-        error_callback = proc {}
+        error_callback = proc{}
 
         expect {
           subject.configure do |config|
@@ -84,7 +84,7 @@ describe HealthMonitor do
     context 'default providers' do
       it 'succesfully checks' do
         expect(subject.check(request: request)).to eq(
-          :results => [
+          results: [
             {
               name: 'Database',
               message: '',
@@ -107,7 +107,7 @@ describe HealthMonitor do
 
       it 'succesfully checks' do
         expect(subject.check(request: request)).to eq(
-          :results => [
+          results: [
             {
               name: 'Database',
               message: '',
@@ -131,7 +131,7 @@ describe HealthMonitor do
 
         it 'fails check' do
           expect(subject.check(request: request)).to eq(
-            :results => [
+            results: [
               {
                 name: 'Database',
                 message: '',
@@ -156,7 +156,7 @@ describe HealthMonitor do
 
         it 'succesfully checks' do
           expect(subject.check(request: request)).to eq(
-            :results => [
+            results: [
               {
                 name: 'Database',
                 message: '',
@@ -182,7 +182,7 @@ describe HealthMonitor do
 
         it 'fails check' do
           expect(subject.check(request: request)).to eq(
-            :results => [
+            results: [
               {
                 name: 'Database',
                 message: 'Exception',
@@ -225,7 +225,7 @@ describe HealthMonitor do
 
       it 'calls error_callback' do
         expect(subject.check(request: request)).to eq(
-          :results => [
+          results: [
             {
               name: 'Database',
               message: 'Exception',
