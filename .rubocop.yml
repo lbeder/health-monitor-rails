@@ -28,9 +28,6 @@ Style/RaiseArgs:
 Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
-Style/HashSyntax:
-  UseHashRocketsWithSymbolValues: true
-
 Layout/AlignHash:
   Enabled: false
 

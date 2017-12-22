@@ -1,6 +1,6 @@
 module HealthMonitor
   class HealthController < ActionController::Base
-    protect_from_forgery :with => :exception
+    protect_from_forgery with: :exception
 
     if Rails.version.starts_with? '3'
       before_filter :authenticate_with_basic_auth

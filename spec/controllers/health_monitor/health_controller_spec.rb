@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'timecop'
 require './app/controllers/health_monitor/health_controller'
 
-describe HealthMonitor::HealthController, :type => :controller do
+describe HealthMonitor::HealthController, type: :controller do
   routes { HealthMonitor::Engine.routes }
 
   let(:time) { Time.local(1990) }
@@ -34,7 +34,7 @@ describe HealthMonitor::HealthController, :type => :controller do
 
       it 'succesfully checks' do
         expect {
-          get :check, :format => :json
+          get :check, format: :json
         }.not_to raise_error
 
         expect(response).to be_ok
@@ -60,7 +60,7 @@ describe HealthMonitor::HealthController, :type => :controller do
 
       it 'fails' do
         expect {
-          get :check, :format => :json
+          get :check, format: :json
         }.not_to raise_error
 
         expect(response).not_to be_ok
@@ -82,7 +82,7 @@ describe HealthMonitor::HealthController, :type => :controller do
     context 'valid environment variables synatx provided' do
       it 'succesfully checks' do
         expect {
-          get :check, :format => :json
+          get :check, format: :json
         }.not_to raise_error
 
         expect(response).to be_ok
@@ -116,7 +116,7 @@ describe HealthMonitor::HealthController, :type => :controller do
     context 'json rendering' do
       it 'succesfully checks' do
         expect {
-          get :check, :format => :json
+          get :check, format: :json
         }.not_to raise_error
 
         expect(response).to be_ok
@@ -140,7 +140,7 @@ describe HealthMonitor::HealthController, :type => :controller do
 
         it 'should fail' do
           expect {
-            get :check, :format => :json
+            get :check, format: :json
           }.not_to raise_error
 
           expect(response).to be_ok
@@ -162,7 +162,7 @@ describe HealthMonitor::HealthController, :type => :controller do
     context 'xml rendering' do
       it 'succesfully checks' do
         expect {
-          get :check, :format => :xml
+          get :check, format: :xml
         }.not_to raise_error
 
         expect(response).to be_ok
@@ -186,7 +186,7 @@ describe HealthMonitor::HealthController, :type => :controller do
 
         it 'should fail' do
           expect {
-            get :check, :format => :xml
+            get :check, format: :xml
           }.not_to raise_error
 
           expect(response).to be_ok

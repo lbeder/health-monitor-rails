@@ -91,8 +91,8 @@ describe HealthMonitor do
               status: 'OK'
             }
           ],
-          :status => :ok,
-          :timestamp => time.to_s(:rfc2822)
+          status: :ok,
+          timestamp: time.to_s(:rfc2822)
         )
       end
     end
@@ -119,8 +119,8 @@ describe HealthMonitor do
               status: 'OK'
             }
           ],
-          :status => :ok,
-          :timestamp => time.to_s(:rfc2822)
+          status: :ok,
+          timestamp: time.to_s(:rfc2822)
         )
       end
 
@@ -143,8 +143,8 @@ describe HealthMonitor do
                 status: 'ERROR'
               }
             ],
-            :status => :service_unavailable,
-            :timestamp => time.to_s(:rfc2822)
+            status: :service_unavailable,
+            timestamp: time.to_s(:rfc2822)
           )
         end
       end
@@ -168,8 +168,8 @@ describe HealthMonitor do
                 status: 'OK'
               }
             ],
-            :status => :ok,
-            :timestamp => time.to_s(:rfc2822)
+            status: :ok,
+            timestamp: time.to_s(:rfc2822)
           )
         end
       end
@@ -194,8 +194,8 @@ describe HealthMonitor do
                 status: 'ERROR'
               }
             ],
-            :status => :service_unavailable,
-            :timestamp => time.to_s(:rfc2822)
+            status: :service_unavailable,
+            timestamp: time.to_s(:rfc2822)
           )
         end
       end
@@ -232,8 +232,8 @@ describe HealthMonitor do
               status: 'ERROR'
             }
           ],
-          :status => :service_unavailable,
-          :timestamp => time.to_s(:rfc2822)
+          status: :service_unavailable,
+          timestamp: time.to_s(:rfc2822)
         )
 
         expect(test).to be_truthy
