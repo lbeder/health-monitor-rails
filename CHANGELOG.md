@@ -1,35 +1,38 @@
+## 7.3.1 (2017-12-22)
+  - Fix redis compatibility.
+
 ## 7.3.0 (2017-10-25)
 
-  - Added Sidekiq live process check (thanks to @noto-alex-j).
+  - Add Sidekiq live process check (thanks to @noto-alex-j).
 
 ## 7.2.3 (2017-06-22)
 
-  - Improved compatibility with `active_model_serializers` (thanks to @tsaifi9).
+  - Improve compatibility with `active_model_serializers` (thanks to @tsaifi9).
 
 ## 7.2.2 (2017-06-21)
 
-  - Improved fix to issue (#19).
+  - Improve fix to issue (#19).
 
 ## 7.2.1 (2017-06-18)
 
-  - Fixed configuration memoization issue (#19).
+  - Fixe configuration memoization issue (#19).
 
 ## 7.1.0 (2017-03-13)
 
-  - Added support for configuring Redis' URL (thanks to @ETetzlaff).
+  - Add support for configuring Redis' URL (thanks to @ETetzlaff).
 
 ## 7.0.1 (2017-03-10)
 
-  - Fixed incorrect configuration memoization issue.
+  - Fixe incorrect configuration memoization issue.
 
 ## 7.0.0 (2017-03-10)
 
-  - Added HTML status page and overall refactoring (thanks to @n-rodriguez).
+  - Add HTML status page and overall refactoring (thanks to @n-rodriguez).
 
 ## 6.0.1 (2017-03-05)
 
-  - Added tests for rails 5.0.2
+  - Add tests for rails 5.0.2
 
 ## 6.0.0 (2017-01-27)
 
-  - Fixed typo in the response JSON (which can caused some backward incompatibility issues)
+  - Fixe typo in the response JSON (which can caused some backward incompatibility issues)
