@@ -148,6 +148,7 @@ end
 Some of the providers can also accept additional configuration:
 
 ```ruby
+# Sidekiq
 HealthMonitor.configure do |config|
   config.sidekiq.configure do |sidekiq_config|
     sidekiq_config.latency = 3.hours
@@ -156,9 +157,11 @@ end
 ```
 
 ```ruby
+# Redis
 HealthMonitor.configure do |config|
   config.redis.configure do |redis_config|
-    redis_config.url = 'redis://user:pass@example.redis.com:90210/'
+    redis_config.connection = Redis.current # use your custom redis connection
+    redis_config.url = 'redis://user:pass@example.redis.com:90210/' # or URL
   end
 end
 ```

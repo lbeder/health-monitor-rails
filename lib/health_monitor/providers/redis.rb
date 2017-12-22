@@ -8,7 +8,7 @@ module HealthMonitor
       class Configuration
         DEFAULT_URL = nil
 
-        attr_accessor :url
+        attr_accessor :url, :connection
 
         def initialize
           @url = DEFAULT_URL
@@ -26,7 +26,14 @@ module HealthMonitor
       def check!
         time = Time.now.to_s(:rfc2822)
 
-        redis = configuration.url ? ::Redis.new(url: configuration.url) : ::Redis.new
+        redis = if configuration.connection
+          configuration.connection
+        elsif configuration.url
+          ::Redis.new(url: configuration.url)
+        else
+          ::Redis.new
+        end
+
         redis.set(key, time)
         fetched = redis.get(key)
 
