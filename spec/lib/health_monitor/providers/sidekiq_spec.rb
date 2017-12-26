@@ -73,9 +73,9 @@ describe HealthMonitor::Providers::Sidekiq do
         end
       end
 
-      context 'queues_size' do
+      context 'queue_size' do
         before do
-          Providers.stub_sidekiq_queues_size_failure
+          Providers.stub_sidekiq_queue_size_failure
         end
 
         it 'fails check!' do

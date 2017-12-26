@@ -10,11 +10,11 @@ module HealthMonitor
         DEFAULT_LATENCY_TIMEOUT = 30
         DEFAULT_QUEUES_SIZE     = 100
 
-        attr_accessor :latency, :queues_size
+        attr_accessor :latency, :queue_size
 
         def initialize
-          @latency     = DEFAULT_LATENCY_TIMEOUT
-          @queues_size = DEFAULT_QUEUES_SIZE
+          @latency = DEFAULT_LATENCY_TIMEOUT
+          @queue_size = DEFAULT_QUEUES_SIZE
         end
       end
 
@@ -22,7 +22,7 @@ module HealthMonitor
         check_workers!
         check_processes!
         check_latency!
-        check_queues_size!
+        check_queue_size!
         check_redis!
       rescue Exception => e
         raise SidekiqException.new(e.message)
@@ -57,12 +57,12 @@ module HealthMonitor
         raise "latency #{latency} is greater than #{configuration.latency}"
       end
 
-      def check_queues_size!
+      def check_queue_size!
         size = queue.size
 
-        return unless size > configuration.queues_size
+        return unless size > configuration.queue_size
 
-        raise "queues size #{size} is greater than #{configuration.queues_size}"
+        raise "queue size #{size} is greater than #{configuration.queue_size}"
       end
 
       def check_redis!
