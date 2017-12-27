@@ -42,36 +42,60 @@ describe HealthMonitor::Providers::Redis do
       described_class.configure
     end
 
-    let(:url) { 'redis://user:password@fake.redis.com:91210/' }
+    describe '#connection' do
+      let(:redis_conenction) { double :redis_conenction, close: true }
 
-    it 'url can be configured' do
-      expect {
-        described_class.configure do |config|
-          config.url = url
-        end
-      }.to change { described_class.new.configuration.url }.to(url)
+      it 'connection could be configured' do
+        expect {
+          described_class.configure do |config|
+            config.connection = redis_conenction
+          end
+        }.to change { described_class.new.configuration.connection }.to(redis_conenction)
+      end
+
+      it 'connection configuration is persistent accross instnaces' do
+        expect {
+          described_class.configure do |config|
+            config.connection = redis_conenction
+          end
+
+          described_class.new
+        }.to change { described_class.new.configuration.connection }.to(redis_conenction)
+      end
     end
 
-    it 'url configuration is persistent' do
-      expect {
-        described_class.configure do |config|
-          config.url = url
-        end
+    describe '#url' do
+      let(:url) { 'redis://user:password@fake.redis.com:91210/' }
 
-        HealthMonitor::Providers::Sidekiq.configure do |config|
-          config.latency = 123
-        end
-      }.to change { described_class.new.configuration.url }.to(url)
-    end
+      it 'url can be configured' do
+        expect {
+          described_class.configure do |config|
+            config.url = url
+          end
+        }.to change { described_class.new.configuration.url }.to(url)
+      end
 
-    it 'url configuration is persistent accross instnaces' do
-      expect {
-        described_class.configure do |config|
-          config.url = url
-        end
+      it 'url configuration is persistent' do
+        expect {
+          described_class.configure do |config|
+            config.url = url
+          end
 
-        described_class.new
-      }.to change { described_class.new.configuration.url }.to(url)
+          HealthMonitor::Providers::Sidekiq.configure do |config|
+            config.latency = 123
+          end
+        }.to change { described_class.new.configuration.url }.to(url)
+      end
+
+      it 'url configuration is persistent accross instnaces' do
+        expect {
+          described_class.configure do |config|
+            config.url = url
+          end
+
+          described_class.new
+        }.to change { described_class.new.configuration.url }.to(url)
+      end
     end
   end
 

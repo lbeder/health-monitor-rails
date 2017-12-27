@@ -73,6 +73,18 @@ describe HealthMonitor::Providers::Sidekiq do
         end
       end
 
+      context 'queue_size' do
+        before do
+          Providers.stub_sidekiq_queue_size_failure
+        end
+
+        it 'fails check!' do
+          expect {
+            subject.check!
+          }.to raise_error(HealthMonitor::Providers::SidekiqException)
+        end
+      end
+
       context 'redis' do
         before do
           Providers.stub_sidekiq_redis_failure

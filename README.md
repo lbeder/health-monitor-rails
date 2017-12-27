@@ -148,17 +148,21 @@ end
 Some of the providers can also accept additional configuration:
 
 ```ruby
+# Sidekiq
 HealthMonitor.configure do |config|
   config.sidekiq.configure do |sidekiq_config|
     sidekiq_config.latency = 3.hours
+    sidekiq_config.queue_size = 50
   end
 end
 ```
 
 ```ruby
+# Redis
 HealthMonitor.configure do |config|
   config.redis.configure do |redis_config|
-    redis_config.url = 'redis://user:pass@example.redis.com:90210/'
+    redis_config.connection = Redis.current # use your custom redis connection
+    redis_config.url = 'redis://user:pass@example.redis.com:90210/' # or URL
   end
 end
 ```
@@ -168,6 +172,7 @@ The currently supported settings are:
 #### Sidekiq
 
 * `latency`: the latency (in seconds) of a queue (now - when the oldest job was enqueued) which is considered unhealthy (the default is 30 seconds, but larger processing queue should have a larger latency value).
+* `queue_size`: the size (maximim) of a queue which is considered unhealthy (the default is 100).
 
 #### Redis
 
