@@ -44,12 +44,12 @@ module HealthMonitor
 
       def redis
         @redis = if configuration.connection
-                   configuration.connection
-                 elsif configuration.url
-                   ::Redis.new(url: configuration.url)
-                 else
-                   ::Redis.new
-                 end
+          configuration.connection
+        elsif configuration.url
+          ::Redis.new(url: configuration.url)
+        else
+          ::Redis.new
+        end
       end
     end
   end

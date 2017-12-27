@@ -8,7 +8,7 @@ module HealthMonitor
     class Sidekiq < Base
       class Configuration
         DEFAULT_LATENCY_TIMEOUT = 30
-        DEFAULT_QUEUES_SIZE     = 100
+        DEFAULT_QUEUES_SIZE = 100
 
         attr_accessor :latency, :queue_size
 
