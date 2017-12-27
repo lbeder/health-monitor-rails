@@ -177,7 +177,7 @@ The currently supported settings are:
 #### Redis
 
 * `url`: the url used to connect to your Redis instance - note, this is an optional configuration and will use the default connection if not specified
-
+* `connection`: Use custom redis connection (e.g., `Redis.current`).
 
 ### Adding a Custom Provider
 It's also possible to add custom health check providers suited for your needs (of course, it's highly appreciated and encouraged if you'd contribute useful providers to the project).
