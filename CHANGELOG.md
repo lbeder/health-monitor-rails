@@ -1,3 +1,6 @@
+## 7.4.0 (2017-12-27)
+  - Add Redis.configuration.connection and Sidekiq.configuration.queues_size check (thanks to @sveredyuk).
+
 ## 7.3.1 (2017-12-22)
   - Fix redis compatibility.
 
