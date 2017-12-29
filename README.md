@@ -163,6 +163,7 @@ HealthMonitor.configure do |config|
   config.redis.configure do |redis_config|
     redis_config.connection = Redis.current # use your custom redis connection
     redis_config.url = 'redis://user:pass@example.redis.com:90210/' # or URL
+    redis_config.max_used_memory = 200 # Megabytes
   end
 end
 ```
@@ -178,6 +179,7 @@ The currently supported settings are:
 
 * `url`: the url used to connect to your Redis instance - note, this is an optional configuration and will use the default connection if not specified
 * `connection`: Use custom redis connection (e.g., `Redis.current`).
+* `max_used_memory`: Set maximum expected memory usage of Redis in megabytes. Prevent memory leaks and keys overstore.
 
 ### Adding a Custom Provider
 It's also possible to add custom health check providers suited for your needs (of course, it's highly appreciated and encouraged if you'd contribute useful providers to the project).
