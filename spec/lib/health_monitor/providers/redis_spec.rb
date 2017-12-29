@@ -14,21 +14,47 @@ describe HealthMonitor::Providers::Redis do
   end
 
   describe '#check!' do
-    it 'succesfully checks' do
-      expect {
-        subject.check!
-      }.not_to raise_error
-    end
-
-    context 'failing' do
-      before do
-        Providers.stub_redis_failure
-      end
-
-      it 'fails check!' do
+    context 'values' do
+      it 'succesfully checks' do
         expect {
           subject.check!
-        }.to raise_error(HealthMonitor::Providers::RedisException)
+        }.not_to raise_error
+      end
+
+      context 'failing' do
+        before do
+          Providers.stub_redis_failure
+        end
+
+        it 'fails check!' do
+          expect {
+            subject.check!
+          }.to raise_error(HealthMonitor::Providers::RedisException)
+        end
+      end
+    end
+
+    context 'max_used_memory' do
+      it 'succesfully checks' do
+        expect {
+          subject.check!
+        }.not_to raise_error
+      end
+
+      context 'failing' do
+        before do
+          described_class.configure do |config|
+            config.max_used_memory = 100
+          end
+
+          Providers.stub_redis_max_user_memory_failure
+        end
+
+        it 'fails check!' do
+          expect {
+            subject.check!
+          }.to raise_error(HealthMonitor::Providers::RedisException, '954Mb memory using is higher than 100Mb maximum expected')
+        end
       end
     end
   end
@@ -95,6 +121,40 @@ describe HealthMonitor::Providers::Redis do
 
           described_class.new
         }.to change { described_class.new.configuration.url }.to(url)
+      end
+    end
+
+    describe '#max_used_memory' do
+      let(:max_used_memory) { 10 }
+
+      it 'max_used_memory can be configured' do
+        expect {
+          described_class.configure do |config|
+            config.max_used_memory = max_used_memory
+          end
+        }.to change { described_class.new.configuration.max_used_memory }.to(max_used_memory)
+      end
+
+      it 'max_used_memory configuration is persistent' do
+        expect {
+          described_class.configure do |config|
+            config.max_used_memory = max_used_memory
+          end
+
+          HealthMonitor::Providers::Sidekiq.configure do |config|
+            config.latency = 123
+          end
+        }.to change { described_class.new.configuration.max_used_memory }.to(max_used_memory)
+      end
+
+      it 'max_used_memory configuration is persistent accross instnaces' do
+        expect {
+          described_class.configure do |config|
+            config.max_used_memory = max_used_memory
+          end
+
+          described_class.new
+        }.to change { described_class.new.configuration.max_used_memory }.to(max_used_memory)
       end
     end
   end
