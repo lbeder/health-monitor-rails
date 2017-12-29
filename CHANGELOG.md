@@ -1,3 +1,6 @@
+## 7.5.0 (2017-12-29)
+  - Add RProviders::Redis.configuration.max_used_memory check (thanks to @sveredyuk).
+
 ## 7.4.0 (2017-12-27)
   - Add Redis.configuration.connection and Sidekiq.configuration.queues_size check (thanks to @sveredyuk).
 
