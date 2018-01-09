@@ -18,7 +18,7 @@ module Providers
   end
 
   def stub_redis_max_user_memory_failure
-    allow_any_instance_of(Redis).to receive(:info).and_return('used_memory' => '10000000')
+    allow_any_instance_of(Redis).to receive(:info).and_return('used_memory' => '1000000000')
   end
 
   def stub_resque_failure
