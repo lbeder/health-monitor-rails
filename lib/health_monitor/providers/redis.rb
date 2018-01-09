@@ -66,7 +66,7 @@ module HealthMonitor
       end
 
       def bytes_to_megabytes(bytes)
-        (bytes.to_f / 1024 / 1024 * 100).round
+        (bytes.to_f / 1024 / 1024).round
       end
 
       def used_memory_mb
