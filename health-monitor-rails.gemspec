@@ -31,6 +31,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'rubocop', '>= 0.5'
   s.add_development_dependency 'sidekiq', '>= 3.0'
+  s.add_development_dependency 'delayed_job_active_record', '>= 4.1'
   s.add_development_dependency 'spork'
   s.add_development_dependency 'sqlite3'
   s.add_development_dependency 'timecop'
