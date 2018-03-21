@@ -1,6 +1,6 @@
 module HealthMonitor
   class Configuration
-    PROVIDERS = %i[cache database redis resque sidekiq].freeze
+    PROVIDERS = %i[cache database delayed_job redis resque sidekiq].freeze
 
     attr_accessor :error_callback, :basic_auth_credentials, :environment_variables
     attr_reader :providers
@@ -17,7 +17,7 @@ module HealthMonitor
       define_method provider_name do |&_block|
         require "health_monitor/providers/#{provider_name}"
 
-        add_provider("HealthMonitor::Providers::#{provider_name.capitalize}".constantize)
+        add_provider("HealthMonitor::Providers::#{provider_name.classify}".constantize)
       end
     end
 
