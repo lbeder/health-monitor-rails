@@ -5,7 +5,7 @@ module HealthMonitor
       attr_accessor :configuration
 
       def self.provider_name
-        @name ||= name.demodulize
+        @provider_name ||= name.demodulize
       end
 
       def self.configure
