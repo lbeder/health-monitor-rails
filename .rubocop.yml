@@ -50,9 +50,6 @@ Style/BlockDelimiters:
 Style/ModuleFunction:
   Enabled: false
 
-Style/ExtendSelf:
-  Enabled: false
-
 Lint/RescueException:
   Exclude:
     - 'lib/health_monitor/providers/**/*'
