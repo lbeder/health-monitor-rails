@@ -14,7 +14,6 @@ describe HealthMonitor::Providers::DelayedJob do
   end
 
   describe '#check!' do
-
     before do
       described_class.configure
       Providers.stub_delayed_job
