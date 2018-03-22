@@ -16,8 +16,7 @@ module HealthMonitor
     PROVIDERS.each do |provider_name|
       define_method provider_name do |&_block|
         require "health_monitor/providers/#{provider_name}"
-
-        add_provider("HealthMonitor::Providers::#{provider_name.to_s.classify}".constantize)
+        add_provider("HealthMonitor::Providers::#{provider_name.to_s.titleize.gsub(' ', '')}".constantize)
       end
     end
 

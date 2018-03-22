@@ -14,7 +14,7 @@ describe HealthMonitor::Configuration do
       before do
         subject.instance_variable_set('@providers', Set.new)
 
-        stub_const("HealthMonitor::Providers::#{provider_name.capitalize}", Class.new)
+        stub_const("HealthMonitor::Providers::#{provider_name.to_s.titleize.gsub(' ' , '')}", Class.new)
       end
 
       it "responds to #{provider_name}" do
@@ -24,11 +24,11 @@ describe HealthMonitor::Configuration do
       it "configures #{provider_name}" do
         expect {
           subject.send(provider_name)
-        }.to change { subject.providers }.to(Set.new(["HealthMonitor::Providers::#{provider_name.capitalize}".constantize]))
+        }.to change { subject.providers }.to(Set.new(["HealthMonitor::Providers::#{provider_name.to_s.titleize.gsub(' ' , '')}".constantize]))
       end
 
       it "returns #{provider_name}'s class" do
-        expect(subject.send(provider_name)).to eq("HealthMonitor::Providers::#{provider_name.capitalize}".constantize)
+        expect(subject.send(provider_name)).to eq("HealthMonitor::Providers::#{provider_name.to_s.titleize.gsub(' ' , '')}".constantize)
       end
     end
   end
