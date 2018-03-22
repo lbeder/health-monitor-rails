@@ -21,7 +21,7 @@ module HealthMonitor
 
     {
       results: results,
-      status: results.all? { |res| res[:status] == STATUSES[:ok] } ? :ok : :service_unavailable,
+      status: results.any? { |res| res[:status] != STATUSES[:ok] } ? :service_unavailable : :ok,
       timestamp: Time.now.to_s(:rfc2822)
     }
   end
