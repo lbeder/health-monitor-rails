@@ -1,3 +1,9 @@
+# Changelog
+
+## 8.0.0 (2018-03-22)
+
+- Return 503 when one of the checks fails.
+
 ## 7.5.0 (2017-12-29)
 
   - Add Providers::Redis.configuration.max_used_memory check (thanks to @sveredyuk).
