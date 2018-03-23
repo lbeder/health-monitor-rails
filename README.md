@@ -120,6 +120,7 @@ The following services are currently supported:
 * Redis
 * Sidekiq
 * Resque
+* Delayed Job
 
 ## Configuration
 
@@ -131,6 +132,7 @@ HealthMonitor.configure do |config|
   config.cache
   config.redis
   config.sidekiq
+  config.delayed_job
 end
 ```
 
@@ -180,6 +182,10 @@ The currently supported settings are:
 * `url`: the url used to connect to your Redis instance - note, this is an optional configuration and will use the default connection if not specified
 * `connection`: Use custom redis connection (e.g., `Redis.current`).
 * `max_used_memory`: Set maximum expected memory usage of Redis in megabytes. Prevent memory leaks and keys overstore.
+
+#### Delayed Job
+
+* `queue_size`: the size (maximim) of a queue which is considered unhealthy (the default is 100).
 
 ### Adding a Custom Provider
 It's also possible to add custom health check providers suited for your needs (of course, it's highly appreciated and encouraged if you'd contribute useful providers to the project).

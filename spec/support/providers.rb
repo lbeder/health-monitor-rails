@@ -13,6 +13,14 @@ module Providers
     allow(ActiveRecord::Migrator).to receive(:current_version).and_raise(Exception)
   end
 
+  def stub_delayed_job
+    allow(Delayed::Job).to receive(:count).and_return(1)
+  end
+
+  def stub_delayed_job_queue_size_failure
+    allow(Delayed::Job).to receive(:count).and_return(1000)
+  end
+
   def stub_redis_failure
     allow_any_instance_of(Redis).to receive(:get).and_return(false)
   end
