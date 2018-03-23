@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.1.0 (2018-03-23)
+
+- Delayed Job support (thanks to @orangewolf).
+
 ## 8.0.0 (2018-03-22)
 
 - Return 503 when one of the checks fails.
