@@ -14,10 +14,10 @@ module HealthMonitor
       respond_to do |format|
         format.html
         format.json do
-          render json: statuses.to_json
+          render json: statuses.to_json, status: statuses[:status]
         end
         format.xml do
-          render xml: statuses.to_xml
+          render xml: statuses.to_xml, status: statuses[:status]
         end
       end
     end

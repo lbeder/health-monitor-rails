@@ -143,7 +143,9 @@ describe HealthMonitor::HealthController, type: :controller do
             get :check, format: :json
           }.not_to raise_error
 
-          expect(response).to be_ok
+          expect(response).not_to be_ok
+          expect(response.status).to eq(503)
+
           expect(JSON.parse(response.body)).to eq(
             'results' => [
               {
@@ -189,7 +191,9 @@ describe HealthMonitor::HealthController, type: :controller do
             get :check, format: :xml
           }.not_to raise_error
 
-          expect(response).to be_ok
+          expect(response).not_to be_ok
+          expect(response.status).to eq(503)
+
           expect(parse_xml(response)).to eq(
             'results' => [
               {
