@@ -25,7 +25,7 @@ module HealthMonitor
     private
 
     def statuses
-      res = HealthMonitor.check(request: request)
+      res = HealthMonitor.check(request: request, params: params)
       res.merge(env_vars)
     end
 

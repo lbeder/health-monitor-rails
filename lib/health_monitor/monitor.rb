@@ -16,8 +16,13 @@ module HealthMonitor
     yield configuration if block_given?
   end
 
-  def check(request: nil)
-    results = configuration.providers.map { |provider| provider_result(provider, request) }
+  def check(request: nil, params: {})
+    providers = configuration.providers
+    if params[:providers].present?
+      providers = providers.select { |provider| params[:providers].include?(provider.provider_name.downcase) }
+    end
+
+    results = providers.map { |provider| provider_result(provider, request) }
 
     {
       results: results,
