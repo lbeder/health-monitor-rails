@@ -157,6 +157,14 @@ HealthMonitor.configure do |config|
     sidekiq_config.queue_size = 50
   end
 end
+
+# To configure specific queues
+HealthMonitor.configure do |config|
+  config.sidekiq.configure do |sidekiq_config|
+    sidekiq_config.add_queue_configuration("critical", latency: 10.seconds, size: 20)
+  end
+end
+
 ```
 
 ```ruby

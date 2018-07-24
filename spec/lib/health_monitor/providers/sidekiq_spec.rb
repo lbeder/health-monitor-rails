@@ -4,6 +4,8 @@ describe HealthMonitor::Providers::Sidekiq do
   describe HealthMonitor::Providers::Sidekiq::Configuration do
     describe 'defaults' do
       it { expect(described_class.new.latency).to eq(HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_LATENCY_TIMEOUT) }
+      it { expect(described_class.new.queue_size).to eq(HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_QUEUES_SIZE) }
+      it { expect(described_class.new.queue_name).to eq(HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_QUEUE_NAME) }
     end
   end
 
@@ -63,13 +65,24 @@ describe HealthMonitor::Providers::Sidekiq do
 
       context 'latency' do
         before do
-          Providers.stub_sidekiq_latency_failure
+          Providers.stub_sidekiq_latency_failure(queue)
         end
 
-        it 'fails check!' do
-          expect {
-            subject.check!
-          }.to raise_error(HealthMonitor::Providers::SidekiqException)
+        context 'fails' do
+          let(:queue) { "default" }
+          it 'fails check!' do
+            expect {
+              subject.check!
+            }.to raise_error(HealthMonitor::Providers::SidekiqException)
+          end
+        end
+        context 'on a different queue' do
+          let(:queue) { "critical" }
+          it 'successfully checks' do
+            expect {
+              subject.check!
+            }.not_to raise_error
+          end
         end
       end
 
