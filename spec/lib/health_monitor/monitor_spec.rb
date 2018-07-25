@@ -49,7 +49,7 @@ describe HealthMonitor do
           subject.configure do |config|
             config.redis
             config.sidekiq.configure do |sidekiq_config|
-              sidekiq_config.add_queue_configuration("critical", latency: 10.seconds, queue_size: 20)
+              sidekiq_config.add_queue_configuration('critical', latency: 10.seconds, queue_size: 20)
             end
           end
         }.to change { HealthMonitor.configuration.providers }

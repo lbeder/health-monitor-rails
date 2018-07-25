@@ -69,7 +69,7 @@ describe HealthMonitor::Providers::Sidekiq do
         end
 
         context 'fails' do
-          let(:queue) { "default" }
+          let(:queue) { 'default' }
           it 'fails check!' do
             expect {
               subject.check!
@@ -77,7 +77,7 @@ describe HealthMonitor::Providers::Sidekiq do
           end
         end
         context 'on a different queue' do
-          let(:queue) { "critical" }
+          let(:queue) { 'critical' }
           it 'successfully checks' do
             expect {
               subject.check!

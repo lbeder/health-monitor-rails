@@ -7,26 +7,25 @@ module HealthMonitor
 
     class Sidekiq < Base
       class Configuration
-        DEFAULT_QUEUE_NAME = "default"
+        DEFAULT_QUEUE_NAME = 'default'.freeze
         DEFAULT_LATENCY_TIMEOUT = 30
         DEFAULT_QUEUES_SIZE = 100
 
         attr_accessor :latency, :queue_size, :queue_name
         attr_reader :queues
 
-
         def initialize
           @queue_name = DEFAULT_QUEUE_NAME
           @latency = DEFAULT_LATENCY_TIMEOUT
           @queue_size = DEFAULT_QUEUES_SIZE
           @queues = {}
-          @queues[queue_name] = {latency: latency, queue_size: queue_size}
+          @queues[queue_name] = { latency: latency, queue_size: queue_size }
         end
 
         def add_queue_configuration(queue_name, latency: DEFAULT_LATENCY_TIMEOUT, queue_size: DEFAULT_QUEUES_SIZE)
-          raise SidekiqException.new("Queue name is mandatory") if queue_name.blank?
+          raise SidekiqException.new('Queue name is mandatory') if queue_name.blank?
 
-          queues[queue_name] = {latency: latency, queue_size: queue_size}
+          queues[queue_name] = { latency: latency, queue_size: queue_size }
         end
       end
 
@@ -62,21 +61,17 @@ module HealthMonitor
       end
 
       def check_latency!
-        self.configuration.queues.each do |queue, config|
+        configuration.queues.each do |queue, config|
           latency = queue(queue).latency
 
-          if latency > config[:latency]
-            raise "queue '#{queue}': latency #{latency} is greater than #{config[:latency]}"
-          end
+          raise "queue '#{queue}': latency #{latency} is greater than #{config[:latency]}" if latency > config[:latency]
         end
       end
 
       def check_queue_size!
-        self.configuration.queues.each do |queue, config|
+        configuration.queues.each do |queue, config|
           size = queue(queue).size
-          if size > config[:queue_size]
-            raise "queue '#{queue}': size #{size} is greater than #{config[:queue_size]}"
-          end
+          raise "queue '#{queue}': size #{size} is greater than #{config[:queue_size]}" if size > config[:queue_size]
         end
       end
 
@@ -88,7 +83,7 @@ module HealthMonitor
         end
       end
 
-      private def queue(queue_name)
+      def queue(queue_name)
         @queue ||= {}
         @queue[queue_name] ||= ::Sidekiq::Queue.new(queue_name)
       end
