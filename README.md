@@ -9,7 +9,7 @@ This is a health monitoring Rails mountable plug-in, which checks various servic
 
 Mounting this gem will add a '/check' route to your application, which can be used for health monitoring the application and its various services. The method will return an appropriate HTTP status as well as an HTML/JSON/XML response representing the state of each provider.
 
-You can filter which checks to run by passing a parameter called providers.
+You can filter which checks to run by passing a parameter called ```providers```.
 
 ## Examples
 

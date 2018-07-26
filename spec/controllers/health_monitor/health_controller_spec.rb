@@ -97,6 +97,22 @@ describe HealthMonitor::HealthController, type: :controller do
             )
           end
         end
+
+        context 'unknown provider' do
+          let(:providers) { %w[foo-bar!] }
+          it 'returns empty providers' do
+            expect {
+              get :check, params
+            }.not_to raise_error
+
+            expect(response).to be_ok
+            expect(JSON.parse(response.body)).to eq(
+              'results' => [],
+              'status' => 'ok',
+              'timestamp' => time.to_s(:rfc2822)
+            )
+          end
+        end
       end
     end
 
