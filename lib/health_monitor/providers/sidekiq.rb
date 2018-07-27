@@ -7,14 +7,25 @@ module HealthMonitor
 
     class Sidekiq < Base
       class Configuration
+        DEFAULT_QUEUE_NAME = 'default'.freeze
         DEFAULT_LATENCY_TIMEOUT = 30
         DEFAULT_QUEUES_SIZE = 100
 
-        attr_accessor :latency, :queue_size
+        attr_accessor :latency, :queue_size, :queue_name
+        attr_reader :queues
 
         def initialize
+          @queue_name = DEFAULT_QUEUE_NAME
           @latency = DEFAULT_LATENCY_TIMEOUT
           @queue_size = DEFAULT_QUEUES_SIZE
+          @queues = {}
+          @queues[queue_name] = { latency: latency, queue_size: queue_size }
+        end
+
+        def add_queue_configuration(queue_name, latency: DEFAULT_LATENCY_TIMEOUT, queue_size: DEFAULT_QUEUES_SIZE)
+          raise SidekiqException.new('Queue name is mandatory') if queue_name.blank?
+
+          queues[queue_name] = { latency: latency, queue_size: queue_size }
         end
       end
 
@@ -25,7 +36,7 @@ module HealthMonitor
         check_queue_size!
         check_redis!
       rescue Exception => e
-        raise SidekiqException.new(e.message)
+        raise SidekiqException.new(e)
       end
 
       private
@@ -50,19 +61,18 @@ module HealthMonitor
       end
 
       def check_latency!
-        latency = queue.latency
+        configuration.queues.each do |queue, config|
+          latency = queue(queue).latency
 
-        return unless latency > configuration.latency
-
-        raise "latency #{latency} is greater than #{configuration.latency}"
+          raise "queue '#{queue}': latency #{latency} is greater than #{config[:latency]}" if latency > config[:latency]
+        end
       end
 
       def check_queue_size!
-        size = queue.size
-
-        return unless size > configuration.queue_size
-
-        raise "queue size #{size} is greater than #{configuration.queue_size}"
+        configuration.queues.each do |queue, config|
+          size = queue(queue).size
+          raise "queue '#{queue}': size #{size} is greater than #{config[:queue_size]}" if size > config[:queue_size]
+        end
       end
 
       def check_redis!
@@ -73,8 +83,9 @@ module HealthMonitor
         end
       end
 
-      private def queue
-        @queue ||= ::Sidekiq::Queue.new
+      def queue(queue_name)
+        @queue ||= {}
+        @queue[queue_name] ||= ::Sidekiq::Queue.new(queue_name)
       end
     end
   end

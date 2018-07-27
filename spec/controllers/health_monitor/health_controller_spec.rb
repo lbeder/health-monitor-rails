@@ -50,6 +50,70 @@ describe HealthMonitor::HealthController, type: :controller do
           'timestamp' => time.to_s(:rfc2822)
         )
       end
+
+      context 'when filtering provider' do
+        let(:params) do
+          if Rails.version >= '5'
+            { params: { providers: providers }, format: :json }
+          else
+            { providers: providers, format: :json }
+          end
+        end
+
+        context 'multiple providers' do
+          let(:providers) { %w[redis database] }
+          it 'succesfully checks' do
+            expect {
+              get :check, params
+            }.not_to raise_error
+
+            expect(response).to be_ok
+            expect(JSON.parse(response.body)).to eq(
+              'results' => [
+                {
+                  'name' => 'Database',
+                  'message' => '',
+                  'status' => 'OK'
+                }
+              ],
+              'status' => 'ok',
+              'timestamp' => time.to_s(:rfc2822)
+            )
+          end
+        end
+
+        context 'single provider' do
+          let(:providers) { %w[redis] }
+          it 'returns empty providers' do
+            expect {
+              get :check, params
+            }.not_to raise_error
+
+            expect(response).to be_ok
+            expect(JSON.parse(response.body)).to eq(
+              'results' => [],
+              'status' => 'ok',
+              'timestamp' => time.to_s(:rfc2822)
+            )
+          end
+        end
+
+        context 'unknown provider' do
+          let(:providers) { %w[foo-bar!] }
+          it 'returns empty providers' do
+            expect {
+              get :check, params
+            }.not_to raise_error
+
+            expect(response).to be_ok
+            expect(JSON.parse(response.body)).to eq(
+              'results' => [],
+              'status' => 'ok',
+              'timestamp' => time.to_s(:rfc2822)
+            )
+          end
+        end
+      end
     end
 
     context 'invalid credentials provided' do

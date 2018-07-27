@@ -42,7 +42,7 @@ Spork.prefork do
 end
 
 def test_request
-  if Rails.version.start_with?('5.1')
+  if Rails.version >= '5.1'
     ActionController::TestRequest.create(ActionController::Metal)
   elsif Rails.version.start_with?('5')
     ActionController::TestRequest.create

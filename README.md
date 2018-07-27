@@ -9,6 +9,8 @@ This is a health monitoring Rails mountable plug-in, which checks various servic
 
 Mounting this gem will add a '/check' route to your application, which can be used for health monitoring the application and its various services. The method will return an appropriate HTTP status as well as an HTML/JSON/XML response representing the state of each provider.
 
+You can filter which checks to run by passing a parameter called ```providers```.
+
 ## Examples
 
 ### HTML Status Page
@@ -50,6 +52,31 @@ Mounting this gem will add a '/check' route to your application, which can be us
 }
 ```
 
+### Filtered JSON Response
+
+```bash
+>> curl -s http://localhost:3000/check.json?providers[]=database&providers[]=redis | json_pp
+```
+
+```json
+{
+   "timestamp" : "2017-03-10 17:07:52 +0200",
+   "status" : "ok",
+   "results" : [
+      {
+         "name" : "Database",
+         "message" : "",
+         "status" : "OK"
+      },
+      {
+         "status" : "OK",
+         "message" : "",
+         "name" : "Redis"
+      },
+   ]
+}
+```
+
 ### XML Response
 
 ```bash
@@ -77,6 +104,32 @@ Mounting this gem will add a '/check' route to your application, which can be us
     </result>
     <result>
       <name>Sidekiq</name>
+      <message></message>
+      <status>OK</status>
+    </result>
+  </results>
+  <status type="symbol">ok</status>
+  <timestamp>2017-03-10 17:08:50 +0200</timestamp>
+</hash>
+```
+
+### Filtered XML Response
+
+```bash
+>> curl -s http://localhost:3000/check.xml?providers[]=database&providers[]=redis
+```
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<hash>
+  <results type="array">
+    <result>
+      <name>Database</name>
+      <message></message>
+      <status>OK</status>
+    </result>
+    <result>
+      <name>Redis</name>
       <message></message>
       <status>OK</status>
     </result>
@@ -157,6 +210,14 @@ HealthMonitor.configure do |config|
     sidekiq_config.queue_size = 50
   end
 end
+
+# To configure specific queues
+HealthMonitor.configure do |config|
+  config.sidekiq.configure do |sidekiq_config|
+    sidekiq_config.add_queue_configuration("critical", latency: 10.seconds, size: 20)
+  end
+end
+
 ```
 
 ```ruby

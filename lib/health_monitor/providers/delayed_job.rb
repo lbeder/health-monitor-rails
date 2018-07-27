@@ -40,7 +40,7 @@ module HealthMonitor
         raise "queue size #{size} is greater than #{configuration.queue_size}"
       end
 
-      private def job_class
+      def job_class
         @job_class ||= ::Delayed::Job
       end
     end
