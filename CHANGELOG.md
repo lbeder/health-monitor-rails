@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.3.0 (2018-07-27)
+
+Allows Sidekiq configuration per queue & allows filtering of providers on the check end-point (thanks to @danielnc).
+
 ## 8.1.0 (2018-03-23)
 
 - Delayed Job support (thanks to @orangewolf).
