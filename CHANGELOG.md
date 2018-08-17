@@ -1,8 +1,12 @@
 # Changelog
 
+## 8.4.0 (2018-08-17)
+
+- Set custom UserAgent in check_rails script (thanks to @n-rodriguez).
+
 ## 8.3.0 (2018-07-27)
 
-Allows Sidekiq configuration per queue & allows filtering of providers on the check end-point (thanks to @danielnc).
+- Allow Sidekiq configuration per queue and allow filtering of providers on the check end-point (thanks to @danielnc).
 
 ## 8.1.0 (2018-03-23)
 
