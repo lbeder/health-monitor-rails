@@ -59,7 +59,7 @@ end
 uri = URI(options[:uri])
 
 # Prepare request
-req = Net::HTTP::Get.new(uri)
+req = Net::HTTP::Get.new(uri, 'User-Agent' => "check_rails/v#{VERSION}")
 req.basic_auth(uri.user, uri.password)
 
 # Send request
