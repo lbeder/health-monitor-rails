@@ -5,23 +5,24 @@ module HealthMonitor
     class SolrException < StandardError; end
 
     class Solr < Base
-      DEFAULT_SOLR_URL = "http://localhost:8983/solr/collection1"
+      class Configuration
+        DEFAULT_SOLR_URL = "http://localhost:8983/solr/collection1"
 
-      attr_accessor :solr_url, :ping_url
+        attr_accessor :solr_url, :ping_url
 
+        def initialize
+          @solr_url = DEFAULT_SOLR_URL
+          @ping_url = nil
+        end
 
-      def initialize
-        @solr_url = DEFAULT_SOLR_URL
-        @ping_url = nil
-      end
-
-      def ping_url
-        @ping_url ||= self.solr_url + '/admin/ping?wt=json&distrib=true&indent=true'
+        def ping_url
+          @ping_url ||= self.solr_url + '/admin/ping?wt=json'
+        end
       end
 
       def check!
         # Check connection to the DB:
-        response = open(ping_url)
+        response = open(configuration.ping_url)
         if response.try(:status).try(:first) == "200"
           json = JSON.parse(response.read)
           if json["status"] == "OK"
@@ -35,6 +36,16 @@ module HealthMonitor
       rescue Exception => e
         raise SolrException.new(e.message)
       end
+
+      private
+      class << self
+        private
+
+        def configuration_class
+          ::HealthMonitor::Providers::Solr::Configuration
+        end
+      end
+
     end
   end
 end
