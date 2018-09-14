@@ -28,10 +28,10 @@ module HealthMonitor
           if json["status"] == "green"
             json
           else
-            raise ElasticSearchException.new("ElasticSearch Ping Failed #{self.ping_url} response was #{json}")
+            raise ElasticSearchException.new("ElasticSearch Ping Failed #{configuration.ping_url} response was #{json}")
           end
         else
-          raise ElasticSearchException.new("Could Not Ping ElasticSearch URL #{self.ping_url} status was #{response.status}")
+          raise ElasticSearchException.new("Could Not Ping ElasticSearch URL #{configuration.ping_url} status was #{response.status}")
         end
       rescue Exception => e
         raise ElasticSearchException.new(e.message)

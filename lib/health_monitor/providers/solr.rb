@@ -28,10 +28,10 @@ module HealthMonitor
           if json["status"] == "OK"
             json
           else
-            raise SolrException.new("Solr Ping Failed #{self.ping_url} response was #{json}")
+            raise SolrException.new("Solr Ping Failed #{configuration.ping_url} response was #{json}")
           end
         else
-          raise SolrException.new("Could Not Ping Solr URL #{self.ping_url} status was #{response.status}")
+          raise SolrException.new("Could Not Ping Solr URL #{configuration.ping_url} status was #{response.status}")
         end
       rescue Exception => e
         raise SolrException.new(e.message)

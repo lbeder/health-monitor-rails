@@ -2,6 +2,7 @@ require 'rubygems'
 require 'spork'
 require 'sidekiq'
 require 'coveralls'
+require 'open-uri'
 Coveralls.wear!
 
 Spork.prefork do

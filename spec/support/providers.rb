@@ -21,6 +21,26 @@ module Providers
     allow(Delayed::Job).to receive(:count).and_return(1000)
   end
 
+  def stub_elastic_search
+    response = double(read: '{"status":"green"}', status: ["200", "OK"])
+    allow(OpenURI).to receive(:open_uri).and_return(response)
+  end
+
+  def stub_elastic_search_failure
+    response = double(read: '{"status":"red"}', status: ["500", "Error"])
+    allow(OpenURI).to receive(:open_uri).and_return(response)
+  end
+
+  def stub_solr
+    response = double(read: '{"status":"OK"}', status: ["200", "OK"])
+    allow(OpenURI).to receive(:open_uri).and_return(response)
+  end
+
+  def stub_solr_failure
+    response = double(read: '{"status":"red"}', status: ["500", "Error"])
+    allow(OpenURI).to receive(:open_uri).and_return(response)
+  end
+
   def stub_redis_failure
     allow_any_instance_of(Redis).to receive(:get).and_return(false)
   end
