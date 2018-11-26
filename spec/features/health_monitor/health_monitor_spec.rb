@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Health Monitor' do
   context 'when check is ok' do
     it 'renders html' do
-      visit '/check'
+      visit '/'
       expect(page).to have_css('span', class: 'name', text: 'Database')
       expect(page).to have_css('span', class: 'state', text: 'OK')
     end
@@ -14,7 +14,7 @@ describe 'Health Monitor' do
       Providers.stub_database_failure
     end
     it 'renders html' do
-      visit '/check'
+      visit '/'
       expect(page).to have_css('span', class: 'name', text: 'Database')
       expect(page).to have_css('span', class: 'state', text: 'ERROR')
       expect(page).to have_css('div', class: 'message', text: 'Exception')

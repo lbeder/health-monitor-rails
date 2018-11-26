@@ -1,5 +1,3 @@
 HealthMonitor::Engine.routes.draw do
-  controller :health do
-    get :check
-  end
+  get '/(.:format)', to: 'health#check'
 end
