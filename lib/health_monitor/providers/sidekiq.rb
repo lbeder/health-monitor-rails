@@ -11,15 +11,31 @@ module HealthMonitor
         DEFAULT_LATENCY_TIMEOUT = 30
         DEFAULT_QUEUES_SIZE = 100
 
-        attr_accessor :latency, :queue_size, :queue_name
         attr_reader :queues
 
         def initialize
-          @queue_name = DEFAULT_QUEUE_NAME
-          @latency = DEFAULT_LATENCY_TIMEOUT
-          @queue_size = DEFAULT_QUEUES_SIZE
           @queues = {}
-          @queues[queue_name] = { latency: latency, queue_size: queue_size }
+          @queues[DEFAULT_QUEUE_NAME] = { latency: DEFAULT_LATENCY_TIMEOUT, queue_size: DEFAULT_QUEUES_SIZE }
+        end
+
+        def latency=(value)
+          default_queue[:latency] = value
+        end
+
+        def latency
+          default_queue[:latency]
+        end
+
+        def queue_size=(value)
+          default_queue[:queue_size] = value
+        end
+
+        def queue_size
+          default_queue[:queue_size]
+        end
+
+        def default_queue
+          queues[DEFAULT_QUEUE_NAME]
         end
 
         def add_queue_configuration(queue_name, latency: DEFAULT_LATENCY_TIMEOUT, queue_size: DEFAULT_QUEUES_SIZE)
