@@ -46,17 +46,17 @@ module Providers
   end
 
   def stub_sidekiq_latency_failure(queue_name = 'default')
-    inifity_queue = instance_double('Sidekiq::Queue', latency: Float::INFINITY, size: 0)
+    infinity_queue = instance_double('Sidekiq::Queue', latency: Float::INFINITY, size: 0)
     regular_queue = instance_double('Sidekiq::Queue', latency: 0, size: 0)
     allow(Sidekiq::Queue).to receive(:new).and_return(regular_queue)
-    allow(Sidekiq::Queue).to receive(:new).with(queue_name).and_return(inifity_queue)
+    allow(Sidekiq::Queue).to receive(:new).with(queue_name).and_return(infinity_queue)
   end
 
   def stub_sidekiq_queue_size_failure(queue_name = 'default')
-    inifity_queue = instance_double('Sidekiq::Queue', size: Float::INFINITY, latency: 0)
+    infinity_queue = instance_double('Sidekiq::Queue', size: Float::INFINITY, latency: 0)
     regular_queue = instance_double('Sidekiq::Queue', size: HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_QUEUES_SIZE, latency: 0)
     allow(Sidekiq::Queue).to receive(:new).and_return(regular_queue)
-    allow(Sidekiq::Queue).to receive(:new).with(queue_name).and_return(inifity_queue)
+    allow(Sidekiq::Queue).to receive(:new).with(queue_name).and_return(infinity_queue)
   end
 
   def stub_sidekiq_redis_failure
