@@ -122,6 +122,7 @@ describe HealthMonitor::Providers::Sidekiq do
     end
 
     let(:latency) { 123 }
+    let(:queue_size) { 50 }
 
     it 'latency can be configured' do
       expect {
@@ -129,6 +130,14 @@ describe HealthMonitor::Providers::Sidekiq do
           config.latency = latency
         end
       }.to change { described_class.new.configuration.latency }.to(latency)
+    end
+
+    it 'queue_size can be configured' do
+      expect {
+        described_class.configure do |config|
+          config.queue_size = queue_size
+        end
+      }.to change { described_class.new.configuration.queue_size }.to(queue_size)
     end
   end
 end
