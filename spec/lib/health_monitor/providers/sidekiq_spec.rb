@@ -1,11 +1,18 @@
 require 'spec_helper'
 
 describe HealthMonitor::Providers::Sidekiq do
+  let(:default_latency) { HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_LATENCY_TIMEOUT }
+  let(:default_queue_size) { HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_QUEUES_SIZE }
+  let(:default_queue_name) { HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_QUEUE_NAME }
+
   describe HealthMonitor::Providers::Sidekiq::Configuration do
     describe 'defaults' do
-      it { expect(described_class.new.latency).to eq(HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_LATENCY_TIMEOUT) }
-      it { expect(described_class.new.queue_size).to eq(HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_QUEUES_SIZE) }
-      it { expect(described_class.new.queue_name).to eq(HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_QUEUE_NAME) }
+      it { expect(described_class.new.latency).to eq(default_latency) }
+      it { expect(described_class.new.queue_size).to eq(default_queue_size) }
+      it do
+        expect(described_class.new.queues[default_queue_name]).to eq(latency: default_latency,
+          queue_size: default_queue_size)
+      end
     end
   end
 
@@ -122,13 +129,30 @@ describe HealthMonitor::Providers::Sidekiq do
     end
 
     let(:latency) { 123 }
+    let(:queue_size) { 50 }
 
     it 'latency can be configured' do
       expect {
         described_class.configure do |config|
           config.latency = latency
         end
-      }.to change { described_class.new.configuration.latency }.to(latency)
+      }.to change { described_class.new.configuration.latency }.to(latency).and \
+        change { described_class.new.configuration.queues[default_queue_name] }.to(
+          latency: latency,
+          queue_size: default_queue_size
+        )
+    end
+
+    it 'queue_size can be configured' do
+      expect {
+        described_class.configure do |config|
+          config.queue_size = queue_size
+        end
+      }.to change { described_class.new.configuration.queue_size }.to(queue_size).and \
+        change { described_class.new.configuration.queues[default_queue_name] }.to(
+          latency: default_latency,
+          queue_size: queue_size
+        )
     end
   end
 end

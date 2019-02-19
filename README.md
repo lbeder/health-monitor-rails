@@ -150,16 +150,17 @@ gem 'health-monitor-rails'
 Then run:
 
 ```bash
-$ bundle install
+bundle install
 ```
 
-Otherwise install the gem:
+Otherwise, install the gem:
 
 ```bash
-$ gem install health-monitor-rails
+gem install health-monitor-rails
 ```
 
 ## Usage
+
 You can mount this inside your app routes by adding this to config/routes.rb:
 
 ```ruby
@@ -167,7 +168,9 @@ mount HealthMonitor::Engine, at: '/'
 ```
 
 ## Supported Service Providers
+
 The following services are currently supported:
+
 * DB
 * Cache
 * Redis
@@ -178,6 +181,7 @@ The following services are currently supported:
 ## Configuration
 
 ### Adding Providers
+
 By default, only the database check is enabled. You can add more service providers by explicitly enabling them via an initializer:
 
 ```ruby
@@ -214,7 +218,7 @@ end
 # To configure specific queues
 HealthMonitor.configure do |config|
   config.sidekiq.configure do |sidekiq_config|
-    sidekiq_config.add_queue_configuration("critical", latency: 10.seconds, size: 20)
+    sidekiq_config.add_queue_configuration('critical', latency: 10.seconds, queue_size: 20)
   end
 end
 
@@ -236,22 +240,23 @@ The currently supported settings are:
 #### Sidekiq
 
 * `latency`: the latency (in seconds) of a queue (now - when the oldest job was enqueued) which is considered unhealthy (the default is 30 seconds, but larger processing queue should have a larger latency value).
-* `queue_size`: the size (maximim) of a queue which is considered unhealthy (the default is 100).
+* `queue_size`: the size (maximum) of a queue which is considered unhealthy (the default is 100).
 
 #### Redis
 
-* `url`: the url used to connect to your Redis instance - note, this is an optional configuration and will use the default connection if not specified
-* `connection`: Use custom redis connection (e.g., `Redis.current`).
+* `url`: the URL used to connect to your Redis instance - note, this is an optional configuration and will use the default connection if not specified
+* `connection`: Use custom Redis connection (e.g., `Redis.current`).
 * `max_used_memory`: Set maximum expected memory usage of Redis in megabytes. Prevent memory leaks and keys overstore.
 
 #### Delayed Job
 
-* `queue_size`: the size (maximim) of a queue which is considered unhealthy (the default is 100).
+* `queue_size`: the size (maximum) of a queue which is considered unhealthy (the default is 100).
 
 ### Adding a Custom Provider
+
 It's also possible to add custom health check providers suited for your needs (of course, it's highly appreciated and encouraged if you'd contribute useful providers to the project).
 
-In order to add a custom provider, you'd need to:
+To add a custom provider, you'd need to:
 
 * Implement the `HealthMonitor::Providers::Base` class and its `check!` method (a check is considered as failed if it raises an exception):
 
@@ -262,6 +267,7 @@ class CustomProvider < HealthMonitor::Providers::Base
   end
 end
 ```
+
 * Add its class to the configuration:
 
 ```ruby
@@ -271,6 +277,7 @@ end
 ```
 
 ### Adding a Custom Error Callback
+
 If you need to perform any additional error handling (for example, for additional error reporting), you can configure a custom error callback:
 
 ```ruby
@@ -284,6 +291,7 @@ end
 ```
 
 ### Adding Authentication Credentials
+
 By default, the `/check` endpoint is not authenticated and is available to any user. You can authenticate using HTTP Basic Auth by providing authentication credentials:
 
 ```ruby
@@ -296,7 +304,8 @@ end
 ```
 
 ### Adding Environment Variables
-By default, environment variables is `nil`, so if you'd want to include additional parameters in the results JSON, all you need is to provide a `Hash` with your custom environment variables:
+
+By default, environment variables are `nil`, so if you'd want to include additional parameters in the results JSON, all you need is to provide a `Hash` with your custom environment variables:
 
 ```ruby
 HealthMonitor.configure do |config|
@@ -311,7 +320,7 @@ end
 
 A Nagios/Shinken/Icinga/Icinga2 plugin is available in `extra` directory.
 
-It takes one argument : `-u` or `--uri`
+It takes one argument: `-u` or `--uri`
 
 ```sh
 nicolas@desktop:$ ./check_rails.rb
@@ -325,7 +334,7 @@ Common options:
     -h, --help                       Displays Help
 ```
 
-And it generates an output with the right status code for your monitoring system :
+Also, it generates an output with the right status code for your monitoring system:
 
 ```sh
 nicolas@desktop:$ ./check_rails.rb -u http://admin:admin@localhost:5000/check.json

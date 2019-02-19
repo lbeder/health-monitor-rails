@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.5.0 (2019-02-19)
+
+- Fix default Sidekiq configuration setting.
+
 ## 8.4.0 (2018-08-17)
 
 - Set custom UserAgent in check_rails script (thanks to @n-rodriguez).
