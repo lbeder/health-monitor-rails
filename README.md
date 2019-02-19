@@ -218,7 +218,7 @@ end
 # To configure specific queues
 HealthMonitor.configure do |config|
   config.sidekiq.configure do |sidekiq_config|
-    sidekiq_config.add_queue_configuration('critical', latency: 10.seconds, size: 20)
+    sidekiq_config.add_queue_configuration('critical', latency: 10.seconds, queue_size: 20)
   end
 end
 
