@@ -163,6 +163,8 @@ gem install health-monitor-rails
 You can mount this inside your app routes by adding this to config/routes.rb:
 
 ```ruby
+require 'health_monitor/engine'
+
 mount HealthMonitor::Engine, at: '/'
 ```
 
