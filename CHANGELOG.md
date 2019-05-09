@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.6.0 (2019-05-09)
+
+- Fix engine autoloading and updated CI.
+
 ## 8.5.0 (2019-02-19)
 
 - Fix default Sidekiq configuration setting.
