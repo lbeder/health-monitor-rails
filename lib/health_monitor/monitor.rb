@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'health_monitor/configuration'
 
 module HealthMonitor
@@ -43,7 +45,7 @@ module HealthMonitor
       status: STATUSES[:ok]
     }
   rescue StandardError => e
-    configuration.error_callback.call(e) if configuration.error_callback
+    configuration.error_callback&.call(e)
 
     {
       name: provider.provider_name,

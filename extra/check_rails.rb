@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
 #===============================================================================
 #         FILE: check_rails.rb
 #        USAGE: ./check_rails.rb -u <uri>
@@ -13,7 +15,7 @@ require 'net/http'
 require 'yaml'
 require 'English'
 
-VERSION = '1.0.0'.freeze
+VERSION = '1.0.0'
 MANDATORY_PARAMS = [:uri].freeze
 
 # Configure options parser
