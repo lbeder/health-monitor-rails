@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'health_monitor/providers/base'
 require 'sidekiq/api'
 
@@ -7,7 +9,7 @@ module HealthMonitor
 
     class Sidekiq < Base
       class Configuration
-        DEFAULT_QUEUE_NAME = 'default'.freeze
+        DEFAULT_QUEUE_NAME = 'default'
         DEFAULT_LATENCY_TIMEOUT = 30
         DEFAULT_QUEUES_SIZE = 100
 

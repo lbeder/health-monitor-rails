@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module HealthMonitor
   module Providers
     class Base

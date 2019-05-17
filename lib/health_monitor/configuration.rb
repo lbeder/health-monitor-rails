@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module HealthMonitor
   class Configuration
     PROVIDERS = %i[cache database delayed_job redis resque sidekiq].freeze
