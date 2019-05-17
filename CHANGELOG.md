@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.6.1 (2019-05-17)
+
+- Fix requires and new rubocop violations.
+
 ## 8.6.0 (2019-05-09)
 
 - Fix engine autoloading and updated CI.
