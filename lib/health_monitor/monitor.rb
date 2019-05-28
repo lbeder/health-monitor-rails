@@ -45,7 +45,7 @@ module HealthMonitor
       status: STATUSES[:ok]
     }
   rescue StandardError => e
-    configuration.error_callback&.call(e)
+    configuration.error_callback.try(:call, e)
 
     {
       name: provider.provider_name,
