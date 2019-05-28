@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.6.2 (2019-05-28)
+
+- Remove the safe navigation operator, in order to support older Ruby versions.
+
 ## 8.6.1 (2019-05-17)
 
 - Fix requires and new rubocop violations.
