@@ -10,7 +10,7 @@ gemfile:
   - gemfiles/rails_5.1.gemfile
   - gemfiles/rails_5.2.gemfile
 allow_failures:
-  - rvm: ruby-head
+  - ruby: ruby-head
     gemfile: gemfiles/rails_4.2.gemfile
 script:
   - bundle exec rake rubocop
