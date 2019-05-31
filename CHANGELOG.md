@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.6.3 (2019-05-31)
+
+- Add Rails 4.2 to CI.
+
 ## 8.6.2 (2019-05-28)
 
 - Remove the safe navigation operator, in order to support older Ruby versions.
