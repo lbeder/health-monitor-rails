@@ -4,7 +4,6 @@
 
 source 'https://rubygems.org'
 
-gem 'rails', '~> 4.2.11.1'
-gem 'rdoc'
+gem 'rails', '~> 6.0.0'
 
 gemspec path: '../'
