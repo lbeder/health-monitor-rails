@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.7.0 (2019-08-22)
+
+- Add support for Rails 6.0.
+
 ## 8.6.3 (2019-05-31)
 
 - Add Rails 4.2 to CI.
