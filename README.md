@@ -227,9 +227,20 @@ end
 # Redis
 HealthMonitor.configure do |config|
   config.redis.configure do |redis_config|
-    redis_config.connection = Redis.current # use your custom redis connection
-    redis_config.url = 'redis://user:pass@example.redis.com:90210/' # or URL
+    redis_config.connection = Redis.current # Use your custom redis connection
     redis_config.max_used_memory = 200 # Megabytes
+  end
+end
+```
+
+Additionally, you can configure an explicit URL:
+
+```ruby
+# Redis
+HealthMonitor.configure do |config|
+  config.redis.configure do |redis_config|
+    redis_config.url = 'redis://user:pass@example.redis.com:90210/'
+    redis_config.max_used_memory = 200
   end
 end
 ```
@@ -243,9 +254,11 @@ The currently supported settings are:
 
 #### Redis
 
-* `url`: the URL used to connect to your Redis instance - note, this is an optional configuration and will use the default connection if not specified
+* `url`: the URL used to connect to your Redis instance. Note, that this is an optional configuration and will use the default connection if not specified. You can also use `url` to explicitly configure authentication (e.g., `'redis://user:pass@example.redis.com:90210/'`).
 * `connection`: Use custom Redis connection (e.g., `Redis.current`).
-* `max_used_memory`: Set maximum expected memory usage of Redis in megabytes. Prevent memory leaks and keys overstore.
+* `max_used_memory`: Set maximum expected memory usage of Redis in megabytes. Prevent memory leaks and keys over storing.
+
+Please note that `url` or `connection` can't be used at the same time.
 
 #### Delayed Job
 
