@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.8.0 (2019-11-12)
+
+- Replace dependency for rails with railties (thanks to @sliiser).
+
 ## 8.7.0 (2019-08-22)
 
 - Add support for Rails 6.0.
