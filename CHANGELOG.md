@@ -1,5 +1,9 @@
 # Changelog
 
+## 8.9.0 (2020-04-16)
+
+- Deprecate Ruby 2.4.0 and update dependencies and style.
+
 ## 8.8.0 (2019-11-12)
 
 - Replace dependency for rails with railties (thanks to @sliiser).
