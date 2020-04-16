@@ -25,20 +25,23 @@ Style/SignalException:
 Style/RaiseArgs:
   Enabled: false
 
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
 
-Layout/AlignHash:
+Layout/HashAlignment:
   Enabled: false
 
-Layout/AlignArray:
+Layout/ArrayAlignment:
   Enabled: false
 
 Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
 
-Layout/IndentFirstHashElement:
+Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
+
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
 
 Style/Documentation:
   Enabled: false
@@ -50,6 +53,24 @@ Style/BlockDelimiters:
 Style/ModuleFunction:
   Enabled: false
 
+Style/ExponentialNotation:
+  Enabled: true
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
 Lint/RescueException:
   Exclude:
     - 'lib/health_monitor/providers/**/*'
+
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
