@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.0.0 (2020-08-18)
+
+- Require Ruby 2.5.0 and later.
+
 ## 8.9.0 (2020-04-16)
 
 - Deprecate Ruby 2.4.0 and update dependencies and style.
