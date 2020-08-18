@@ -3,6 +3,7 @@
 $LOAD_PATH.push File.expand_path('lib', __dir__)
 require 'health_monitor/version'
 
+# rubocop:disable Metrics/BlockLength
 Gem::Specification.new do |s|
   s.name = 'health-monitor-rails'
   s.version = HealthMonitor::VERSION
@@ -19,6 +20,7 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
   s.test_files = Dir['test/**/*']
 
+  s.required_ruby_version = '>= 2.5'
   s.add_dependency 'railties', '>= 4.0'
 
   s.add_development_dependency 'appraisal'
@@ -38,3 +40,4 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'sqlite3', '>= 1.3'
   s.add_development_dependency 'timecop'
 end
+# rubocop:enable Metrics/BlockLength
