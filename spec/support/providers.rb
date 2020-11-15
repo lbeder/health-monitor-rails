@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
+require 'rspec/mocks'
 
 module Providers
   include RSpec::Mocks::ExampleMethods
