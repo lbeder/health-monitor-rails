@@ -92,15 +92,17 @@
       <% end %>
     </div>
 
-    <div class="variables">
-      <h2>Environment Variables</h2>
-      <% @statuses[:environment_variables].each do |environment_variable| %>
-      <div class="variable">
-        <span class="name"><%= environment_variable[0] %></span>
-        <span class="value"><%= environment_variable[1] %></span>
+    <% if @statuses[:environment_variables].present? %>
+      <div class="variables">
+        <h2>Environment Variables</h2>
+        <% @statuses[:environment_variables].each do |environment_variable| %>
+        <div class="variable">
+          <span class="name"><%= environment_variable[0] %></span>
+          <span class="value"><%= environment_variable[1] %></span>
+        </div>
+        <% end %>
       </div>
-      <% end %>
-    </div>
+    <% end %>
 
     <div class="powered">
       Powered by <a href="https://github.com/lbeder/health-monitor-rails" target="_blank">health-monitor-rails</a>
