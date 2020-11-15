@@ -2,11 +2,6 @@
 AllCops:
   TargetRubyVersion: 2.5
 
-Metrics/LineLength:
-  Max: 120
-  Exclude:
-    - 'spec/**/*'
-
 Metrics/MethodLength:
   Max: 20
   Exclude:
@@ -32,6 +27,7 @@ Style/Documentation:
   Enabled: false
 
 Style/BlockDelimiters:
+  Enabled: true
   Exclude:
     - 'spec/**/*'
 
@@ -101,6 +97,29 @@ Style/SlicingWithRange:
 Style/StringConcatenation:
   Enabled: true
 
+Style/ArgumentsForwarding:
+  Enabled: true
+
+Style/CollectionCompact:
+  Enabled: true
+
+Style/DocumentDynamicEvalDefinition:
+  Enabled: true
+
+Style/NegatedIfElseCondition:
+  Enabled: true
+
+Style/NilLambda:
+  Enabled: true
+
+Style/SwapValues:
+  Enabled: true
+
+Layout/LineLength:
+  Max: 120
+  Exclude:
+    - 'spec/**/*'
+
 Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
 
@@ -123,6 +142,7 @@ Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: true
 
 Lint/RescueException:
+  Enabled: true
   Exclude:
     - 'lib/health_monitor/providers/**/*'
 
@@ -166,4 +186,34 @@ Lint/TopLevelReturnWithArgument:
   Enabled: true
 
 Lint/UnreachableLoop:
+  Enabled: true
+
+Lint/ConstantDefinitionInBlock:
+  Enabled: true
+  Exclude:
+    - 'spec/**/*'
+
+Lint/DuplicateBranch:
+  Enabled: true
+
+Lint/DuplicateRegexpCharacterClassElement:
+  Enabled: true
+
+Lint/EmptyBlock:
+  Enabled: true
+  Exclude:
+    - 'spec/**/*'
+
+Lint/EmptyClass:
+  Enabled: true
+  Exclude:
+    - 'spec/**/*'
+
+Lint/NoReturnInBeginEndBlocks:
+  Enabled: true
+
+Lint/ToEnumArguments:
+  Enabled: true
+
+Lint/UnmodifiedReduceAccumulator:
   Enabled: true

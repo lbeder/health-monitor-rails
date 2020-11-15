@@ -69,8 +69,7 @@ describe HealthMonitor do
 
     describe 'error_callback' do
       it 'configures' do
-        error_callback = proc do
-        end
+        error_callback = proc {}
 
         expect {
           subject.configure do |config|
