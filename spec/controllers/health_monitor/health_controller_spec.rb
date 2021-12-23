@@ -49,7 +49,7 @@ describe HealthMonitor::HealthController, type: :controller do
             }
           ],
           'status' => 'ok',
-          'timestamp' => time.to_s(:rfc2822)
+          'timestamp' => time.to_formatted_s(:rfc2822)
         )
       end
 
@@ -79,7 +79,7 @@ describe HealthMonitor::HealthController, type: :controller do
                 }
               ],
               'status' => 'ok',
-              'timestamp' => time.to_s(:rfc2822)
+              'timestamp' => time.to_formatted_s(:rfc2822)
             )
           end
         end
@@ -95,7 +95,7 @@ describe HealthMonitor::HealthController, type: :controller do
             expect(JSON.parse(response.body)).to eq(
               'results' => [],
               'status' => 'ok',
-              'timestamp' => time.to_s(:rfc2822)
+              'timestamp' => time.to_formatted_s(:rfc2822)
             )
           end
         end
@@ -111,7 +111,7 @@ describe HealthMonitor::HealthController, type: :controller do
             expect(JSON.parse(response.body)).to eq(
               'results' => [],
               'status' => 'ok',
-              'timestamp' => time.to_s(:rfc2822)
+              'timestamp' => time.to_formatted_s(:rfc2822)
             )
           end
         end
@@ -161,7 +161,7 @@ describe HealthMonitor::HealthController, type: :controller do
             }
           ],
           'status' => 'ok',
-          'timestamp' => time.to_s(:rfc2822),
+          'timestamp' => time.to_formatted_s(:rfc2822),
           'environment_variables' => {
             'build_number' => '12',
             'git_sha' => 'example_sha'
@@ -195,7 +195,7 @@ describe HealthMonitor::HealthController, type: :controller do
             }
           ],
           'status' => 'ok',
-          'timestamp' => time.to_s(:rfc2822)
+          'timestamp' => time.to_formatted_s(:rfc2822)
         )
       end
 
@@ -221,7 +221,7 @@ describe HealthMonitor::HealthController, type: :controller do
               }
             ],
             'status' => 'service_unavailable',
-            'timestamp' => time.to_s(:rfc2822)
+            'timestamp' => time.to_formatted_s(:rfc2822)
           )
         end
       end
@@ -243,7 +243,7 @@ describe HealthMonitor::HealthController, type: :controller do
             }
           ],
           'status' => 'ok',
-          'timestamp' => time.to_s(:rfc2822)
+          'timestamp' => time.to_formatted_s(:rfc2822)
         )
       end
 
@@ -269,7 +269,7 @@ describe HealthMonitor::HealthController, type: :controller do
               }
             ],
             'status' => 'service_unavailable',
-            'timestamp' => time.to_s(:rfc2822)
+            'timestamp' => time.to_formatted_s(:rfc2822)
           )
         end
       end
