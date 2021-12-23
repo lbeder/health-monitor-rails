@@ -29,7 +29,7 @@ module HealthMonitor
     {
       results: results,
       status: results.any? { |res| res[:status] != STATUSES[:ok] } ? :service_unavailable : :ok,
-      timestamp: Time.now.to_s(:rfc2822)
+      timestamp: Time.now.to_formatted_s(:rfc2822)
     }
   end
 
