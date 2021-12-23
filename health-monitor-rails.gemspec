@@ -29,7 +29,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'delayed_job_active_record', '>= 4.1'
   s.add_development_dependency 'pry'
   s.add_development_dependency 'rake'
-  s.add_development_dependency 'rediska', '>= 1.0'
+  s.add_development_dependency 'rediska', '>= 1.1.0'
   s.add_development_dependency 'resque'
   s.add_development_dependency 'rspec-rails'
   s.add_development_dependency 'rubocop', '>= 0.5'
