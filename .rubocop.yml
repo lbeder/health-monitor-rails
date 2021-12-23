@@ -17,6 +17,9 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
 
+Security/IoMethods:
+  Enabled: true
+
 Style/SignalException:
   EnforcedStyle: only_raise
 
@@ -115,6 +118,58 @@ Style/NilLambda:
 Style/SwapValues:
   Enabled: true
 
+Style/EndlessMethod:
+  Enabled: true
+
+Style/FileRead:
+  Enabled: true
+
+Style/FileWrite:
+  Enabled: true
+
+Style/HashConversion:
+  Enabled: true
+
+Style/HashExcept:
+  Enabled: true
+
+Style/IfWithBooleanLiteralBranches:
+  Enabled: true
+
+Style/InPatternThen:
+  Enabled: true
+
+Style/MapToHash:
+  Enabled: true
+
+Style/MultilineInPatternThen:
+  Enabled: true
+
+Style/NumberedParameters:
+  Enabled: true
+
+Style/NumberedParametersLimit:
+  Enabled: true
+
+Style/OpenStructUse:
+  Enabled: true
+
+Style/QuotedSymbols:
+  Enabled: true
+
+Style/RedundantArgument:
+  Enabled: true
+
+Style/RedundantSelfAssignmentBranch:
+  Enabled: true
+
+Style/SelectByRegexp:
+  Enabled: true
+
+Style/StringChars:
+  Enabled: true
+
+
 Layout/LineLength:
   Max: 120
   Exclude:
@@ -139,6 +194,12 @@ Layout/SpaceAroundMethodCallOperator:
   Enabled: true
 
 Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: true
+
+Layout/LineEndStringConcatenationIndentation:
+  Enabled: true
+
+Layout/SpaceBeforeBrackets:
   Enabled: true
 
 Lint/RescueException:
@@ -216,4 +277,58 @@ Lint/ToEnumArguments:
   Enabled: true
 
 Lint/UnmodifiedReduceAccumulator:
+  Enabled: true
+
+Lint/AmbiguousAssignment:
+  Enabled: true
+
+Lint/AmbiguousOperatorPrecedence:
+  Enabled: true
+
+Lint/AmbiguousRange:
+  Enabled: true
+
+Lint/DeprecatedConstants:
+  Enabled: true
+
+Lint/EmptyInPattern:
+  Enabled: true
+
+Lint/IncompatibleIoSelectWithFiberScheduler:
+  Enabled: true
+
+Lint/LambdaWithoutLiteralBlock:
+  Enabled: true
+
+Lint/NumberedParameterAssignment:
+  Enabled: true
+
+Lint/OrAssignmentToConstant:
+  Enabled: true
+
+Lint/RedundantDirGlobSort:
+  Enabled: true
+
+Lint/RequireRelativeSelfPath:
+  Enabled: true
+
+Lint/SymbolConversion:
+  Enabled: true
+
+Lint/TripleQuotes:
+  Enabled: true
+
+Lint/UnexpectedBlockArity:
+  Enabled: true
+
+Lint/UselessRuby2Keywords:
+  Enabled: true
+
+Naming/BlockForwarding:
+  Enabled: true
+
+Gemspec/DateAssignment:
+  Enabled: true
+
+Gemspec/RequireMFA:
   Enabled: true
