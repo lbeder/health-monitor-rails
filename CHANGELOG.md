@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.1.0 (2021-12-24)
+
+- Use formatted rather than deprecated to_s (thanks to @Liberatys).
+
 ## 9.0.0 (2020-08-18)
 
 - Require Ruby 2.5.0 and later.
