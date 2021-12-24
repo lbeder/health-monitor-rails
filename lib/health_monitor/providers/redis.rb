@@ -37,7 +37,7 @@ module HealthMonitor
       private
 
       def check_values!
-        time = Time.now.to_s(:rfc2822)
+        time = Time.now.to_formatted_s(:rfc2822)
 
         redis.set(key, time)
         fetched = redis.get(key)
