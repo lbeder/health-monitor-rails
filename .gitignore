@@ -4,3 +4,5 @@ tmp
 coverage
 spec/dummy/log
 gemfiles/*gemfile.lock
+vendor/bundle
+.bundle

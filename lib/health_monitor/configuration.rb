@@ -24,8 +24,7 @@ module HealthMonitor
 
     def add_custom_provider(custom_provider_class)
       unless custom_provider_class < HealthMonitor::Providers::Base
-        raise ArgumentError.new 'custom provider class must implement '\
-          'HealthMonitor::Providers::Base'
+        raise ArgumentError.new 'custom provider class must implement HealthMonitor::Providers::Base'
       end
 
       add_provider(custom_provider_class)

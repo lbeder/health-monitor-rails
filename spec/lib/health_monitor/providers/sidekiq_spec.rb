@@ -12,8 +12,10 @@ describe HealthMonitor::Providers::Sidekiq do
       it { expect(described_class.new.latency).to eq(default_latency) }
       it { expect(described_class.new.queue_size).to eq(default_queue_size) }
       it do
-        expect(described_class.new.queues[default_queue_name]).to eq(latency: default_latency,
-          queue_size: default_queue_size)
+        expect(described_class.new.queues[default_queue_name]).to eq(
+          latency: default_latency,
+          queue_size: default_queue_size
+        )
       end
     end
   end
