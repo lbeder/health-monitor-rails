@@ -23,7 +23,7 @@ describe HealthMonitor do
         expect {
           subject.configure(&:redis)
         }.to change { HealthMonitor.configuration.providers }
-          .to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis]))
+          .to([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis])
       end
 
       it 'configures a single provider with custom configuration' do
@@ -32,7 +32,7 @@ describe HealthMonitor do
             redis_config.url = 'redis://user:pass@example.redis.com:90210/'
           end
         }.to change { HealthMonitor.configuration.providers }
-          .to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis]))
+          .to([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis])
       end
 
       it 'configures a multiple providers' do
@@ -42,8 +42,8 @@ describe HealthMonitor do
             config.sidekiq
           end
         }.to change { HealthMonitor.configuration.providers }
-          .to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis,
-            HealthMonitor::Providers::Sidekiq]))
+          .to([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis,
+            HealthMonitor::Providers::Sidekiq])
       end
 
       it 'configures multiple providers with custom configuration' do
@@ -55,15 +55,15 @@ describe HealthMonitor do
             end
           end
         }.to change { HealthMonitor.configuration.providers }
-          .to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis,
-            HealthMonitor::Providers::Sidekiq]))
+          .to([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis,
+            HealthMonitor::Providers::Sidekiq])
       end
 
       it 'appends new providers' do
         expect {
           subject.configure(&:resque)
-        }.to change { HealthMonitor.configuration.providers }.to(Set.new([HealthMonitor::Providers::Database,
-          HealthMonitor::Providers::Resque]))
+        }.to change { HealthMonitor.configuration.providers }.to([HealthMonitor::Providers::Database,
+          HealthMonitor::Providers::Resque])
       end
     end
 

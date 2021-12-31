@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe HealthMonitor::Configuration do
-  let(:default_configuration) { Set.new([HealthMonitor::Providers::Database]) }
+  let(:default_configuration) { [HealthMonitor::Providers::Database] }
 
   describe 'defaults' do
     it { expect(subject.providers).to eq(default_configuration) }
@@ -14,7 +14,7 @@ describe HealthMonitor::Configuration do
   describe 'providers' do
     HealthMonitor::Configuration::PROVIDERS.each do |provider_name|
       before do
-        subject.instance_variable_set('@providers', Set.new)
+        subject.instance_variable_set('@providers', [])
 
         stub_const("HealthMonitor::Providers::#{provider_name.to_s.titleize.delete(' ')}", Class.new)
       end
@@ -26,7 +26,7 @@ describe HealthMonitor::Configuration do
       it "configures #{provider_name}" do
         expect {
           subject.send(provider_name)
-        }.to change { subject.providers }.to(Set.new(["HealthMonitor::Providers::#{provider_name.to_s.titleize.delete(' ')}".constantize]))
+        }.to change { subject.providers }.to(["HealthMonitor::Providers::#{provider_name.to_s.titleize.delete(' ')}".constantize])
       end
 
       it "returns #{provider_name}'s class" do
@@ -37,7 +37,7 @@ describe HealthMonitor::Configuration do
 
   describe '#add_custom_provider' do
     before do
-      subject.instance_variable_set('@providers', Set.new)
+      subject.instance_variable_set('@providers', [])
     end
 
     context 'inherits' do
@@ -47,7 +47,7 @@ describe HealthMonitor::Configuration do
       it 'accepts' do
         expect {
           subject.add_custom_provider(CustomProvider)
-        }.to change { subject.providers }.to(Set.new([CustomProvider]))
+        }.to change { subject.providers }.to([CustomProvider])
       end
 
       it 'returns CustomProvider class' do
@@ -71,7 +71,7 @@ describe HealthMonitor::Configuration do
     it 'removes the default database check' do
       expect {
         subject.no_database
-      }.to change { subject.providers }.from(default_configuration).to(Set.new)
+      }.to change { subject.providers }.from(default_configuration).to([])
     end
   end
 end

@@ -33,7 +33,7 @@ module HealthMonitor
     private
 
     def add_provider(provider_class)
-      (@providers ||= Set.new) << provider_class
+      (@providers ||= []) << provider_class
 
       provider_class
     end
