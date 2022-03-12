@@ -169,6 +169,8 @@ Style/SelectByRegexp:
 Style/StringChars:
   Enabled: true
 
+Style/NestedFileDirname:
+  Enabled: true
 
 Layout/LineLength:
   Max: 120
