@@ -15,12 +15,8 @@ module HealthMonitor
 
       respond_to do |format|
         format.html
-        format.json do
-          render json: statuses.to_json, status: statuses[:status]
-        end
-        format.xml do
-          render xml: statuses.to_xml, status: statuses[:status]
-        end
+        format.json { render json: statuses.to_json, status: statuses[:status] }
+        format.xml { render xml: statuses.to_xml, status: statuses[:status] }
       end
     end
 
@@ -46,7 +42,7 @@ module HealthMonitor
     end
 
     def providers_params
-      params.permit(providers: [])
+      params.except(:format).permit(providers: [])
     end
   end
 end
