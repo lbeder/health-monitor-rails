@@ -55,10 +55,10 @@
                   <% @statuses[:environment_variables].each_with_index do |env_var, index| %>
                     <div class="<%= index.odd? ? 'bg-gray-50' : 'bg-white' %> px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                       <dt class="text-sm font-medium text-gray-500">
-                        <%= env_var[0] %>
+                        <%= env_var[:name] %>
                       </dt>
                       <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                        <%= env_var[1] %>
+                        <%= env_var[:value] %>
                       </dd>
                     </div>
                   <% end %>

@@ -321,10 +321,7 @@ By default, environment variables are `nil`, so if you'd want to include additio
 
 ```ruby
 HealthMonitor.configure do |config|
-  config.environment_variables = {
-    build_number: 'BUILD_NUMBER',
-    git_sha: 'GIT_SHA'
-  }
+  config.environment_variables = %w[BUILD_NUMBER GIT_SHA]
 end
 ```
 
