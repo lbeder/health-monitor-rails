@@ -7,6 +7,7 @@ module HealthMonitor
     attr_accessor :basic_auth_credentials,
                   :environment_variables,
                   :error_callback,
+                  :hide_footer,
                   :path
     attr_reader :providers
 
@@ -21,7 +22,10 @@ module HealthMonitor
     PROVIDERS.each do |provider_name|
       define_method provider_name do |&_block|
         require "health_monitor/providers/#{provider_name}"
-        add_provider("HealthMonitor::Providers::#{provider_name.to_s.titleize.delete(' ')}".constantize)
+        add_provider(
+          "HealthMonitor::Providers::#{provider_name.to_s.titleize.delete(' ')}"
+            .constantize
+        )
       end
     end
 

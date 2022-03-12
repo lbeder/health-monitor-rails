@@ -12,6 +12,7 @@ module HealthMonitor
 
     def check
       @statuses = statuses
+      @hide_footer = HealthMonitor.configuration.hide_footer
 
       respond_to do |format|
         format.html
