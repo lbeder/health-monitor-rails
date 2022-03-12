@@ -1,79 +1,55 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Status</title>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width">
-  <style type="text/css" media="screen">
-  body {
-    line-height: 2rem;
-    font-family: sans;
-    font-size: 14px;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
-    color: #000;
-    text-align: center;
-  }
-
-  a { color: #333; }
-
-  .container {
-    width: 960px;
-    margin: 20px auto;
-    text-align: left;
-  }
-
-  h1 {
-    font-weight: normal;
-    line-height: 2.8rem;
-    font-size: 30px;
-    letter-spacing: -1px;
-    text-align: center;
-    color: #333;
-  }
-
-  .container {
-    width: 960px;
-    margin:40px auto;
-    overflow: hidden;
-  }
-
-  .statuses {
-    background: #FFF;
-    width: 100%;
-    border-radius: 5px;
-  }
-  .statuses h1 { border-radius: 5px 5px 0 0; background: #f9f9f9; padding: 10px; border-bottom: 1px solid #eee;}
-  .statuses .status { font-size: 14px; border-bottom: 1px solid #eee; padding: 15px; }
-  .statuses .status:last-child { border-bottom: 0px; }
-  .statuses .name { font-size: 20px; margin-right: 20px; min-width: 100px; font-weight: bold; color: #555; }
-  .statuses .state { font-size: 14px; float: right; width: 80px; color: #45b81d; }
-  .statuses .message { color: #666; }
-  .statuses .timestamp { width: 130px; color: #999; }
-  .statuses .status-error .state { color: red; }
-
-  .powered { text-align: center; margin-top: 10px; color: #aaa; }
-  .powered a { color: #666; }
-  </style>
-</head>
-
-<body>
-  <div class="container">
-    <div class="statuses">
-      <h1>Status Page</h1>
-      <% @statuses[:results].each do |status| %>
-      <div class="status status-<%= status[:status].downcase %>">
-        <div class="status-heading">
-          <span class="name"><%= status[:name]  %></span>
-          <span class="state"><%= status[:status] %></span>
-        </div>
-        <div class="message"><%= status[:message] %></div>
+  <head>
+    <title>Status</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="antialiased font-sans bg-gray-100">
+    <header class="bg-white shadow">
+      <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <h1 class="text-3xl font-bold text-gray-900 text-center">
+          Status Page
+        </h1>
       </div>
-      <% end %>
-    </div>
-    <div class="powered">
-      Powered by <a href="https://github.com/lbeder/health-monitor-rails" target="_blank">health-monitor-rails</a>
-    </div>
-  </div>
-</body>
+    </header>
+    <main>
+      <div class="max-w-7xl mx-auto py-12 sm:px-6 lg:px-8">
+        <div class="max-w-4xl mx-auto">
+          <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+            <div class="px-4 py-5 sm:px-6">
+              <h3 class="text-lg leading-6 font-medium text-gray-900">
+                Services
+              </h3>
+            </div>
+            <div class="border-t border-gray-200">
+              <dl>
+                <% @statuses[:results].each_with_index do |status, index| %>
+                  <div class="<%= index.odd? ? 'bg-gray-50' : 'bg-white' %> px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt class="text-sm font-medium text-gray-500">
+                      <%= status[:name] %>
+                    </dt>
+                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                      <div class="<%= 'text-red-600' if status[:status].downcase == 'error' %> font-bold">
+                        <%= status[:status] %>
+                      </div>
+                      <% if !status[:message].empty? %>
+                        <div class="text-slate-600"><%= status[:message] %></div>
+                      <% end %>
+                    </dd>
+                  </div>
+                <% end %>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="font-light text-center text-slate-500 text-xs px-5">
+        Powered by <a href="https://github.com/lbeder/health-monitor-rails" target="_blank">health-monitor-rails</a>
+      </div>
+    </footer>
+  </body>
+</html>
