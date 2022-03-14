@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
 HealthMonitor::Engine.routes.draw do
-  controller :health do
-    get :check
-  end
+  path =
+    if HealthMonitor.configuration.path.present?
+      HealthMonitor.configuration.path
+    else
+      :check
+    end
+
+  get path, to: 'health#check'
 end

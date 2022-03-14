@@ -9,6 +9,7 @@ describe HealthMonitor::Configuration do
     it { expect(subject.providers).to eq(default_configuration) }
     it { expect(subject.error_callback).to be_nil }
     it { expect(subject.basic_auth_credentials).to be_nil }
+    it { expect(subject.path).to be_nil }
   end
 
   describe 'providers' do

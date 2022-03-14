@@ -4,7 +4,10 @@ module HealthMonitor
   class Configuration
     PROVIDERS = %i[cache database delayed_job redis resque sidekiq].freeze
 
-    attr_accessor :error_callback, :basic_auth_credentials, :environment_variables
+    attr_accessor :basic_auth_credentials,
+                  :environment_variables,
+                  :error_callback,
+                  :path
     attr_reader :providers
 
     def initialize
