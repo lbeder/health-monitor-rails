@@ -1,5 +1,11 @@
 # Changelog
 
+## 9.2.0 (2022-03-14)
+
+- Convert page to use TailwindCSS (thanks to @yorch)
+- Avoid Unpermitted parameter: format error (thanks to @yorch)
+- Add path config (thanks to @yorch)
+
 ## 9.1.0 (2021-12-24)
 
 - Use formatted rather than deprecated to_s (thanks to @Liberatys).
