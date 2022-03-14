@@ -328,6 +328,18 @@ HealthMonitor.configure do |config|
 end
 ```
 
+### Customizing the path
+
+By default, the endpoint where the status page is served is `/check`, but this can be customized:
+
+```ruby
+HealthMonitor.configure do |config|
+  config.path = :status
+end
+```
+
+This will make the page to be served in the `/status` endpoint for instance (from where the engine was mounted).
+
 ### Monitoring Script
 
 A Nagios/Shinken/Icinga/Icinga2 plugin is available in `extra` directory.
