@@ -14,7 +14,7 @@ You can filter which checks to run by passing a parameter called ```providers```
 
 ### HTML Status Page
 
-![alt example](/docs/screenshots/example.png "HTML Status Page")
+![alt example](/docs/screenshots/page.png "HTML Status Page")
 
 ### JSON Response
 
