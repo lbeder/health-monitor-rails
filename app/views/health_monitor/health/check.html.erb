@@ -27,15 +27,15 @@
               <dl>
                 <% @statuses[:results].each_with_index do |status, index| %>
                   <div class="<%= index.odd? ? 'bg-gray-50' : 'bg-white' %> px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="text-sm font-medium text-gray-500">
+                    <dt class="name text-sm font-medium text-gray-500">
                       <%= status[:name] %>
                     </dt>
                     <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                      <div class="<%= 'text-red-600' if status[:status].downcase == 'error' %> font-bold">
+                      <div class="state <%= 'text-red-600' if status[:status].downcase == 'error' %> font-bold">
                         <%= status[:status] %>
                       </div>
                       <% if !status[:message].empty? %>
-                        <div class="text-slate-600"><%= status[:message] %></div>
+                        <div class="message text-slate-600"><%= status[:message] %></div>
                       <% end %>
                     </dd>
                   </div>
