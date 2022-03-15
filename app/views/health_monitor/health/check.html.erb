@@ -17,7 +17,7 @@
     <main>
       <div class="max-w-7xl mx-auto py-12 sm:px-6 lg:px-8">
         <div class="max-w-4xl mx-auto">
-          <div class="bg-white shadow overflow-hidden sm:rounded-lg">
+          <div class="services bg-white shadow overflow-hidden sm:rounded-lg">
             <div class="px-4 py-5 sm:px-6">
               <h3 class="text-lg leading-6 font-medium text-gray-900">
                 Services
@@ -43,6 +43,29 @@
               </dl>
             </div>
           </div>
+          <% if @statuses[:environment_variables].present? %>
+            <div class="env-variables bg-white shadow overflow-hidden sm:rounded-lg my-6">
+              <div class="px-4 py-5 sm:px-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900">
+                  Environment Variables
+                </h3>
+              </div>
+              <div class="border-t border-gray-200">
+                <dl>
+                  <% @statuses[:environment_variables].each_with_index do |env_var, index| %>
+                    <div class="<%= index.odd? ? 'bg-gray-50' : 'bg-white' %> px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                      <dt class="text-sm font-medium text-gray-500">
+                        <%= env_var[0] %>
+                      </dt>
+                      <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                        <%= env_var[1] %>
+                      </dd>
+                    </div>
+                  <% end %>
+                </dl>
+              </div>
+            </div>
+          <% end %>
         </div>
       </div>
     </main>
