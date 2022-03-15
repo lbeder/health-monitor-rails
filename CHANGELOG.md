@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.3.0 (2022-03-15)
+
+- Add env variables to HTML page (thanks to @yorch)
+
 ## 9.2.0 (2022-03-14)
 
 - Convert page to use TailwindCSS (thanks to @yorch)
