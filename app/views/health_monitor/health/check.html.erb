@@ -69,10 +69,12 @@
         </div>
       </div>
     </main>
-    <footer>
-      <div class="font-light text-center text-slate-500 text-xs px-5">
-        Powered by <a href="https://github.com/lbeder/health-monitor-rails" target="_blank">health-monitor-rails</a>
-      </div>
-    </footer>
+    <% if !@hide_footer %>
+      <footer>
+        <div class="font-light text-center text-slate-500 text-xs px-5">
+          Powered by <a href="https://github.com/lbeder/health-monitor-rails" target="_blank">health-monitor-rails</a>
+        </div>
+      </footer>
+    <% end %>
   </body>
 </html>
