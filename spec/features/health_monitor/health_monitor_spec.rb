@@ -28,11 +28,9 @@ describe 'Health Monitor' do
   end
 
   context 'when env variables are configured' do
-    let(:environment_variables) { { build_number: '12', git_sha: 'example_sha' } }
-
     before do
       HealthMonitor.configure do |config|
-        config.environment_variables = environment_variables
+        config.environment_variables = %w[BUILD_NUMBER GIT_SHA]
       end
     end
     it 'renders html' do

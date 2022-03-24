@@ -32,8 +32,8 @@ module HealthMonitor
       conf_env_vars = HealthMonitor.configuration.environment_variables || []
       res =
         conf_env_vars
-          .select { |env_var| ENV[env_var].present? }
-          .map { |env_var| { name: env_var, value: ENV[env_var] } }
+        .select { |env_var| ENV[env_var].present? }
+        .map { |env_var| { name: env_var, value: ENV[env_var] } }
       res.empty? ? {} : { environment_variables: res }
     end
 

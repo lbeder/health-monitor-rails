@@ -136,12 +136,10 @@ describe HealthMonitor::HealthController, type: :controller do
   end
 
   describe 'environment variables' do
-    let(:environment_variables) { { build_number: '12', git_sha: 'example_sha' } }
-
     before do
       HealthMonitor.configure do |config|
         config.basic_auth_credentials = nil
-        config.environment_variables = environment_variables
+        config.environment_variables = %w[BUILD_NUMBER GIT_SHA]
       end
     end
 
