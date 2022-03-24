@@ -1,7 +1,7 @@
 # health-monitor-rails
 
 [![Gem Version](https://badge.fury.io/rb/health-monitor-rails.svg)](http://badge.fury.io/rb/health-monitor-rails)
-[![Build Status](https://travis-ci.com/lbeder/health-monitor-rails.svg?branch=master)](https://travis-ci.com/lbeder/health-monitor-rails)
+[![Build Status](https://github.com/lbeder/health-monitor-rails/actions/workflows/workflow.yml/badge.svg)](https://github.com/lbeder/health-monitor-rails/actions/workflows/workflow.yml)
 [![Coverage Status](https://coveralls.io/repos/lbeder/health-monitor-rails/badge.svg)](https://coveralls.io/r/lbeder/health-monitor-rails)
 
 This is a health monitoring Rails mountable plug-in, which checks various services (db, cache, sidekiq, redis, etc.).
