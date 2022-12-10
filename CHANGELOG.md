@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.4.0 (2022-12-10)
+
+- Support a connection pool for Redis
+
 ## 9.3.0 (2022-03-15)
 
 - Add env variables to HTML page (thanks to @yorch)
