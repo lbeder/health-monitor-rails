@@ -16,7 +16,39 @@ describe HealthMonitor::Providers::Redis do
   end
 
   describe '#check!' do
-    context 'with values' do
+    context 'with a connection' do
+      before do
+        described_class.configure do |config|
+          config.connection = Redis.new
+        end
+      end
+
+      it 'succesfully checks' do
+        expect {
+          subject.check!
+        }.not_to raise_error
+      end
+
+      context 'when failing' do
+        before do
+          Providers.stub_redis_failure
+        end
+
+        it 'fails check!' do
+          expect {
+            subject.check!
+          }.to raise_error(HealthMonitor::Providers::RedisException)
+        end
+      end
+    end
+
+    context 'with a connection pool' do
+      before do
+        described_class.configure do |config|
+          config.connection = ConnectionPool.new(size: 5) { Redis.new }
+        end
+      end
+
       it 'succesfully checks' do
         expect {
           subject.check!
@@ -37,6 +69,12 @@ describe HealthMonitor::Providers::Redis do
     end
 
     context 'with max_used_memory' do
+      before do
+        described_class.configure do |config|
+          config.max_used_memory = 100
+        end
+      end
+
       it 'succesfully checks' do
         expect {
           subject.check!
@@ -45,10 +83,6 @@ describe HealthMonitor::Providers::Redis do
 
       context 'when failing' do
         before do
-          described_class.configure do |config|
-            config.max_used_memory = 100
-          end
-
           Providers.stub_redis_max_user_memory_failure
         end
 
@@ -73,7 +107,7 @@ describe HealthMonitor::Providers::Redis do
     describe '#connection' do
       let(:redis_conenction) { 123 }
 
-      it 'connection could be configured' do
+      it 'connection can be set directly dir' do
         expect {
           described_class.configure do |config|
             config.connection = redis_conenction
