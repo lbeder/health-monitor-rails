@@ -1,4 +1,7 @@
-# Custom config for RuboCop static code analysis
+require:
+  - rubocop-rake
+  - rubocop-rspec
+
 AllCops:
   TargetRubyVersion: 2.5
 
@@ -329,8 +332,146 @@ Lint/UselessRuby2Keywords:
 Naming/BlockForwarding:
   Enabled: true
 
-Gemspec/DateAssignment:
-  Enabled: true
-
 Gemspec/RequireMFA:
   Enabled: true
+
+Gemspec/DeprecatedAttributeAssignment:
+  Enabled: true
+
+Layout/LineContinuationLeadingSpace:
+  Enabled: true
+
+Layout/LineContinuationSpacing:
+  Enabled: true
+
+Lint/ConstantOverwrittenInRescue:
+  Enabled: true
+
+Lint/DuplicateMagicComment:
+  Enabled: true
+
+Lint/NonAtomicFileOperation:
+  Enabled: true
+
+Lint/RefinementImportMethods:
+  Enabled: true
+
+Lint/RequireRangeParentheses:
+  Enabled: true
+
+Security/CompoundHash:
+  Enabled: true
+
+Style/ArrayIntersect:
+  Enabled: true
+
+Style/EmptyHeredoc:
+  Enabled: true
+
+Style/EnvHome:
+  Enabled: true
+
+Style/FetchEnvVar:
+  Enabled: true
+
+Style/MagicCommentFormat:
+  Enabled: true
+
+Style/MapCompactWithConditionalBlock:
+  Enabled: true
+
+Style/ObjectThen:
+  Enabled: true
+
+Style/OperatorMethodCall:
+  Enabled: true
+
+Style/RedundantConstantBase:
+  Enabled: true
+
+Style/RedundantEach:
+  Enabled: true
+
+Style/RedundantInitialize:
+  Enabled: true
+
+Style/RedundantStringEscape:
+  Enabled: true
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false
+
+RSpec/AnyInstance:
+  Enabled: false
+
+RSpec/FilePath:
+  Enabled: false
+
+RSpec/LeakyConstantDeclaration:
+  Enabled: false
+
+RSpec/BeEq:
+  Enabled: true
+
+RSpec/BeNil:
+  Enabled: true
+
+RSpec/ChangeByZero:
+  Enabled: true
+
+RSpec/ClassCheck:
+  Enabled: true
+
+RSpec/ExcessiveDocstringSpacing:
+  Enabled: true
+
+RSpec/IdenticalEqualityAssertion:
+  Enabled: true
+
+RSpec/NoExpectationExample:
+  Enabled: true
+
+RSpec/SortMetadata:
+  Enabled: true
+
+RSpec/SubjectDeclaration:
+  Enabled: true
+
+RSpec/VerifiedDoubleReference:
+  Enabled: true
+
+RSpec/Capybara/NegationMatcher:
+  Enabled: true
+
+RSpec/Capybara/SpecificActions:
+  Enabled: true
+
+RSpec/Capybara/SpecificFinders:
+  Enabled: true
+
+RSpec/Capybara/SpecificMatcher:
+  Enabled: true
+
+RSpec/FactoryBot/ConsistentParenthesesStyle:
+  Enabled: true
+
+RSpec/FactoryBot/SyntaxMethods:
+  Enabled: true
+
+RSpec/Rails/AvoidSetupHook:
+  Enabled: true
+
+RSpec/Rails/HaveHttpStatus:
+  Enabled: true
+
+RSpec/Rails/InferredSpecType:
+  Enabled: false
