@@ -4,6 +4,8 @@ require 'health_monitor/providers/base'
 
 module HealthMonitor
   module Providers
+    CONNECTION_POOL_SIZE = 1
+
     class RedisException < StandardError; end
 
     class Redis < Base
@@ -23,6 +25,10 @@ module HealthMonitor
         def configuration_class
           ::HealthMonitor::Providers::Redis::Configuration
         end
+
+        def as_connection_pool(connection)
+          ConnectionPool.new(size: CONNECTION_POOL_SIZE) { connection }
+        end
       end
 
       def check!
@@ -30,8 +36,6 @@ module HealthMonitor
         check_max_used_memory!
       rescue Exception => e
         raise RedisException.new(e.message)
-      ensure
-        redis.close
       end
 
       private
@@ -39,8 +43,8 @@ module HealthMonitor
       def check_values!
         time = Time.now.to_formatted_s(:rfc2822)
 
-        redis.set(key, time)
-        fetched = redis.get(key)
+        redis.with { |conn| conn.set(key, time) }
+        fetched = redis.with { |conn| conn.get(key) }
 
         raise "different values (now: #{time}, fetched: #{fetched})" if fetched != time
       end
@@ -59,11 +63,15 @@ module HealthMonitor
       def redis
         @redis =
           if configuration.connection
-            configuration.connection
+            if configuration.connection.is_a?(ConnectionPool)
+              configuration.connection
+            else
+              ConnectionPool.new(size: CONNECTION_POOL_SIZE) { configuration.connection }
+            end
           elsif configuration.url
-            ::Redis.new(url: configuration.url)
+            ConnectionPool.new(size: CONNECTION_POOL_SIZE) { ::Redis.new(url: configuration.url) }
           else
-            ::Redis.new
+            ConnectionPool.new(size: CONNECTION_POOL_SIZE) { ::Redis.new }
           end
       end
 
@@ -72,7 +80,7 @@ module HealthMonitor
       end
 
       def used_memory_mb
-        bytes_to_megabytes(redis.info['used_memory'])
+        bytes_to_megabytes(redis.with { |conn| conn.info['used_memory'] })
       end
     end
   end
