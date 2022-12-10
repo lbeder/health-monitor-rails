@@ -73,6 +73,7 @@ module HealthMonitor
 
       def check_processes!
         sidekiq_stats = ::Sidekiq::Stats.new
+
         return unless sidekiq_stats.processes_size.zero?
 
         raise 'Sidekiq alive processes number is 0!'
@@ -89,6 +90,7 @@ module HealthMonitor
       def check_queue_size!
         configuration.queues.each do |queue, config|
           size = queue(queue).size
+
           raise "queue '#{queue}': size #{size} is greater than #{config[:queue_size]}" if size > config[:queue_size]
         end
       end

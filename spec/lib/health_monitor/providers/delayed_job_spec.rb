@@ -3,13 +3,13 @@
 require 'spec_helper'
 
 describe HealthMonitor::Providers::DelayedJob do
+  subject { described_class.new(request: test_request) }
+
   describe HealthMonitor::Providers::DelayedJob::Configuration do
     describe 'defaults' do
       it { expect(described_class.new.queue_size).to eq(HealthMonitor::Providers::DelayedJob::Configuration::DEFAULT_QUEUES_SIZE) }
     end
   end
-
-  subject { described_class.new(request: test_request) }
 
   describe '#provider_name' do
     it { expect(described_class.provider_name).to eq('DelayedJob') }
@@ -18,6 +18,7 @@ describe HealthMonitor::Providers::DelayedJob do
   describe '#check!' do
     before do
       described_class.configure
+
       Providers.stub_delayed_job
     end
 
@@ -27,8 +28,8 @@ describe HealthMonitor::Providers::DelayedJob do
       }.not_to raise_error
     end
 
-    context 'failing' do
-      context 'queue_size' do
+    context 'when failing' do
+      context 'with queue_size' do
         before do
           Providers.stub_delayed_job_queue_size_failure
         end

@@ -28,7 +28,7 @@ describe HealthMonitor::HealthController, type: :controller do
       end
     end
 
-    context 'valid credentials provided' do
+    context 'with valid credentials provided' do
       before do
         request.env['HTTP_AUTHORIZATION'] =
           ActionController::HttpAuthentication::Basic.encode_credentials(username, password)
@@ -54,19 +54,14 @@ describe HealthMonitor::HealthController, type: :controller do
       end
 
       context 'when filtering provider' do
-        let(:params) do
-          if Rails.version >= '5'
-            { params: { providers: providers }, format: :json }
-          else
-            { providers: providers, format: :json }
-          end
-        end
+        let(:params) { { providers: providers } }
 
-        context 'multiple providers' do
+        context 'with multiple providers' do
           let(:providers) { %w[redis database] }
+
           it 'succesfully checks' do
             expect {
-              get :check, params
+              get :check, params: params, format: :json
             }.not_to raise_error
 
             expect(response).to be_ok
@@ -84,11 +79,12 @@ describe HealthMonitor::HealthController, type: :controller do
           end
         end
 
-        context 'single provider' do
+        context 'with a single provider' do
           let(:providers) { %w[redis] }
+
           it 'returns empty providers' do
             expect {
-              get :check, params
+              get :check, params: params, format: :json
             }.not_to raise_error
 
             expect(response).to be_ok
@@ -100,11 +96,12 @@ describe HealthMonitor::HealthController, type: :controller do
           end
         end
 
-        context 'unknown provider' do
+        context 'with an unknown provider' do
           let(:providers) { %w[foo-bar!] }
+
           it 'returns empty providers' do
             expect {
-              get :check, params
+              get :check, params: params, format: :json
             }.not_to raise_error
 
             expect(response).to be_ok
@@ -118,7 +115,7 @@ describe HealthMonitor::HealthController, type: :controller do
       end
     end
 
-    context 'invalid credentials provided' do
+    context 'with invalid credentials provided' do
       before do
         request.env['HTTP_AUTHORIZATION'] =
           ActionController::HttpAuthentication::Basic.encode_credentials('', '')
@@ -130,7 +127,7 @@ describe HealthMonitor::HealthController, type: :controller do
         }.not_to raise_error
 
         expect(response).not_to be_ok
-        expect(response.status).to eq(401)
+        expect(response).to have_http_status(:unauthorized)
       end
     end
   end
@@ -145,7 +142,7 @@ describe HealthMonitor::HealthController, type: :controller do
       end
     end
 
-    context 'valid environment variables synatx provided' do
+    context 'with valid environment variables synatx provided' do
       it 'succesfully checks' do
         expect {
           get :check, format: :json
@@ -179,7 +176,7 @@ describe HealthMonitor::HealthController, type: :controller do
       end
     end
 
-    context 'json rendering' do
+    describe 'json rendering' do
       it 'succesfully checks' do
         expect {
           get :check, format: :json
@@ -199,18 +196,18 @@ describe HealthMonitor::HealthController, type: :controller do
         )
       end
 
-      context 'failing' do
+      context 'when failing' do
         before do
           Providers.stub_database_failure
         end
 
-        it 'should fail' do
+        it 'fails' do
           expect {
             get :check, format: :json
           }.not_to raise_error
 
           expect(response).not_to be_ok
-          expect(response.status).to eq(503)
+          expect(response).to have_http_status(:service_unavailable)
 
           expect(JSON.parse(response.body)).to eq(
             'results' => [
@@ -227,7 +224,7 @@ describe HealthMonitor::HealthController, type: :controller do
       end
     end
 
-    context 'xml rendering' do
+    describe 'xml rendering' do
       it 'succesfully checks' do
         expect {
           get :check, format: :xml
@@ -247,18 +244,18 @@ describe HealthMonitor::HealthController, type: :controller do
         )
       end
 
-      context 'failing' do
+      context 'when failing' do
         before do
           Providers.stub_database_failure
         end
 
-        it 'should fail' do
+        it 'fails' do
           expect {
             get :check, format: :xml
           }.not_to raise_error
 
           expect(response).not_to be_ok
-          expect(response.status).to eq(503)
+          expect(response).to have_http_status(:service_unavailable)
 
           expect(parse_xml(response)).to eq(
             'results' => [

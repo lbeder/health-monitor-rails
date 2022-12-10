@@ -4,14 +4,13 @@ require 'spec_helper'
 
 describe HealthMonitor do
   let(:time) { Time.local(1990) }
+  let(:request) { test_request }
 
   before do
-    HealthMonitor.configuration = HealthMonitor::Configuration.new
+    described_class.configuration = HealthMonitor::Configuration.new
 
     Timecop.freeze(time)
   end
-
-  let(:request) { test_request }
 
   after do
     Timecop.return
@@ -22,7 +21,7 @@ describe HealthMonitor do
       it 'configures a single provider' do
         expect {
           subject.configure(&:redis)
-        }.to change { HealthMonitor.configuration.providers }
+        }.to change { described_class.configuration.providers }
           .to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis]))
       end
 
@@ -31,17 +30,17 @@ describe HealthMonitor do
           subject.configure(&:redis).configure do |redis_config|
             redis_config.url = 'redis://user:pass@example.redis.com:90210/'
           end
-        }.to change { HealthMonitor.configuration.providers }
+        }.to change { described_class.configuration.providers }
           .to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis]))
       end
 
-      it 'configures a multiple providers' do
+      it 'configures multiple providers' do
         expect {
           subject.configure do |config|
             config.redis
             config.sidekiq
           end
-        }.to change { HealthMonitor.configuration.providers }
+        }.to change { described_class.configuration.providers }
           .to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis,
             HealthMonitor::Providers::Sidekiq]))
       end
@@ -54,7 +53,7 @@ describe HealthMonitor do
               sidekiq_config.add_queue_configuration('critical', latency: 10.seconds, queue_size: 20)
             end
           end
-        }.to change { HealthMonitor.configuration.providers }
+        }.to change { described_class.configuration.providers }
           .to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis,
             HealthMonitor::Providers::Sidekiq]))
       end
@@ -62,7 +61,7 @@ describe HealthMonitor do
       it 'appends new providers' do
         expect {
           subject.configure(&:resque)
-        }.to change { HealthMonitor.configuration.providers }.to(Set.new([HealthMonitor::Providers::Database,
+        }.to change { described_class.configuration.providers }.to(Set.new([HealthMonitor::Providers::Database,
           HealthMonitor::Providers::Resque]))
       end
     end
@@ -75,7 +74,7 @@ describe HealthMonitor do
           subject.configure do |config|
             config.error_callback = error_callback
           end
-        }.to change { HealthMonitor.configuration.error_callback }.to(error_callback)
+        }.to change { described_class.configuration.error_callback }.to(error_callback)
       end
     end
 
@@ -90,13 +89,13 @@ describe HealthMonitor do
           subject.configure do |config|
             config.basic_auth_credentials = expected
           end
-        }.to change { HealthMonitor.configuration.basic_auth_credentials }.to(expected)
+        }.to change { described_class.configuration.basic_auth_credentials }.to(expected)
       end
     end
   end
 
   describe '#check' do
-    context 'default providers' do
+    context 'when default providers' do
       it 'succesfully checks' do
         expect(subject.check(request: request)).to eq(
           results: [
@@ -112,7 +111,7 @@ describe HealthMonitor do
       end
     end
 
-    context 'db and redis providers' do
+    context 'when db and redis providers' do
       before do
         subject.configure do |config|
           config.database
@@ -139,7 +138,7 @@ describe HealthMonitor do
         )
       end
 
-      context 'redis fails' do
+      context 'when redis fails' do
         before do
           Providers.stub_redis_failure
         end
@@ -164,7 +163,7 @@ describe HealthMonitor do
         end
       end
 
-      context 'sidekiq fails' do
+      context 'when sidekiq fails' do
         before do
           Providers.stub_sidekiq_workers_failure
         end
@@ -189,7 +188,7 @@ describe HealthMonitor do
         end
       end
 
-      context 'both redis and db fail' do
+      context 'when both redis and db fail' do
         before do
           Providers.stub_database_failure
           Providers.stub_redis_failure

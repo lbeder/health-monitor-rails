@@ -17,6 +17,7 @@ describe 'Health Monitor' do
     before do
       Providers.stub_database_failure
     end
+
     it 'renders html' do
       visit '/check'
       expect(page).to have_css('h3', count: 1)
@@ -35,6 +36,7 @@ describe 'Health Monitor' do
         config.environment_variables = environment_variables
       end
     end
+
     it 'renders html' do
       visit '/check'
       expect(page).to have_css('h3', count: 2)

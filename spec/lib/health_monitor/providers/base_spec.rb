@@ -3,9 +3,9 @@
 require 'spec_helper'
 
 describe HealthMonitor::Providers::Base do
-  let(:request) { test_request }
-
   subject { described_class.new(request: request) }
+
+  let(:request) { test_request }
 
   describe '#initialize' do
     it 'sets the request' do
