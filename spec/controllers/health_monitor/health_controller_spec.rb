@@ -56,7 +56,6 @@ describe HealthMonitor::HealthController, type: :controller do
       context 'when filtering provider' do
         let(:params) { { providers: providers } }
 
-
         context 'with multiple providers' do
           let(:providers) { %w[redis database] }
 
