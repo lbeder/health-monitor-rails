@@ -16,7 +16,7 @@ describe HealthMonitor::Providers::Resque do
       }.not_to raise_error
     end
 
-    context 'failing' do
+    context 'when failing' do
       before do
         Providers.stub_resque_failure
       end

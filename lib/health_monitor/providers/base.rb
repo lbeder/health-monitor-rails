@@ -3,6 +3,8 @@
 module HealthMonitor
   module Providers
     class Base
+      @global_configuration = nil
+
       attr_reader :request
       attr_accessor :configuration
 
@@ -10,10 +12,14 @@ module HealthMonitor
         @provider_name ||= name.demodulize
       end
 
+      def self.global_configuration
+        @global_configuration ||= configuration_class.new
+      end
+
       def self.configure
         return unless configurable?
 
-        @global_configuration = configuration_class.new
+        @global_configuration ||= configuration_class.new
 
         yield @global_configuration if block_given?
       end
@@ -23,7 +29,7 @@ module HealthMonitor
 
         return unless self.class.configurable?
 
-        self.configuration = self.class.instance_variable_get('@global_configuration')
+        self.configuration = self.class.global_configuration
       end
 
       # @abstract

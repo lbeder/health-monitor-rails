@@ -14,7 +14,8 @@ Spork.prefork do
   require 'rspec/rails'
   require 'database_cleaner'
   require 'pry'
-  require 'rediska'
+  require 'mock_redis'
+  require 'sidekiq/testing'
 
   Dir[File.expand_path('../lib/**/*.rb', __dir__)].sort.each { |f| require f }
   Dir[File.expand_path('support/**/*.rb', __dir__)].sort.each { |f| require f }
@@ -29,11 +30,16 @@ Spork.prefork do
       DatabaseCleaner.clean_with(:truncation)
     end
 
-    config.before(:each) do
+    config.before do
       DatabaseCleaner.start
+
+      mock_redis = MockRedis.new
+      allow(Redis).to receive(:new).and_return(mock_redis)
+
+      Sidekiq::Testing.fake!
     end
 
-    config.after(:each) do
+    config.after do
       DatabaseCleaner.clean
     end
 
