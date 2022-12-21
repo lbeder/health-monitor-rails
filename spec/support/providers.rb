@@ -12,8 +12,12 @@ module Providers
     allow(Rails.cache).to receive(:read).and_return(false)
   end
 
-  def stub_database_failure
-    allow(ActiveRecord::Migrator).to receive(:current_version).and_raise(Exception)
+  def stub_database_failure(database = nil)
+    if database.present?
+      allow(ActiveRecord::Base).to receive(:establish_connection).with(database).and_raise(Exception)
+    else
+      allow(ActiveRecord::Base).to receive(:establish_connection).and_raise(Exception)
+    end
   end
 
   def stub_delayed_job

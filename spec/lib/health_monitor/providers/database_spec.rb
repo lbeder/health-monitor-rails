@@ -27,9 +27,50 @@ describe HealthMonitor::Providers::Database do
         }.to raise_error(HealthMonitor::Providers::DatabaseException)
       end
     end
+
+    context 'with multiple databases' do
+      let(:database1) { :database1 }
+      let(:database2) { :database2 }
+
+      before do
+        described_class.configure do |config|
+          config.databases = [database1, database2]
+        end
+      end
+
+      it 'succesfully checks' do
+        expect {
+          subject.check!
+        }.not_to raise_error
+      end
+    end
+
+    context 'with the first database failing' do
+      before do
+        Providers.stub_database_failure(:database1)
+      end
+
+      it 'fails check!' do
+        expect {
+          subject.check!
+        }.to raise_error(HealthMonitor::Providers::DatabaseException)
+      end
+    end
+
+    context 'with the second database failing' do
+      before do
+        Providers.stub_database_failure(:database2)
+      end
+
+      it 'fails check!' do
+        expect {
+          subject.check!
+        }.to raise_error(HealthMonitor::Providers::DatabaseException)
+      end
+    end
   end
 
   describe '#configurable?' do
-    it { expect(described_class).not_to be_configurable }
+    it { expect(described_class).to be_configurable }
   end
 end
