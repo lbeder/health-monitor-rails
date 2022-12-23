@@ -5,25 +5,16 @@ development:
   timeout: 5000
 
 test:
-  adapter: sqlite3
-  database: db/test.sqlite3
-  pool: 5
-  timeout: 5000
+  database1:
+    adapter: sqlite3
+    database: db/database1.sqlite3
+  database2:
+    adapter: sqlite3
+    database: db/database2.sqlite3
+
 
 production:
   adapter: sqlite3
   database: db/production.sqlite3
-  pool: 5
-  timeout: 5000
-
-database1:
-  adapter: sqlite3
-  database: db/database1.sqlite3
-  pool: 5
-  timeout: 5000
-
-database2:
-  adapter: sqlite3
-  database: db/database2.sqlite3
   pool: 5
   timeout: 5000
