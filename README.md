@@ -258,10 +258,6 @@ end
 
 The currently supported settings are:
 
-#### Database
-
-* `databases`: an optional array of database names (as specified in `database.yml`) to check in case of using multiple databases at the same time. If you are only using a single per-env database by default, you can ignore this/
-
 #### Sidekiq
 
 * `latency`: the latency (in seconds) of a queue (now - when the oldest job was enqueued) which is considered unhealthy (the default is 30 seconds, but larger processing queue should have a larger latency value).

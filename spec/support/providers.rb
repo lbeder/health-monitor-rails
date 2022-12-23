@@ -13,10 +13,8 @@ module Providers
   end
 
   def stub_database_failure(database = nil)
-    if database.present?
-      allow(ActiveRecord::Base).to receive(:establish_connection).with(database).and_raise(Exception)
-    else
-      allow(ActiveRecord::Base).to receive(:establish_connection).and_raise(Exception)
+    allow_any_instance_of(ActiveRecord::ConnectionAdapters::AbstractAdapter).to receive(:schema_version) do |instance|
+      raise StandardError if !database.present? || instance.pool.db_config.name == database.to_s
     end
   end
 

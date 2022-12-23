@@ -2,7 +2,9 @@ Gemfile.lock
 pkg
 tmp
 coverage
-spec/dummy/log
 gemfiles/*gemfile.lock
 vendor/bundle
 .bundle
+
+spec/dummy/log
+spec/dummy/db

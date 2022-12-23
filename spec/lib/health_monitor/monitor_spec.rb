@@ -199,7 +199,7 @@ describe HealthMonitor do
             results: [
               {
                 name: 'Database',
-                message: 'Exception',
+                message: 'unable to connect to: database1,database1_replica,database2',
                 status: 'ERROR'
               },
               {
@@ -242,7 +242,7 @@ describe HealthMonitor do
           results: [
             {
               name: 'Database',
-              message: 'Exception',
+              message: 'unable to connect to: database1,database1_replica,database2',
               status: 'ERROR'
             }
           ],

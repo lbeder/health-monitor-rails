@@ -24,19 +24,13 @@ describe HealthMonitor::Providers::Database do
       it 'fails check!' do
         expect {
           subject.check!
-        }.to raise_error(HealthMonitor::Providers::DatabaseException)
+        }.to raise_error(HealthMonitor::Providers::DatabaseException, 'unable to connect to: database1,database1_replica,database2')
       end
     end
 
     context 'with multiple databases' do
       let(:database1) { :database1 }
       let(:database2) { :database2 }
-
-      before do
-        described_class.configure do |config|
-          config.databases = [database1, database2]
-        end
-      end
 
       it 'succesfully checks' do
         expect {
@@ -53,7 +47,7 @@ describe HealthMonitor::Providers::Database do
       it 'fails check!' do
         expect {
           subject.check!
-        }.to raise_error(HealthMonitor::Providers::DatabaseException)
+        }.to raise_error(HealthMonitor::Providers::DatabaseException, 'unable to connect to: database1')
       end
     end
 
@@ -65,12 +59,12 @@ describe HealthMonitor::Providers::Database do
       it 'fails check!' do
         expect {
           subject.check!
-        }.to raise_error(HealthMonitor::Providers::DatabaseException)
+        }.to raise_error(HealthMonitor::Providers::DatabaseException, 'unable to connect to: database2')
       end
     end
   end
 
   describe '#configurable?' do
-    it { expect(described_class).to be_configurable }
+    it { expect(described_class).not_to be_configurable }
   end
 end
