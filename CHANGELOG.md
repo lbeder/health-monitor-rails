@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.5.0 (2022-12-23)
+
+- Support multiple databases (thanks to @HarlemSquirrel for the help)
+
 ## 9.4.0 (2022-12-10)
 
 - Support a connection pool for Redis

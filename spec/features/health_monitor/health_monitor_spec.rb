@@ -24,7 +24,7 @@ describe 'Health Monitor' do
       expect(page).to have_css('h3', text: 'Services')
       expect(page).to have_css('.services dt.name', text: 'Database')
       expect(page).to have_css('.services div.state', text: 'ERROR')
-      expect(page).to have_css('.services div.message', text: 'Exception')
+      expect(page).to have_css('.services div.message', text: 'unable to connect to: database1,database1_replica,database2')
     end
   end
 

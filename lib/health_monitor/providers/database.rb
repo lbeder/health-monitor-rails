@@ -8,8 +8,15 @@ module HealthMonitor
 
     class Database < Base
       def check!
-        # Check connection to the DB:
-        ActiveRecord::Migrator.current_version
+        failed_databases = []
+
+        ActiveRecord::Base.connection_handler.all_connection_pools.each do |cp|
+          cp.connection.schema_version
+        rescue Exception
+          failed_databases << cp.db_config.name
+        end
+
+        raise "unable to connect to: #{failed_databases.uniq.join(',')}" unless failed_databases.empty?
       rescue Exception => e
         raise DatabaseException.new(e.message)
       end

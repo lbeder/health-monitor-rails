@@ -214,7 +214,7 @@ HealthMonitor.configure do |config|
   end
 end
 
-# To configure specific queues
+# Sidekiq with specific queues
 HealthMonitor.configure do |config|
   config.sidekiq.configure do |sidekiq_config|
     sidekiq_config.add_queue_configuration('critical', latency: 10.seconds, queue_size: 20)
@@ -224,7 +224,7 @@ end
 ```
 
 ```ruby
-# Redis
+# Redis with existing connection
 HealthMonitor.configure do |config|
   config.redis.configure do |redis_config|
     redis_config.connection = Redis.current # Use your custom redis connection
@@ -236,11 +236,22 @@ end
 Additionally, you can configure an explicit URL:
 
 ```ruby
-# Redis
+# Redis with a URL configuration
 HealthMonitor.configure do |config|
   config.redis.configure do |redis_config|
     redis_config.url = 'redis://user:pass@example.redis.com:90210/'
     redis_config.max_used_memory = 200
+  end
+end
+```
+
+Or via a connection pool:
+
+```ruby
+# Redis using Connection Pools
+HealthMonitor.configure do |config|
+  config.redis.configure do |redis_config|
+    redis_config.connection = ConnectionPool.new(size: 5) { Redis.new } # Use your custom connection pool
   end
 end
 ```

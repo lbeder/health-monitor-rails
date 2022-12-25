@@ -24,7 +24,42 @@ describe HealthMonitor::Providers::Database do
       it 'fails check!' do
         expect {
           subject.check!
-        }.to raise_error(HealthMonitor::Providers::DatabaseException)
+        }.to raise_error(HealthMonitor::Providers::DatabaseException, 'unable to connect to: database1,database1_replica,database2')
+      end
+    end
+
+    context 'with multiple databases' do
+      let(:database1) { :database1 }
+      let(:database2) { :database2 }
+
+      it 'succesfully checks' do
+        expect {
+          subject.check!
+        }.not_to raise_error
+      end
+    end
+
+    context 'with the first database failing' do
+      before do
+        Providers.stub_database_failure(:database1)
+      end
+
+      it 'fails check!' do
+        expect {
+          subject.check!
+        }.to raise_error(HealthMonitor::Providers::DatabaseException, 'unable to connect to: database1')
+      end
+    end
+
+    context 'with the second database failing' do
+      before do
+        Providers.stub_database_failure(:database2)
+      end
+
+      it 'fails check!' do
+        expect {
+          subject.check!
+        }.to raise_error(HealthMonitor::Providers::DatabaseException, 'unable to connect to: database2')
       end
     end
   end

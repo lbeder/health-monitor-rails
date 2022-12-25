@@ -213,7 +213,7 @@ describe HealthMonitor::HealthController, type: :controller do
             'results' => [
               {
                 'name' => 'Database',
-                'message' => 'Exception',
+                'message' => 'unable to connect to: database1,database1_replica,database2',
                 'status' => 'ERROR'
               }
             ],
@@ -261,7 +261,7 @@ describe HealthMonitor::HealthController, type: :controller do
             'results' => [
               {
                 'name' => 'Database',
-                'message' => 'Exception',
+                'message' => 'unable to connect to: database1,database1_replica,database2',
                 'status' => 'ERROR'
               }
             ],

@@ -12,8 +12,10 @@ module Providers
     allow(Rails.cache).to receive(:read).and_return(false)
   end
 
-  def stub_database_failure
-    allow(ActiveRecord::Migrator).to receive(:current_version).and_raise(Exception)
+  def stub_database_failure(database = nil)
+    allow_any_instance_of(ActiveRecord::ConnectionAdapters::AbstractAdapter).to receive(:schema_version) do |instance|
+      raise StandardError if !database.present? || instance.pool.db_config.name == database.to_s
+    end
   end
 
   def stub_delayed_job
