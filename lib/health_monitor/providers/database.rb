@@ -11,7 +11,7 @@ module HealthMonitor
         failed_databases = []
 
         ActiveRecord::Base.connection_handler.all_connection_pools.each do |cp|
-          cp.connection.schema_version
+          cp.connection.check_version
         rescue Exception
           failed_databases << cp.db_config.name
         end
