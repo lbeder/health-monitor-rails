@@ -12,6 +12,7 @@ module HealthMonitor
         DEFAULT_QUEUE_NAME = 'default'
         DEFAULT_LATENCY_TIMEOUT = 30
         DEFAULT_QUEUES_SIZE = 100
+        DEFAULT_RETRY_CHECK = 20
 
         attr_reader :queues
 
@@ -53,6 +54,7 @@ module HealthMonitor
         check_latency!
         check_queue_size!
         check_redis!
+        check_amount_of_retries!
       rescue Exception => e
         raise SidekiqException.new(e)
       end
@@ -93,6 +95,12 @@ module HealthMonitor
 
           raise "queue '#{queue}': size #{size} is greater than #{config[:queue_size]}" if size > config[:queue_size]
         end
+      end
+      
+      def check_amount_of_retries!
+        jobs_over_limit = ::Sidekiq::RetrySet.new.select { |job| job.item["retry_count"] >= DEFAULT_RETRY_CHECK }
+        
+        raise "amount of retries for a job is greater than #{DEFAULT_RETRY_CHECK}" if jobs_over_limit.any?
       end
 
       def check_redis!
