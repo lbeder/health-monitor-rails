@@ -13,7 +13,7 @@ module Providers
   end
 
   def stub_database_failure(database = nil)
-    allow_any_instance_of(ActiveRecord::ConnectionAdapters::AbstractAdapter).to receive(:schema_version) do |instance|
+    allow_any_instance_of(ActiveRecord::ConnectionAdapters::AbstractAdapter).to receive(:check_version) do |instance|
       raise StandardError if !database.present? || instance.pool.db_config.name == database.to_s
     end
   end
