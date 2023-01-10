@@ -6,7 +6,7 @@ require 'rails/all'
 
 Bundler.require(*Rails.groups)
 
-ActiveRecord.legacy_connection_handling = false
+ActiveRecord.legacy_connection_handling = false if Rails.version >= '7.0'
 
 module Dummy
   class Application < Rails::Application
