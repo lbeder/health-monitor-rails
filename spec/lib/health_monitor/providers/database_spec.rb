@@ -24,7 +24,7 @@ describe HealthMonitor::Providers::Database do
       it 'fails check!' do
         expect {
           subject.check!
-        }.to raise_error(HealthMonitor::Providers::DatabaseException, 'unable to connect to: database1,database1_replica,database2')
+        }.to raise_error(HealthMonitor::Providers::DatabaseException, 'unable to connect to: database1,database2')
       end
     end
 
