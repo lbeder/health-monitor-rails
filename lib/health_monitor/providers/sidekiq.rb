@@ -96,10 +96,10 @@ module HealthMonitor
           raise "queue '#{queue}': size #{size} is greater than #{config[:queue_size]}" if size > config[:queue_size]
         end
       end
-      
+
       def check_amount_of_retries!
-        jobs_over_limit = ::Sidekiq::RetrySet.new.select { |job| job.item["retry_count"] >= DEFAULT_RETRY_CHECK }
-        
+        jobs_over_limit = ::Sidekiq::RetrySet.new.select { |job| job.item['retry_count'] >= DEFAULT_RETRY_CHECK }
+
         raise "amount of retries for a job is greater than #{DEFAULT_RETRY_CHECK}" if jobs_over_limit.any?
       end
 
