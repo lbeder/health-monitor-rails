@@ -262,6 +262,8 @@ The currently supported settings are:
 
 * `latency`: the latency (in seconds) of a queue (now - when the oldest job was enqueued) which is considered unhealthy (the default is 30 seconds, but larger processing queue should have a larger latency value).
 * `queue_size`: the size (maximum) of a queue which is considered unhealthy (the default is 100).
+* `default_queue`: the default queue to check.
+* `add_queue_configuration`: add specific configuration per queue.
 
 #### Redis
 

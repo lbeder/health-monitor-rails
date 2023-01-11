@@ -1,5 +1,9 @@
 # Changelog
 
+## 9.6.0 (2023-10-01)
+
+- Fix issue "Unable to connect to: primary" for PostgreSQL (thanks to @loed-idzinga)
+
 ## 9.5.0 (2022-12-23)
 
 - Support multiple databases (thanks to @HarlemSquirrel for the help)
