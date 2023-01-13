@@ -98,9 +98,10 @@ module HealthMonitor
       end
 
       def check_amount_of_retries!
-        jobs_over_limit = ::Sidekiq::RetrySet.new.select { |job| job.item['retry_count'] >= DEFAULT_RETRY_CHECK }
+        maximum_amount_of_retries = ::HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_RETRY_CHECK
+        jobs_over_limit = ::Sidekiq::RetrySet.new.select { |job| job.item['retry_count'] >= maximum_amount_of_retries }
 
-        raise "amount of retries for a job is greater than #{DEFAULT_RETRY_CHECK}" if jobs_over_limit.any?
+        raise "amount of retries for a job is greater than #{maximum_amount_of_retries}" if jobs_over_limit.any?
       end
 
       def check_redis!
