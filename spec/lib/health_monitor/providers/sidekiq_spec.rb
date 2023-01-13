@@ -8,6 +8,7 @@ describe HealthMonitor::Providers::Sidekiq do
   let(:default_latency) { HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_LATENCY_TIMEOUT }
   let(:default_queue_size) { HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_QUEUES_SIZE }
   let(:default_queue_name) { HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_QUEUE_NAME }
+  let(:default_retry_check) { HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_RETRY_CHECK }
 
   describe HealthMonitor::Providers::Sidekiq::Configuration do
     describe 'defaults' do
@@ -110,6 +111,18 @@ describe HealthMonitor::Providers::Sidekiq do
           expect {
             subject.check!
           }.to raise_error(HealthMonitor::Providers::SidekiqException)
+        end
+      end
+
+      context 'with retries over limit' do
+        before do
+          Providers.stub_sidekiq_over_retry_limit_failure
+        end
+
+        it 'fails check!' do
+          expect {
+            subject.check!
+          }.to raise_error(HealthMonitor::Providers::SidekiqException, "amount of retries for a job is greater than 20")
         end
       end
     end
