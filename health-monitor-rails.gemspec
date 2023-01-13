@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.files = Dir['{app,config,db,lib}/**/*', 'MIT-LICENSE', 'Rakefile', 'README.md']
 
   s.required_ruby_version = '>= 2.5'
-  s.add_dependency 'railties', '>= 4.0'
+  s.add_dependency 'railties', '>= 6.1'
 
   s.add_development_dependency 'appraisal'
   s.add_development_dependency 'capybara'
