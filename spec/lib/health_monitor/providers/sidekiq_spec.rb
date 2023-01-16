@@ -5,12 +5,12 @@ require 'spec_helper'
 describe HealthMonitor::Providers::Sidekiq do
   subject { described_class.new(request: test_request) }
 
-  let(:default_latency) { HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_LATENCY_TIMEOUT }
-  let(:default_queue_size) { HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_QUEUES_SIZE }
   let(:default_queue_name) { HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_QUEUE_NAME }
-  let(:default_retry_check) { HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_RETRY_CHECK }
 
   describe HealthMonitor::Providers::Sidekiq::Configuration do
+    let(:default_latency) { HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_LATENCY_TIMEOUT }
+    let(:default_queue_size) { HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_QUEUES_SIZE }
+
     describe 'defaults' do
       it { expect(described_class.new.latency).to eq(default_latency) }
       it { expect(described_class.new.queue_size).to eq(default_queue_size) }
@@ -118,6 +118,8 @@ describe HealthMonitor::Providers::Sidekiq do
         before do
           Providers.stub_sidekiq_over_retry_limit_failure
         end
+
+        let(:default_retry_check) { HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_RETRY_CHECK }
 
         it 'fails check!' do
           expect {
