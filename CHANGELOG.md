@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.1.0 ((2023-01-16)
+
+- Add retry check for Sidekiq (thanks to @loed-idzinga)
+
 ## 10.0.0 ((2023-01-11)
 
 - Support multiple databases (thanks to @HarlemSquirrel and @loed-idzinga for the help)
