@@ -122,7 +122,10 @@ describe HealthMonitor::Providers::Sidekiq do
         it 'fails check!' do
           expect {
             subject.check!
-          }.to raise_error(HealthMonitor::Providers::SidekiqException, "amount of retries for a job is greater than 20")
+          }.to raise_error(
+            HealthMonitor::Providers::SidekiqException,
+            "amount of retries for a job is greater than #{default_retry_check}"
+          )
         end
       end
     end
