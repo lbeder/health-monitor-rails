@@ -50,6 +50,10 @@ module Providers
     allow(queue).to receive(:size).and_return(5)
     allow(Sidekiq::Queue).to receive(:new).and_return(queue)
 
+    retry_set = instance_double(Sidekiq::RetrySet)
+    allow(retry_set).to receive(:select).and_return([])
+    allow(Sidekiq::RetrySet).to receive(:new).and_return(retry_set)
+
     allow(Sidekiq).to receive(:redis_info).and_return(true)
   end
 
@@ -79,5 +83,12 @@ module Providers
 
   def stub_sidekiq_redis_failure
     allow(Sidekiq).to receive(:redis_info).and_raise(Redis::CannotConnectError)
+  end
+
+  def stub_sidekiq_over_retry_limit_failure
+    retry_set = instance_double(Sidekiq::RetrySet)
+    retry_count = ::HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_RETRY_CHECK + 1
+    allow(retry_set).to receive(:select).and_return([item: { retry_count: retry_count }])
+    allow(Sidekiq::RetrySet).to receive(:new).and_return(retry_set)
   end
 end
