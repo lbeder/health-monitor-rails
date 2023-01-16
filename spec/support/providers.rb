@@ -87,7 +87,8 @@ module Providers
 
   def stub_sidekiq_over_retry_limit_failure
     retry_set = instance_double(Sidekiq::RetrySet)
-    allow(retry_set).to receive(:select).and_return([item: { retry_count: 21 }])
+    retry_count = ::HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_RETRY_CHECK + 1
+    allow(retry_set).to receive(:select).and_return([item: { retry_count: retry_count }])
     allow(Sidekiq::RetrySet).to receive(:new).and_return(retry_set)
   end
 end
