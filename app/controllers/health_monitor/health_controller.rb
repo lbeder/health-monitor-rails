@@ -16,8 +16,8 @@ module HealthMonitor
 
       respond_to do |format|
         format.html
-        format.json { render json: statuses.to_json, status: statuses[:status] }
-        format.xml { render xml: statuses.to_xml, status: statuses[:status] }
+        format.json { render json: @statuses.to_json, status: @statuses[:status] }
+        format.xml { render xml: @statuses.to_xml, status: @statuses[:status] }
       end
     end
 
