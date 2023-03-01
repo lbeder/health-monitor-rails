@@ -108,7 +108,7 @@
 
 ## 7.2.1 (2017-06-18)
 
-- Fixe configuration memoization issue (#19).
+- Fix configuration memoization issue (#19).
 
 ## 7.1.0 (2017-03-13)
 
@@ -116,7 +116,7 @@
 
 ## 7.0.1 (2017-03-10)
 
-- Fixe incorrect configuration memoization issue.
+- Fix incorrect configuration memoization issue.
 
 ## 7.0.0 (2017-03-10)
 
@@ -128,4 +128,4 @@
 
 ## 6.0.0 (2017-01-27)
 
-- Fixe typo in the response JSON (which can caused some backward incompatibility issues)
+- Fix typo in the response JSON (which can caused some backward incompatibility issues)
