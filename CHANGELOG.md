@@ -1,5 +1,9 @@
 # Changelog
 
+## 10.2.0 ((2023-02-28)
+
+- Prevent duplicative status checks on JSON and XML endpoints (thanks to @GUI)
+
 ## 10.1.0 ((2023-01-16)
 
 - Add retry check for Sidekiq (thanks to @loed-idzinga)
