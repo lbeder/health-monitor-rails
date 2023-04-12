@@ -3,33 +3,31 @@
 module HealthMonitor
   module Providers
     class Base
-      @global_configuration = nil
+      class Configuration
+        attr_accessor :name
+
+        def initialize(provider)
+          @name = provider.class.name.demodulize
+        end
+      end
 
       attr_reader :request
-      attr_accessor :configuration
+      attr_reader :configuration
 
-      def self.provider_name
-        @provider_name ||= name.demodulize
+      def initialize
+        @configuration = configuration_class.new(self)
       end
 
-      def self.global_configuration
-        @global_configuration ||= configuration_class.new
+      def configure
+        yield @configuration if block_given?
       end
 
-      def self.configure
-        return unless configurable?
-
-        @global_configuration ||= configuration_class.new
-
-        yield @global_configuration if block_given?
+      def name
+        @configuration.name
       end
 
-      def initialize(request: nil)
-        @request = request
-
-        return unless self.class.configurable?
-
-        self.configuration = self.class.global_configuration
+      def request=(request)
+        @request ||= request
       end
 
       # @abstract
@@ -37,12 +35,11 @@ module HealthMonitor
         raise NotImplementedError
       end
 
-      def self.configurable?
-        configuration_class
-      end
+      private
 
-      # @abstract
-      def self.configuration_class; end
+      def configuration_class
+        Configuration
+      end
     end
   end
 end

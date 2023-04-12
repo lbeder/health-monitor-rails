@@ -14,6 +14,7 @@ Spork.prefork do
   require 'rspec/rails'
   require 'database_cleaner'
   require 'pry'
+  require 'timecop'
   require 'mock_redis'
   require 'sidekiq/testing'
 

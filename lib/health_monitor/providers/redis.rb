@@ -9,22 +9,20 @@ module HealthMonitor
     class RedisException < StandardError; end
 
     class Redis < Base
-      class Configuration
+      class Configuration < Base::Configuration
         DEFAULT_URL = nil
 
         attr_accessor :url, :connection, :max_used_memory
 
-        def initialize
+        def initialize(provider)
+          super(provider)
+
           @url = DEFAULT_URL
         end
       end
 
       class << self
         private
-
-        def configuration_class
-          ::HealthMonitor::Providers::Redis::Configuration
-        end
 
         def as_connection_pool(connection)
           ConnectionPool.new(size: CONNECTION_POOL_SIZE) { connection }
@@ -39,6 +37,10 @@ module HealthMonitor
       end
 
       private
+
+      def configuration_class
+        ::HealthMonitor::Providers::Redis::Configuration
+      end
 
       def check_values!
         time = Time.now.to_formatted_s(:rfc2822)

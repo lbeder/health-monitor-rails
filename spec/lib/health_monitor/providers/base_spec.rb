@@ -3,18 +3,16 @@
 require 'spec_helper'
 
 describe HealthMonitor::Providers::Base do
-  subject { described_class.new(request: request) }
-
-  let(:request) { test_request }
+  subject { described_class.new }
 
   describe '#initialize' do
-    it 'sets the request' do
-      expect(described_class.new(request: request).request).to eq(request)
+    it 'sets the configuration' do
+      expect(subject.configuration).to be_a(HealthMonitor::Providers::Base::Configuration)
     end
   end
 
-  describe '#provider_name' do
-    it { expect(described_class.provider_name).to eq('Base') }
+  describe '#name' do
+    it { expect(subject.name).to eq('Base') }
   end
 
   describe '#check!' do
@@ -25,13 +23,9 @@ describe HealthMonitor::Providers::Base do
     end
   end
 
-  describe '#configurable?' do
-    it { expect(described_class).not_to be_configurable }
-  end
-
   describe '#configuration_class' do
     it 'abstract' do
-      expect(described_class.send(:configuration_class)).to be_nil
+      expect(subject.send(:configuration_class)).to be(HealthMonitor::Providers::Base::Configuration)
     end
   end
 end

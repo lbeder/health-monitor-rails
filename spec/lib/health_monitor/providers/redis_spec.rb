@@ -3,22 +3,23 @@
 require 'spec_helper'
 
 describe HealthMonitor::Providers::Redis do
-  subject { described_class.new(request: test_request) }
+  subject { described_class.new }
 
-  describe HealthMonitor::Providers::Redis::Configuration do
-    describe 'defaults' do
-      it { expect(described_class.new.url).to eq(HealthMonitor::Providers::Redis::Configuration::DEFAULT_URL) }
-    end
+  context "defaults" do
+    it { expect(subject.configuration.name).to eq('Redis') }
+    it { expect(subject.configuration.url).to eq(HealthMonitor::Providers::Redis::Configuration::DEFAULT_URL) }
   end
 
-  describe '#provider_name' do
-    it { expect(described_class.provider_name).to eq('Redis') }
+  describe '#name' do
+    it { expect(subject.name).to eq('Redis') }
   end
 
   describe '#check!' do
+    before { subject.request = test_request }
+
     context 'with a connection' do
       before do
-        described_class.configure do |config|
+        subject.configure do |config|
           config.connection = Redis.new
         end
       end
@@ -44,7 +45,7 @@ describe HealthMonitor::Providers::Redis do
 
     context 'with a connection pool' do
       before do
-        described_class.configure do |config|
+        subject.configure do |config|
           config.connection = ConnectionPool.new(size: 5) { Redis.new }
         end
       end
@@ -70,7 +71,7 @@ describe HealthMonitor::Providers::Redis do
 
     context 'with max_used_memory' do
       before do
-        described_class.configure do |config|
+        subject.configure do |config|
           config.max_used_memory = 100
         end
       end
@@ -95,13 +96,9 @@ describe HealthMonitor::Providers::Redis do
     end
   end
 
-  describe '#configurable?' do
-    it { expect(described_class).to be_configurable }
-  end
-
   describe '#configure' do
     before do
-      described_class.configure
+      subject.configure
     end
 
     describe '#connection' do
@@ -109,10 +106,10 @@ describe HealthMonitor::Providers::Redis do
 
       it 'connection can be set directly dir' do
         expect {
-          described_class.configure do |config|
+          subject.configure do |config|
             config.connection = redis_conenction
           end
-        }.to change { described_class.new.configuration.connection }.to(redis_conenction)
+        }.to change { subject.configuration.connection }.to(redis_conenction)
       end
     end
 
@@ -121,10 +118,10 @@ describe HealthMonitor::Providers::Redis do
 
       it 'url can be configured' do
         expect {
-          described_class.configure do |config|
+          subject.configure do |config|
             config.url = url
           end
-        }.to change { described_class.new.configuration.url }.to(url)
+        }.to change { subject.configuration.url }.to(url)
       end
     end
 
@@ -133,15 +130,17 @@ describe HealthMonitor::Providers::Redis do
 
       it 'max_used_memory can be configured' do
         expect {
-          described_class.configure do |config|
+          subject.configure do |config|
             config.max_used_memory = max_used_memory
           end
-        }.to change { described_class.new.configuration.max_used_memory }.to(max_used_memory)
+        }.to change { subject.configuration.max_used_memory }.to(max_used_memory)
       end
     end
   end
 
   describe '#key' do
+    before { subject.request = test_request }
+
     it { expect(subject.send(:key)).to eq('health:0.0.0.0') }
   end
 end

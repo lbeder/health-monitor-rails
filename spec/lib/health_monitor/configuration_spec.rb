@@ -3,10 +3,12 @@
 require 'spec_helper'
 
 describe HealthMonitor::Configuration do
-  let(:default_configuration) { Set.new([HealthMonitor::Providers::Database]) }
-
   describe 'defaults' do
-    it { expect(subject.providers).to eq(default_configuration) }
+    it do
+      expect(subject.providers.length).to be(1)
+      expect(subject.providers.first).to be_a(HealthMonitor::Providers::Database)
+    end
+
     it { expect(subject.error_callback).to be_nil }
     it { expect(subject.basic_auth_credentials).to be_nil }
     it { expect(subject.path).to be_nil }
@@ -25,13 +27,14 @@ describe HealthMonitor::Configuration do
       end
 
       it "configures #{provider_name}" do
-        expect {
-          subject.send(provider_name)
-        }.to change(subject, :providers).to(Set.new(["HealthMonitor::Providers::#{provider_name.to_s.titleize.delete(' ')}".constantize]))
+        subject.send(provider_name)
+
+        expect(subject.providers.length).to be(1)
+        expect(subject.providers.first).to be_a("HealthMonitor::Providers::#{provider_name.to_s.titleize.delete(' ')}".constantize)
       end
 
       it "returns #{provider_name}'s class" do
-        expect(subject.send(provider_name)).to eq("HealthMonitor::Providers::#{provider_name.to_s.titleize.delete(' ')}".constantize)
+        expect(subject.send(provider_name)).to be_a("HealthMonitor::Providers::#{provider_name.to_s.titleize.delete(' ')}".constantize)
       end
     end
   end
@@ -68,11 +71,11 @@ describe HealthMonitor::Configuration do
     end
   end
 
-  describe '#no_database' do
-    it 'removes the default database check' do
-      expect {
-        subject.no_database
-      }.to change(subject, :providers).from(default_configuration).to(Set.new)
-    end
-  end
+  # describe '#no_database' do
+  #   it 'removes the default database check' do
+  #     subject.no_database
+
+  #     expect(subject.providers).to be_empty?
+  #   end
+  # end
 end

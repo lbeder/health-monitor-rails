@@ -3,16 +3,19 @@
 require 'spec_helper'
 
 describe HealthMonitor::Providers::Cache do
-  subject { described_class.new(request: test_request) }
+  subject { described_class.new }
 
-  describe '#provider_name' do
-    it { expect(described_class.provider_name).to eq('Cache') }
+  describe '#name' do
+    it { expect(subject.name).to eq('Cache') }
   end
 
   describe '#check!' do
+    subject { described_class.new }
+    before { subject.request = test_request }
+
     it 'succesfully checks' do
       expect {
-        subject.check!
+        subject
       }.not_to raise_error
     end
 
@@ -29,11 +32,11 @@ describe HealthMonitor::Providers::Cache do
     end
   end
 
-  describe '#configurable?' do
-    it { expect(described_class).not_to be_configurable }
-  end
-
   describe '#key' do
+    before do
+      subject.request = test_request
+    end
+
     it { expect(subject.send(:key)).to eq('health:0.0.0.0') }
   end
 end

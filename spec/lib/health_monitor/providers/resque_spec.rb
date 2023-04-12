@@ -3,13 +3,15 @@
 require 'spec_helper'
 
 describe HealthMonitor::Providers::Resque do
-  subject { described_class.new(request: test_request) }
+  subject { described_class.new }
 
-  describe '#provider_name' do
-    it { expect(described_class.provider_name).to eq('Resque') }
+  describe '#name' do
+    it { expect(subject.name).to eq('Resque') }
   end
 
   describe '#check!' do
+    before { subject.request = test_request }
+
     it 'succesfully checks' do
       expect {
         subject.check!
@@ -27,9 +29,5 @@ describe HealthMonitor::Providers::Resque do
         }.to raise_error(HealthMonitor::Providers::ResqueException)
       end
     end
-  end
-
-  describe '#configurable?' do
-    it { expect(described_class).not_to be_configurable }
   end
 end

@@ -25,7 +25,7 @@ module HealthMonitor
 
         add_provider(
           "HealthMonitor::Providers::#{provider_name.to_s.titleize.delete(' ')}"
-            .constantize
+            .constantize.new
         )
       end
     end
@@ -40,10 +40,10 @@ module HealthMonitor
 
     private
 
-    def add_provider(provider_class)
-      (@providers ||= Set.new) << provider_class
+    def add_provider(provider)
+      (@providers ||= Set.new) << provider
 
-      provider_class
+      provider
     end
   end
 end

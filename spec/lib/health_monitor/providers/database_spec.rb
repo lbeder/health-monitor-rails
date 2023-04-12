@@ -3,13 +3,16 @@
 require 'spec_helper'
 
 describe HealthMonitor::Providers::Database do
-  subject { described_class.new(request: test_request) }
+  subject { described_class.new }
 
-  describe '#provider_name' do
-    it { expect(described_class.provider_name).to eq('Database') }
+  describe '#name' do
+    it { expect(subject.name).to eq('Database') }
   end
 
   describe '#check!' do
+    subject { described_class.new }
+    before { subject.request = test_request }
+
     it 'succesfully checks' do
       expect {
         subject.check!
@@ -62,9 +65,5 @@ describe HealthMonitor::Providers::Database do
         }.to raise_error(HealthMonitor::Providers::DatabaseException, 'unable to connect to: database2')
       end
     end
-  end
-
-  describe '#configurable?' do
-    it { expect(described_class).not_to be_configurable }
   end
 end

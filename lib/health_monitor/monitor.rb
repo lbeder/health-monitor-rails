@@ -21,7 +21,7 @@ module HealthMonitor
   def check(request: nil, params: {})
     providers = configuration.providers
     if params[:providers].present?
-      providers = providers.select { |provider| params[:providers].include?(provider.provider_name.downcase) }
+      providers = providers.select { |provider| params[:providers].include?(provider.name.downcase) }
     end
 
     results = providers.map { |provider| provider_result(provider, request) }
@@ -36,11 +36,12 @@ module HealthMonitor
   private
 
   def provider_result(provider, request)
-    monitor = provider.new(request: request)
+    monitor = provider
+    monitor.request = request
     monitor.check!
 
     {
-      name: provider.provider_name,
+      name: provider.name,
       message: '',
       status: STATUSES[:ok]
     }
@@ -48,7 +49,7 @@ module HealthMonitor
     configuration.error_callback.try(:call, e)
 
     {
-      name: provider.provider_name,
+      name: provider.name,
       message: e.message,
       status: STATUSES[:error]
     }

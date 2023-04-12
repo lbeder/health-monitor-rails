@@ -8,7 +8,7 @@ module HealthMonitor
     class SidekiqException < StandardError; end
 
     class Sidekiq < Base
-      class Configuration
+      class Configuration < Base::Configuration
         DEFAULT_QUEUE_NAME = 'default'
         DEFAULT_LATENCY_TIMEOUT = 30
         DEFAULT_QUEUES_SIZE = 100
@@ -16,7 +16,9 @@ module HealthMonitor
 
         attr_reader :queues
 
-        def initialize
+        def initialize(provider)
+          super(provider)
+
           @queues = {}
           @queues[DEFAULT_QUEUE_NAME] = { latency: DEFAULT_LATENCY_TIMEOUT, queue_size: DEFAULT_QUEUES_SIZE }
         end
@@ -61,12 +63,8 @@ module HealthMonitor
 
       private
 
-      class << self
-        private
-
-        def configuration_class
-          ::HealthMonitor::Providers::Sidekiq::Configuration
-        end
+      def configuration_class
+        ::HealthMonitor::Providers::Sidekiq::Configuration
       end
 
       def check_workers!
