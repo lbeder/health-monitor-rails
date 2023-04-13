@@ -16,7 +16,7 @@ module HealthMonitor
     end
 
     def no_database
-      @providers.delete(HealthMonitor::Providers::Database)
+      @providers.shift
     end
 
     PROVIDERS.each do |provider_name|
@@ -41,7 +41,7 @@ module HealthMonitor
     private
 
     def add_provider(provider)
-      (@providers ||= Set.new) << provider
+      (@providers ||= Array.new) << provider
 
       provider
     end

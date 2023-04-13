@@ -17,7 +17,7 @@ describe HealthMonitor::Configuration do
   describe 'providers' do
     HealthMonitor::Configuration::PROVIDERS.each do |provider_name|
       before do
-        subject.instance_variable_set('@providers', Set.new)
+        subject.instance_variable_set('@providers', Array.new)
 
         stub_const("HealthMonitor::Providers::#{provider_name.to_s.titleize.delete(' ')}", Class.new)
       end
@@ -41,7 +41,7 @@ describe HealthMonitor::Configuration do
 
   describe '#add_custom_provider' do
     before do
-      subject.instance_variable_set('@providers', Set.new)
+      subject.instance_variable_set('@providers', Array.new)
     end
 
     context 'when inherits' do
@@ -51,7 +51,7 @@ describe HealthMonitor::Configuration do
       it 'accepts' do
         expect {
           subject.add_custom_provider(CustomProvider)
-        }.to change(subject, :providers).to(Set.new([CustomProvider]))
+        }.to change(subject, :providers).to(Array.new([CustomProvider]))
       end
 
       it 'returns CustomProvider class' do
@@ -71,11 +71,21 @@ describe HealthMonitor::Configuration do
     end
   end
 
-  # describe '#no_database' do
-  #   it 'removes the default database check' do
-  #     subject.no_database
+  describe '#no_database' do
+    it 'removes the default database check' do
+      subject.no_database
 
-  #     expect(subject.providers).to be_empty?
-  #   end
-  # end
+      expect(subject.providers).to be_empty
+    end
+
+    context 'when there are multiple configured providers' do
+      it 'removes only the default database check' do
+        subject.redis
+        subject.no_database
+
+        expect(subject.providers.length).to be(1)
+        expect(subject.providers.first).to be_a(HealthMonitor::Providers::Redis)
+      end
+    end
+  end
 end
