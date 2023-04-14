@@ -1,5 +1,9 @@
 # Changelog
 
+## 11.0.0 ((2023-04-14)
+
+- Adding support for multiple named providers and optional providers (thanks to @saviogl)
+
 ## 10.2.0 ((2023-02-28)
 
 - Prevent duplicative status checks on JSON and XML endpoints (thanks to @GUI)
