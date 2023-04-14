@@ -1,6 +1,7 @@
 require:
   - rubocop-rake
   - rubocop-rspec
+  - rubocop-capybara
 
 AllCops:
   TargetRubyVersion: 2.5
@@ -19,6 +20,9 @@ Metrics/BlockLength:
   Max: 30
   Exclude:
     - 'spec/**/*'
+
+Metrics/CollectionLiteralLength:
+  Enabled: true
 
 Security/IoMethods:
   Enabled: true
@@ -175,6 +179,36 @@ Style/StringChars:
 Style/NestedFileDirname:
   Enabled: true
 
+Style/ConcatArrayLiterals:
+  Enabled: true
+
+Style/MapToSet:
+  Enabled: true
+
+Style/MinMaxComparison:
+  Enabled: true
+
+Style/RedundantDoubleSplatHashBraces:
+  Enabled: true
+
+Style/ComparableClamp:
+  Enabled: true
+
+Style/DataInheritance:
+  Enabled: true
+
+Style/DirEmpty:
+  Enabled: true
+
+Style/FileEmpty:
+  Enabled: true
+
+Style/RedundantHeredocDelimiterQuotes:
+  Enabled: true
+
+Style/RedundantLineContinuation:
+  Enabled: true
+
 Layout/LineLength:
   Max: 120
   Exclude:
@@ -329,19 +363,7 @@ Lint/UnexpectedBlockArity:
 Lint/UselessRuby2Keywords:
   Enabled: true
 
-Naming/BlockForwarding:
-  Enabled: true
-
-Gemspec/RequireMFA:
-  Enabled: true
-
-Gemspec/DeprecatedAttributeAssignment:
-  Enabled: true
-
-Layout/LineContinuationLeadingSpace:
-  Enabled: true
-
-Layout/LineContinuationSpacing:
+Lint/DuplicateMatchPattern:
   Enabled: true
 
 Lint/ConstantOverwrittenInRescue:
@@ -357,6 +379,27 @@ Lint/RefinementImportMethods:
   Enabled: true
 
 Lint/RequireRangeParentheses:
+  Enabled: true
+
+Lint/UselessRescue:
+  Enabled: true
+
+Naming/BlockForwarding:
+  Enabled: true
+
+Gemspec/RequireMFA:
+  Enabled: true
+
+Gemspec/DeprecatedAttributeAssignment:
+  Enabled: true
+
+Gemspec/DevelopmentDependencies:
+  Enabled: true
+
+Layout/LineContinuationLeadingSpace:
+  Enabled: true
+
+Layout/LineContinuationSpacing:
   Enabled: true
 
 Security/CompoundHash:
@@ -449,18 +492,6 @@ RSpec/SubjectDeclaration:
 RSpec/VerifiedDoubleReference:
   Enabled: true
 
-RSpec/Capybara/NegationMatcher:
-  Enabled: true
-
-RSpec/Capybara/SpecificActions:
-  Enabled: true
-
-RSpec/Capybara/SpecificFinders:
-  Enabled: true
-
-RSpec/Capybara/SpecificMatcher:
-  Enabled: true
-
 RSpec/FactoryBot/ConsistentParenthesesStyle:
   Enabled: true
 
@@ -475,3 +506,39 @@ RSpec/Rails/HaveHttpStatus:
 
 RSpec/Rails/InferredSpecType:
   Enabled: false
+
+RSpec/DuplicatedMetadata:
+  Enabled: true
+
+RSpec/PendingWithoutReason:
+  Enabled: true
+
+RSpec/FactoryBot/FactoryNameStyle:
+  Enabled: true
+
+RSpec/RedundantAround:
+  Enabled: true
+
+RSpec/SkipBlockInsideExample:
+  Enabled: true
+
+RSpec/Rails/MinitestAssertions:
+  Enabled: true
+
+RSpec/Rails/TravelAround:
+  Enabled: true
+
+Capybara/NegationMatcher:
+  Enabled: true
+
+Capybara/SpecificActions:
+  Enabled: true
+
+Capybara/SpecificFinders:
+  Enabled: true
+
+Capybara/SpecificMatcher:
+  Enabled: true
+
+Capybara/MatchStyle:
+  Enabled: true

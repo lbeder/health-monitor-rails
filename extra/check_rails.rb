@@ -51,7 +51,7 @@ begin
   missing = MANDATORY_PARAMS.select { |p| options[p].nil? }
   raise OptionParser::MissingArgument.new(missing.join(', ')) unless missing.empty?
 rescue OptionParser::InvalidOption, OptionParser::MissingArgument
-  puts $ERROR_INFO.to_s
+  puts $ERROR_INFO
   puts ''
   puts parser
   exit 1

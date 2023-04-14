@@ -19,25 +19,6 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.5'
   s.add_dependency 'railties', '>= 6.1'
 
-  s.add_development_dependency 'appraisal'
-  s.add_development_dependency 'capybara'
-  s.add_development_dependency 'capybara-screenshot'
-  s.add_development_dependency 'coveralls_reborn'
-  s.add_development_dependency 'database_cleaner'
-  s.add_development_dependency 'delayed_job_active_record', '>= 4.1'
-  s.add_development_dependency 'mock_redis'
-  s.add_development_dependency 'pry'
-  s.add_development_dependency 'rake'
-  s.add_development_dependency 'resque'
-  s.add_development_dependency 'rspec-rails'
-  s.add_development_dependency 'rubocop'
-  s.add_development_dependency 'rubocop-rake'
-  s.add_development_dependency 'rubocop-rspec'
-  s.add_development_dependency 'sidekiq', '>= 3.0'
-  s.add_development_dependency 'spork'
-  s.add_development_dependency 'sqlite3', '>= 1.3'
-  s.add_development_dependency 'timecop'
-
   s.metadata = {
     'rubygems_mfa_required' => 'true'
   }
