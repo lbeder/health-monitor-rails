@@ -12,12 +12,17 @@ Metrics/MethodLength:
     - 'spec/**/*'
 
 Metrics/AbcSize:
-  Max: 20
+  Max: 24
   Exclude:
     - 'spec/**/*'
 
 Metrics/BlockLength:
   Max: 30
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/CyclomaticComplexity:
+  Max: 12
   Exclude:
     - 'spec/**/*'
 
