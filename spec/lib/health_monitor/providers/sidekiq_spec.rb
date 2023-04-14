@@ -7,7 +7,7 @@ describe HealthMonitor::Providers::Sidekiq do
 
   let(:default_queue_name) { HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_QUEUE_NAME }
 
-  context "defaults" do
+  context 'with defaults' do
     let(:default_latency) { HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_LATENCY_TIMEOUT }
     let(:default_queue_size) { HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_QUEUES_SIZE }
 
@@ -134,7 +134,7 @@ describe HealthMonitor::Providers::Sidekiq do
   end
 
   describe '#configure' do
-        let(:latency) { 123 }
+    let(:latency) { 123 }
     let(:queue_size) { 50 }
 
     it 'latency and queue_size can be configured' do

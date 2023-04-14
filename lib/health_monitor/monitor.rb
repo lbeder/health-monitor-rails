@@ -27,7 +27,7 @@ module HealthMonitor
     results = providers.map { |provider| provider_result(provider, request) }
 
     {
-      results: results.map{ |c| c.without(:critical) },
+      results: results.map { |c| c.without(:critical) },
       status: results.any? { |res| res[:status] != STATUSES[:ok] && res[:critical] } ? :service_unavailable : :ok,
       timestamp: Time.now.to_formatted_s(:rfc2822)
     }

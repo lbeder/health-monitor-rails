@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'forwardable'
 
 module HealthMonitor
@@ -7,8 +8,7 @@ module HealthMonitor
       extend Forwardable
 
       class Configuration
-        attr_accessor :name
-        attr_accessor :critical
+        attr_accessor :name, :critical
 
         def initialize(provider)
           @name = provider.class.name.demodulize
@@ -16,7 +16,7 @@ module HealthMonitor
         end
       end
 
-      attr_reader :request
+      attr_accessor :request
       attr_reader :configuration
 
       def_delegators :@configuration, :name, :critical
@@ -27,10 +27,6 @@ module HealthMonitor
 
       def configure
         yield @configuration if block_given?
-      end
-
-      def request=(request)
-        @request ||= request
       end
 
       # @abstract

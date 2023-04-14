@@ -5,7 +5,7 @@ require 'spec_helper'
 describe HealthMonitor::Providers::Redis do
   subject { described_class.new }
 
-  context "defaults" do
+  context 'with defaults' do
     it { expect(subject.configuration.name).to eq('Redis') }
     it { expect(subject.configuration.url).to eq(HealthMonitor::Providers::Redis::Configuration::DEFAULT_URL) }
   end

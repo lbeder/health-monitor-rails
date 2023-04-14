@@ -111,19 +111,18 @@ describe HealthMonitor do
     context 'when providers are not critical' do
       before do
         subject.configure do |config|
-          config.redis.configure { |config| config.critical = false }
-          config.sidekiq.configure { |config| config.critical = false }
+          config.redis.configure { |c| c.critical = false }
+          config.sidekiq.configure { |c| c.critical = false }
         end
       end
 
-      context 'and fails check' do
+      context 'with failed check' do
         before do
           Providers.stub_sidekiq_workers_failure
           Providers.stub_redis_failure
         end
 
         it 'returns results and succesful status' do
-
           expect(subject.check(request: request)).to eq(
             results: [
               {
@@ -151,9 +150,7 @@ describe HealthMonitor do
 
     context 'when db and redis providers' do
       before do
-        subject.configure do |config|
-          config.redis
-        end
+        subject.configure(&:redis)
       end
 
       it 'succesfully checks' do

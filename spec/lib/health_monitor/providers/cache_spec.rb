@@ -11,6 +11,7 @@ describe HealthMonitor::Providers::Cache do
 
   describe '#check!' do
     subject { described_class.new }
+
     before { subject.request = test_request }
 
     it 'succesfully checks' do

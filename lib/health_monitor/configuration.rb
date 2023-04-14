@@ -41,7 +41,7 @@ module HealthMonitor
     private
 
     def add_provider(provider)
-      (@providers ||= Array.new) << provider
+      (@providers ||= []) << provider
 
       provider
     end

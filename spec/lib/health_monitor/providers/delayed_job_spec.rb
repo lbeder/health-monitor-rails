@@ -15,7 +15,8 @@ describe HealthMonitor::Providers::DelayedJob do
   end
 
   describe '#check!' do
-    subject { described_class.new}
+    subject { described_class.new }
+
     before do
       subject.request = test_request
       Providers.stub_delayed_job

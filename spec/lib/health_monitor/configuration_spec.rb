@@ -17,7 +17,7 @@ describe HealthMonitor::Configuration do
   describe 'providers' do
     HealthMonitor::Configuration::PROVIDERS.each do |provider_name|
       before do
-        subject.instance_variable_set('@providers', Array.new)
+        subject.instance_variable_set('@providers', [])
 
         stub_const("HealthMonitor::Providers::#{provider_name.to_s.titleize.delete(' ')}", Class.new)
       end
@@ -41,7 +41,7 @@ describe HealthMonitor::Configuration do
 
   describe '#add_custom_provider' do
     before do
-      subject.instance_variable_set('@providers', Array.new)
+      subject.instance_variable_set('@providers', [])
     end
 
     context 'when inherits' do
