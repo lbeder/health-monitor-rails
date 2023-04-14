@@ -203,6 +203,22 @@ end
 
 ### Provider Configuration
 
+All providers accept a general set of baseline configuration:
+
+```ruby
+HealthMonitor.configure do |config|
+  config.[provider].configure do |provider_config|
+    provider_config.name = 'Redis'
+    provider_config.critical = true
+  end
+end
+```
+
+- __name__: Custom name for the provider (Defaults to __class name__. Ex: 'Redis', 'Sidekiq')
+- __critical__: Whether or not the provider is a critical dependency (Defaults to: __true__). If set to __false__, the monitor will report its status but ignore it when determining overall application health status
+
+> The __critical__ option allows you to monitor for additional non-critical dependencies that are not fully required for your application to be operational, like a cache database for instance
+
 Some of the providers can also accept additional configuration:
 
 ```ruby
@@ -252,6 +268,25 @@ Or via a connection pool:
 HealthMonitor.configure do |config|
   config.redis.configure do |redis_config|
     redis_config.connection = ConnectionPool.new(size: 5) { Redis.new } # Use your custom connection pool
+  end
+end
+```
+
+For providers that can be configured with its endpoits/urls you can also add multiple declarations to ensure you are reporting across all dependencies:
+
+```ruby
+HealthMonitor.configure do |config|
+  config.redis.configure do |c|
+    c.name = "Redis: Cache"
+    c.url = ENV.fetch("REDISCLOUD_URL", 'redis://localhost:6379/0')
+  end
+  config.redis.configure do |c|
+    c.name = "Redis: Action Cable"
+    c.url = ENV.fetch("REDISCLOUD_URL", 'redis://localhost:6379/0')
+  end
+  config.redis.configure do |c|
+    c.name = "Redis: Sidekiq"
+    c.url = ENV.fetch("REDISCLOUD_URL", 'redis://localhost:6379/1')
   end
 end
 ```

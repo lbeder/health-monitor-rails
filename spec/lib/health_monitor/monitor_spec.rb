@@ -19,50 +19,47 @@ describe HealthMonitor do
   describe '#configure' do
     describe 'providers' do
       it 'configures a single provider' do
-        expect {
-          subject.configure(&:redis)
-        }.to change { described_class.configuration.providers }
-          .to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis]))
+        subject.configure(&:redis)
+
+        expect(described_class.configuration.providers.length).to be(2)
+        expect(described_class.configuration.providers.to_a.first).to be_a(HealthMonitor::Providers::Database)
+        expect(described_class.configuration.providers.to_a.second).to be_a(HealthMonitor::Providers::Redis)
       end
 
       it 'configures a single provider with custom configuration' do
-        expect {
-          subject.configure(&:redis).configure do |redis_config|
-            redis_config.url = 'redis://user:pass@example.redis.com:90210/'
-          end
-        }.to change { described_class.configuration.providers }
-          .to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis]))
+        subject.configure(&:redis).configure do |redis_config|
+          redis_config.url = 'redis://user:pass@example.redis.com:90210/'
+        end
+
+        expect(described_class.configuration.providers.length).to be(2)
+        expect(described_class.configuration.providers.to_a.first).to be_a(HealthMonitor::Providers::Database)
+        expect(described_class.configuration.providers.to_a.second).to be_a(HealthMonitor::Providers::Redis)
       end
 
       it 'configures multiple providers' do
-        expect {
-          subject.configure do |config|
-            config.redis
-            config.sidekiq
-          end
-        }.to change { described_class.configuration.providers }
-          .to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis,
-            HealthMonitor::Providers::Sidekiq]))
+        subject.configure do |config|
+          config.redis
+          config.sidekiq
+        end
+
+        expect(described_class.configuration.providers.length).to be(3)
+        expect(described_class.configuration.providers.to_a.first).to be_a(HealthMonitor::Providers::Database)
+        expect(described_class.configuration.providers.to_a.second).to be_a(HealthMonitor::Providers::Redis)
+        expect(described_class.configuration.providers.to_a.third).to be_a(HealthMonitor::Providers::Sidekiq)
       end
 
       it 'configures multiple providers with custom configuration' do
-        expect {
-          subject.configure do |config|
-            config.redis
-            config.sidekiq.configure do |sidekiq_config|
-              sidekiq_config.add_queue_configuration('critical', latency: 10.seconds, queue_size: 20)
-            end
+        subject.configure do |config|
+          config.redis
+          config.sidekiq.configure do |sidekiq_config|
+            sidekiq_config.add_queue_configuration('critical', latency: 10.seconds, queue_size: 20)
           end
-        }.to change { described_class.configuration.providers }
-          .to(Set.new([HealthMonitor::Providers::Database, HealthMonitor::Providers::Redis,
-            HealthMonitor::Providers::Sidekiq]))
-      end
+        end
 
-      it 'appends new providers' do
-        expect {
-          subject.configure(&:resque)
-        }.to change { described_class.configuration.providers }.to(Set.new([HealthMonitor::Providers::Database,
-          HealthMonitor::Providers::Resque]))
+        expect(described_class.configuration.providers.length).to be(3)
+        expect(described_class.configuration.providers.to_a.first).to be_a(HealthMonitor::Providers::Database)
+        expect(described_class.configuration.providers.to_a.second).to be_a(HealthMonitor::Providers::Redis)
+        expect(described_class.configuration.providers.to_a.third).to be_a(HealthMonitor::Providers::Sidekiq)
       end
     end
 
@@ -111,12 +108,49 @@ describe HealthMonitor do
       end
     end
 
-    context 'when db and redis providers' do
+    context 'when providers are not critical' do
       before do
         subject.configure do |config|
-          config.database
-          config.redis
+          config.redis.configure { |c| c.critical = false }
+          config.sidekiq.configure { |c| c.critical = false }
         end
+      end
+
+      context 'with failed check' do
+        before do
+          Providers.stub_sidekiq_workers_failure
+          Providers.stub_redis_failure
+        end
+
+        it 'returns results and succesful status' do
+          expect(subject.check(request: request)).to eq(
+            results: [
+              {
+                name: 'Database',
+                message: '',
+                status: 'OK'
+              },
+              {
+                name: 'Redis',
+                message: "different values (now: #{time}, fetched: false)",
+                status: 'ERROR'
+              },
+              {
+                name: 'Sidekiq',
+                message: 'Exception',
+                status: 'ERROR'
+              }
+            ],
+            status: :ok,
+            timestamp: time.to_formatted_s(:rfc2822)
+          )
+        end
+      end
+    end
+
+    context 'when db and redis providers' do
+      before do
+        subject.configure(&:redis)
       end
 
       it 'succesfully checks' do
@@ -229,8 +263,6 @@ describe HealthMonitor do
 
       before do
         subject.configure do |config|
-          config.database
-
           config.error_callback = callback
         end
 

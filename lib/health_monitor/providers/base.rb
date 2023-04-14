@@ -1,35 +1,32 @@
 # frozen_string_literal: true
 
+require 'forwardable'
+
 module HealthMonitor
   module Providers
     class Base
-      @global_configuration = nil
+      extend Forwardable
 
-      attr_reader :request
-      attr_accessor :configuration
+      class Configuration
+        attr_accessor :name, :critical
 
-      def self.provider_name
-        @provider_name ||= name.demodulize
+        def initialize(provider)
+          @name = provider.class.name.demodulize
+          @critical = true
+        end
       end
 
-      def self.global_configuration
-        @global_configuration ||= configuration_class.new
+      attr_accessor :request
+      attr_reader :configuration
+
+      def_delegators :@configuration, :name, :critical
+
+      def initialize
+        @configuration = configuration_class.new(self)
       end
 
-      def self.configure
-        return unless configurable?
-
-        @global_configuration ||= configuration_class.new
-
-        yield @global_configuration if block_given?
-      end
-
-      def initialize(request: nil)
-        @request = request
-
-        return unless self.class.configurable?
-
-        self.configuration = self.class.global_configuration
+      def configure
+        yield @configuration if block_given?
       end
 
       # @abstract
@@ -37,12 +34,11 @@ module HealthMonitor
         raise NotImplementedError
       end
 
-      def self.configurable?
-        configuration_class
-      end
+      private
 
-      # @abstract
-      def self.configuration_class; end
+      def configuration_class
+        Configuration
+      end
     end
   end
 end

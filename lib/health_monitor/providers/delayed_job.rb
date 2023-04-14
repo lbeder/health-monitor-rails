@@ -8,12 +8,14 @@ module HealthMonitor
     class DelayedJobException < StandardError; end
 
     class DelayedJob < Base
-      class Configuration
+      class Configuration < Base::Configuration
         DEFAULT_QUEUES_SIZE = 100
 
         attr_accessor :queue_size
 
-        def initialize
+        def initialize(provider)
+          super(provider)
+
           @queue_size = DEFAULT_QUEUES_SIZE
         end
       end
@@ -22,16 +24,6 @@ module HealthMonitor
         check_queue_size!
       rescue Exception => e
         raise DelayedJobException.new(e.message)
-      end
-
-      private
-
-      class << self
-        private
-
-        def configuration_class
-          ::HealthMonitor::Providers::DelayedJob::Configuration
-        end
       end
 
       def check_queue_size!
@@ -44,6 +36,12 @@ module HealthMonitor
 
       def job_class
         @job_class ||= ::Delayed::Job
+      end
+
+      private
+
+      def configuration_class
+        ::HealthMonitor::Providers::DelayedJob::Configuration
       end
     end
   end

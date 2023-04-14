@@ -3,34 +3,34 @@
 require 'spec_helper'
 
 describe HealthMonitor::Providers::Sidekiq do
-  subject { described_class.new(request: test_request) }
+  subject { described_class.new }
 
   let(:default_queue_name) { HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_QUEUE_NAME }
 
-  describe HealthMonitor::Providers::Sidekiq::Configuration do
+  context 'with defaults' do
     let(:default_latency) { HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_LATENCY_TIMEOUT }
     let(:default_queue_size) { HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_QUEUES_SIZE }
 
-    describe 'defaults' do
-      it { expect(described_class.new.latency).to eq(default_latency) }
-      it { expect(described_class.new.queue_size).to eq(default_queue_size) }
+    it { expect(subject.configuration.name).to eq('Sidekiq') }
+    it { expect(subject.configuration.latency).to eq(default_latency) }
+    it { expect(subject.configuration.queue_size).to eq(default_queue_size) }
 
-      it do
-        expect(described_class.new.queues[default_queue_name]).to eq(
-          latency: default_latency,
-          queue_size: default_queue_size
-        )
-      end
+    it do
+      expect(subject.configuration.queues[default_queue_name]).to eq(
+        latency: default_latency,
+        queue_size: default_queue_size
+      )
     end
   end
 
-  describe '#provider_name' do
-    it { expect(described_class.provider_name).to eq('Sidekiq') }
+  describe '#name' do
+    it { expect(subject.name).to eq('Sidekiq') }
   end
 
   describe '#check!' do
     before do
       Providers.stub_sidekiq
+      subject.request = test_request
     end
 
     it 'succesfully checks' do
@@ -133,26 +133,18 @@ describe HealthMonitor::Providers::Sidekiq do
     end
   end
 
-  describe '#configurable?' do
-    it { expect(described_class).to be_configurable }
-  end
-
   describe '#configure' do
-    before do
-      described_class.configure
-    end
-
     let(:latency) { 123 }
     let(:queue_size) { 50 }
 
     it 'latency and queue_size can be configured' do
       expect {
-        described_class.configure do |config|
+        subject.configure do |config|
           config.latency = latency
           config.queue_size = queue_size
         end
-      }.to change { described_class.new.configuration.latency }.to(latency).and \
-        change { described_class.new.configuration.queues[default_queue_name] }.to(
+      }.to change { subject.configuration.latency }.to(latency).and \
+        change { subject.configuration.queues[default_queue_name] }.to(
           latency: latency,
           queue_size: queue_size
         )

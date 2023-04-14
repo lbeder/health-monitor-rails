@@ -21,14 +21,14 @@ module HealthMonitor
   def check(request: nil, params: {})
     providers = configuration.providers
     if params[:providers].present?
-      providers = providers.select { |provider| params[:providers].include?(provider.provider_name.downcase) }
+      providers = providers.select { |provider| params[:providers].include?(provider.name.downcase) }
     end
 
     results = providers.map { |provider| provider_result(provider, request) }
 
     {
-      results: results,
-      status: results.any? { |res| res[:status] != STATUSES[:ok] } ? :service_unavailable : :ok,
+      results: results.map { |c| c.without(:critical) },
+      status: results.any? { |res| res[:status] != STATUSES[:ok] && res[:critical] } ? :service_unavailable : :ok,
       timestamp: Time.now.to_formatted_s(:rfc2822)
     }
   end
@@ -36,21 +36,24 @@ module HealthMonitor
   private
 
   def provider_result(provider, request)
-    monitor = provider.new(request: request)
+    monitor = provider
+    monitor.request = request
     monitor.check!
 
     {
-      name: provider.provider_name,
+      name: provider.name,
       message: '',
-      status: STATUSES[:ok]
+      status: STATUSES[:ok],
+      critical: provider.critical
     }
   rescue StandardError => e
     configuration.error_callback.try(:call, e)
 
     {
-      name: provider.provider_name,
+      name: provider.name,
       message: e.message,
-      status: STATUSES[:error]
+      status: STATUSES[:error],
+      critical: provider.critical
     }
   end
 end

@@ -3,10 +3,12 @@
 require 'spec_helper'
 
 describe HealthMonitor::Configuration do
-  let(:default_configuration) { Set.new([HealthMonitor::Providers::Database]) }
-
   describe 'defaults' do
-    it { expect(subject.providers).to eq(default_configuration) }
+    it do
+      expect(subject.providers.length).to be(1)
+      expect(subject.providers.first).to be_a(HealthMonitor::Providers::Database)
+    end
+
     it { expect(subject.error_callback).to be_nil }
     it { expect(subject.basic_auth_credentials).to be_nil }
     it { expect(subject.path).to be_nil }
@@ -15,7 +17,7 @@ describe HealthMonitor::Configuration do
   describe 'providers' do
     HealthMonitor::Configuration::PROVIDERS.each do |provider_name|
       before do
-        subject.instance_variable_set('@providers', Set.new)
+        subject.instance_variable_set('@providers', [])
 
         stub_const("HealthMonitor::Providers::#{provider_name.to_s.titleize.delete(' ')}", Class.new)
       end
@@ -25,20 +27,21 @@ describe HealthMonitor::Configuration do
       end
 
       it "configures #{provider_name}" do
-        expect {
-          subject.send(provider_name)
-        }.to change(subject, :providers).to(Set.new(["HealthMonitor::Providers::#{provider_name.to_s.titleize.delete(' ')}".constantize]))
+        subject.send(provider_name)
+
+        expect(subject.providers.length).to be(1)
+        expect(subject.providers.first).to be_a("HealthMonitor::Providers::#{provider_name.to_s.titleize.delete(' ')}".constantize)
       end
 
       it "returns #{provider_name}'s class" do
-        expect(subject.send(provider_name)).to eq("HealthMonitor::Providers::#{provider_name.to_s.titleize.delete(' ')}".constantize)
+        expect(subject.send(provider_name)).to be_a("HealthMonitor::Providers::#{provider_name.to_s.titleize.delete(' ')}".constantize)
       end
     end
   end
 
   describe '#add_custom_provider' do
     before do
-      subject.instance_variable_set('@providers', Set.new)
+      subject.instance_variable_set('@providers', [])
     end
 
     context 'when inherits' do
@@ -48,7 +51,7 @@ describe HealthMonitor::Configuration do
       it 'accepts' do
         expect {
           subject.add_custom_provider(CustomProvider)
-        }.to change(subject, :providers).to(Set.new([CustomProvider]))
+        }.to change(subject, :providers).to(Array.new([CustomProvider]))
       end
 
       it 'returns CustomProvider class' do
@@ -70,9 +73,19 @@ describe HealthMonitor::Configuration do
 
   describe '#no_database' do
     it 'removes the default database check' do
-      expect {
+      subject.no_database
+
+      expect(subject.providers).to be_empty
+    end
+
+    context 'when there are multiple configured providers' do
+      it 'removes only the default database check' do
+        subject.redis
         subject.no_database
-      }.to change(subject, :providers).from(default_configuration).to(Set.new)
+
+        expect(subject.providers.length).to be(1)
+        expect(subject.providers.first).to be_a(HealthMonitor::Providers::Redis)
+      end
     end
   end
 end
