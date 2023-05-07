@@ -35,7 +35,7 @@ module HealthMonitor
         raise ArgumentError.new 'custom provider class must implement HealthMonitor::Providers::Base'
       end
 
-      add_provider(custom_provider_class)
+      add_provider(custom_provider_class.new)
     end
 
     private

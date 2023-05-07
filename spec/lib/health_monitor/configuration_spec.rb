@@ -55,7 +55,7 @@ describe HealthMonitor::Configuration do
       end
 
       it 'returns CustomProvider class' do
-        expect(subject.add_custom_provider(CustomProvider)).to eq(CustomProvider)
+        expect(subject.add_custom_provider(CustomProvider)).to be_a(CustomProvider)
       end
     end
 
