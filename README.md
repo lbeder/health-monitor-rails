@@ -332,7 +332,7 @@ end
 
 ```ruby
 HealthMonitor.configure do |config|
-  config.add_custom_provider(CustomProvider)
+  config.add_custom_provider(CustomProvider.new)
 end
 ```
 

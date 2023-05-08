@@ -1,5 +1,9 @@
 # Changelog
 
+## 11.1.0 ((2023-05-08)
+
+- Fixed add_custom_provider (thanks to @shettytejas)
+
 ## 11.0.0 ((2023-04-14)
 
 - Adding support for multiple named providers and optional providers (thanks to @saviogl)
