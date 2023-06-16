@@ -17,7 +17,7 @@ describe HealthMonitor::Providers::Redis do
   describe '#check!' do
     before { subject.request = test_request }
 
-    context 'with a connection' do
+    context 'with a standard connection' do
       before do
         subject.configure do |config|
           config.connection = Redis.new
@@ -47,6 +47,47 @@ describe HealthMonitor::Providers::Redis do
       before do
         subject.configure do |config|
           config.connection = ConnectionPool.new(size: 5) { Redis.new }
+        end
+      end
+
+      it 'succesfully checks' do
+        expect {
+          subject.check!
+        }.not_to raise_error
+      end
+
+      context 'when failing' do
+        before do
+          Providers.stub_redis_failure
+        end
+
+        it 'fails check!' do
+          expect {
+            subject.check!
+          }.to raise_error(HealthMonitor::Providers::RedisException)
+        end
+      end
+    end
+
+    context 'with a custom connection' do
+      class CustomRedisClient
+        attr_reader :client
+
+        delegate :info, to: :client
+        delegate :get, to: :client
+        delegate :set, to: :client
+
+        def initialize
+          @client = Redis.new
+        end
+      end
+
+      let(:host) { 'fake.redis.com' }
+      let(:port) { 91_210 }
+
+      before do
+        subject.configure do |config|
+          config.connection = CustomRedisClient.new
         end
       end
 
