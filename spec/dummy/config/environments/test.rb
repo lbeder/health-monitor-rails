@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 Dummy::Application.configure do
-  config.cache_classes = false
+  config.cache_classes = true
 
   config.eager_load = true
 
