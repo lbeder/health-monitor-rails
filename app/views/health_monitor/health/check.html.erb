@@ -28,16 +28,7 @@
         overflow-wrap: break-word;
       }
 
-      ol, ul {
-        list-style: none;
-      }
-
-      img {
-        max-width: 100%;
-        height: auto;
-      }
-
-      /* Custom */
+      /* Custom CSS*/
       body {
         background-color: rgb(243 244 246);
         color: rgb(17 24 39);
@@ -53,9 +44,8 @@
       }
 
       main {
-        padding-top: 3rem; /* 48px */
-        padding-bottom: 3rem; /* 48px */
-
+        padding-top: 3rem;
+        padding-bottom: 3rem;
         width: 100vw;
       }
 
@@ -75,10 +65,9 @@
       }
 
       h2 {
+        font-weight: 500;
         font-size: 1.125rem;
         line-height: 1.5rem;
-        font-weight: 500;
-
         padding: 1.25rem 1rem;
       }
 
@@ -129,16 +118,16 @@
 
       dt {
         min-width: 10vw;
-        font-size: 0.875rem; /* 14px */
-        line-height: 1.25rem; /* 20px */
+        font-size: 0.875rem;
+        line-height: 1.25rem;
         font-weight: 500;
         color: rgb(107 114 128);
         grid-column-start: 1;
       }
 
       dd {
-        font-size: 0.875rem; /* 14px */
-        line-height: 1.25rem; /* 20px */
+        font-size: 0.875rem;
+        line-height: 1.25rem;
         grid-column-start: 2;
       }
     </style>
@@ -201,12 +190,6 @@
         </div>
       <% end %>
     </main>
-
-    <footer>
-      <div class="text-center">
-        Powered by <a href="https://github.com/lbeder/health-monitor-rails" target="_blank">health-monitor-rails</a>
-      </div>
-    </footer>
 
     <% if !@hide_footer %>
       <footer>
