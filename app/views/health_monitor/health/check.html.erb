@@ -149,7 +149,7 @@
           <dl>
             <% @statuses[:results].each_with_index do |status, index| %>
               <div class="<%= index.odd? ? 'bg-gray' : 'bg-white' %> item">
-                <dt>
+                <dt class="name">
                   <%= status[:name] %>
                 </dt>
 
