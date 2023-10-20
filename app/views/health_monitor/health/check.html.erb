@@ -4,74 +4,196 @@
     <title>Status</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+      /* Reset */
+      html {
+        box-sizing: border-box;
+        font-size: 16px;
+      }
+
+      *, *:before, *:after {
+        box-sizing: inherit;
+      }
+
+      body {
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+        margin: 0;
+        padding: 0;
+        font-weight: normal;
+        overflow-wrap: break-word;
+      }
+
+      /* Custom CSS*/
+      body {
+        background-color: rgb(243 244 246);
+        color: rgb(17 24 39);
+        font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+                     Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+                     "Noto Color Emoji";
+      }
+
+      header {
+        background-color: white;
+        box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        padding: 1.5rem 1rem;
+      }
+
+      main {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+        width: 100vw;
+      }
+
+      footer {
+        font-weight: 300;
+        color: rgb(100 116 139);
+        font-size: 0.75rem;
+        line-height: 1rem;
+        padding-left: 1.25rem;
+        padding-right: 1.25rem;
+      }
+
+      h1 {
+        font-weight: 700;
+        font-size: 1.875rem;
+        line-height: 2.25rem;
+      }
+
+      h2 {
+        font-weight: 500;
+        font-size: 1.125rem;
+        line-height: 1.5rem;
+        padding: 1.25rem 1rem;
+      }
+
+      .text-center {
+        text-align: center;
+      }
+
+      .services, .env-variables {
+        display: block;
+        background-color: white;
+        box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+        overflow: hidden;
+        border-radius: 0.5rem;
+        max-width: 56rem;
+        margin: 0 auto 1.5rem auto;
+      }
+
+      .border {
+        border-top-width: 1px;
+        border-color: rgb(229 231 235);
+      }
+
+      .red {
+        color: red;
+      }
+
+      .item {
+        display: grid;
+        grid-template-columns: max-content auto;
+        padding: 1.25rem 1rem;
+      }
+
+      .bg-gray {
+        background-color: rgb(249 250 251);
+      }
+
+      .bg-white {
+        background-color: white;
+      }
+
+      .state {
+        font-weight: 700;
+      }
+
+      .message {
+        color: rgb(71 85 105);
+      }
+
+      dt {
+        min-width: 10vw;
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        font-weight: 500;
+        color: rgb(107 114 128);
+        grid-column-start: 1;
+      }
+
+      dd {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+        grid-column-start: 2;
+      }
+    </style>
   </head>
-  <body class="antialiased font-sans bg-gray-100">
-    <header class="bg-white shadow">
-      <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <h1 class="text-3xl font-bold text-gray-900 text-center">
-          Status Page
-        </h1>
-      </div>
+
+  <body>
+    <header>
+      <h1 class="text-center">
+        Status Page
+      </h1>
     </header>
+
     <main>
-      <div class="max-w-7xl mx-auto py-12 sm:px-6 lg:px-8">
-        <div class="max-w-4xl mx-auto">
-          <div class="services bg-white shadow overflow-hidden sm:rounded-lg">
-            <div class="px-4 py-5 sm:px-6">
-              <h3 class="text-lg leading-6 font-medium text-gray-900">
-                Services
-              </h3>
-            </div>
-            <div class="border-t border-gray-200">
-              <dl>
-                <% @statuses[:results].each_with_index do |status, index| %>
-                  <div class="<%= index.odd? ? 'bg-gray-50' : 'bg-white' %> px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                    <dt class="name text-sm font-medium text-gray-500">
-                      <%= status[:name] %>
-                    </dt>
-                    <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                      <div class="state <%= 'text-red-600' if status[:status].downcase == 'error' %> font-bold">
-                        <%= status[:status] %>
-                      </div>
-                      <% if !status[:message].empty? %>
-                        <div class="message text-slate-600"><%= status[:message] %></div>
-                      <% end %>
-                    </dd>
+      <div class="services">
+        <h2>
+          Services
+        </h2>
+        <div class="border">
+          <dl>
+            <% @statuses[:results].each_with_index do |status, index| %>
+              <div class="<%= index.odd? ? 'bg-gray' : 'bg-white' %> item">
+                <dt class="name">
+                  <%= status[:name] %>
+                </dt>
+
+                <dd>
+                  <div class="state <%= 'red' if status[:status].downcase == 'error' %> font-bold">
+                    <%= status[:status] %>
                   </div>
-                <% end %>
-              </dl>
-            </div>
-          </div>
-          <% if @statuses[:environment_variables].present? %>
-            <div class="env-variables bg-white shadow overflow-hidden sm:rounded-lg my-6">
-              <div class="px-4 py-5 sm:px-6">
-                <h3 class="text-lg leading-6 font-medium text-gray-900">
-                  Environment Variables
-                </h3>
-              </div>
-              <div class="border-t border-gray-200">
-                <dl>
-                  <% @statuses[:environment_variables].each_with_index do |env_var, index| %>
-                    <div class="<%= index.odd? ? 'bg-gray-50' : 'bg-white' %> px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                      <dt class="text-sm font-medium text-gray-500">
-                        <%= env_var[0] %>
-                      </dt>
-                      <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                        <%= env_var[1] %>
-                      </dd>
-                    </div>
+                  <% if !status[:message].empty? %>
+                    <div class="message"><%= status[:message] %></div>
                   <% end %>
-                </dl>
+                </dd>
               </div>
-            </div>
-          <% end %>
+            <% end %>
+          </dl>
         </div>
       </div>
+
+      <% if @statuses[:environment_variables].present? %>
+        <div class="env-variables">
+          <h2>
+            Environment Variables
+          </h2>
+
+          <div class="border">
+            <dl>
+              <% @statuses[:environment_variables].each_with_index do |env_var, index| %>
+                <div class="<%= index.odd? ? 'bg-gray' : 'bg-white' %> item">
+                  <dt>
+                    <%= env_var[0] %>
+                  </dt>
+                  <dd>
+                    <%= env_var[1] %>
+                  </dd>
+                </div>
+              <% end %>
+            </dl>
+          </div>
+        </div>
+      <% end %>
     </main>
+
     <% if !@hide_footer %>
       <footer>
-        <div class="font-light text-center text-slate-500 text-xs px-5">
+        <div class="text-center">
           Powered by <a href="https://github.com/lbeder/health-monitor-rails" target="_blank">health-monitor-rails</a>
         </div>
       </footer>

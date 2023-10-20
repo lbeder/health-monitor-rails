@@ -6,8 +6,8 @@ describe 'Health Monitor' do
   context 'when check is ok' do
     it 'renders html' do
       visit '/check'
-      expect(page).to have_css('h3', count: 1)
-      expect(page).to have_css('h3', text: 'Services')
+      expect(page).to have_css('h2', count: 1)
+      expect(page).to have_css('h2', text: 'Services')
       expect(page).to have_css('.services dt.name', text: 'Database')
       expect(page).to have_css('.services div.state', text: 'OK')
     end
@@ -20,8 +20,8 @@ describe 'Health Monitor' do
 
     it 'renders html' do
       visit '/check'
-      expect(page).to have_css('h3', count: 1)
-      expect(page).to have_css('h3', text: 'Services')
+      expect(page).to have_css('h2', count: 1)
+      expect(page).to have_css('h2', text: 'Services')
       expect(page).to have_css('.services dt.name', text: 'Database')
       expect(page).to have_css('.services div.state', text: 'ERROR')
       expect(page).to have_css('.services div.message', text: 'unable to connect to: database1,database2')
@@ -39,9 +39,9 @@ describe 'Health Monitor' do
 
     it 'renders html' do
       visit '/check'
-      expect(page).to have_css('h3', count: 2)
-      expect(page).to have_css('h3', text: 'Services')
-      expect(page).to have_css('h3', text: 'Environment Variables')
+      expect(page).to have_css('h2', count: 2)
+      expect(page).to have_css('h2', text: 'Services')
+      expect(page).to have_css('h2', text: 'Environment Variables')
       expect(page).to have_css('.env-variables dt', count: 2)
       expect(page).to have_css('.env-variables dt', text: 'build_number')
       expect(page).to have_css('.env-variables dd', text: '12')
