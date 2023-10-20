@@ -1,22 +1,26 @@
 # Changelog
 
-## 11.1.0 ((2023-05-08)
+## 11.2.0 (2023-10-20)
+
+- Refactor Tailwind out of this project (thanks to @loed-idzinga)
+
+## 11.1.0 (2023-05-08)
 
 - Fixed add_custom_provider (thanks to @shettytejas)
 
-## 11.0.0 ((2023-04-14)
+## 11.0.0 (2023-04-14)
 
 - Adding support for multiple named providers and optional providers (thanks to @saviogl)
 
-## 10.2.0 ((2023-02-28)
+## 10.2.0 (2023-02-28)
 
 - Prevent duplicative status checks on JSON and XML endpoints (thanks to @GUI)
 
-## 10.1.0 ((2023-01-16)
+## 10.1.0 (2023-01-16)
 
 - Add retry check for Sidekiq (thanks to @loed-idzinga)
 
-## 10.0.0 ((2023-01-11)
+## 10.0.0 (2023-01-11)
 
 - Support multiple databases (thanks to @HarlemSquirrel and @loed-idzinga for the help)
 
