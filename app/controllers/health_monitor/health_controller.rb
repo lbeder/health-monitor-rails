@@ -43,7 +43,7 @@ module HealthMonitor
     end
 
     def providers_params
-      params.except(:format).permit(providers: [])
+      params.except(:format, :subdomain).permit(providers: [])
     end
   end
 end
