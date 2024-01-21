@@ -1,5 +1,9 @@
 # Changelog
 
+## 11.3.0 (2024-01-21)
+
+- Unpermitting subdomain (thanks to @shettytejas)
+
 ## 11.2.0 (2023-10-20)
 
 - Refactor Tailwind out of this project (thanks to @loed-idzinga)
