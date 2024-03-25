@@ -1,5 +1,9 @@
 # Changelog
 
+## 12.0.0 (2024-03-23)
+
+- Use "SELECT 1" to check for DB connectivity and liveness (thanks to @jayceekay)
+
 ## 11.3.0 (2024-01-21)
 
 - Unpermitting subdomain (thanks to @shettytejas)
