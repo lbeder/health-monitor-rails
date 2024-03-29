@@ -51,7 +51,7 @@ describe HealthMonitor::Configuration do
       it 'accepts' do
         expect {
           subject.add_custom_provider(CustomProvider)
-        }.to change(subject, :providers).to(Array.new([CustomProvider]))
+        }.to change(subject, :providers).to([CustomProvider])
       end
 
       it 'returns CustomProvider class' do

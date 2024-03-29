@@ -389,6 +389,12 @@ Lint/RequireRangeParentheses:
 Lint/UselessRescue:
   Enabled: true
 
+Lint/MixedCaseRange:
+  Enabled: true
+
+Lint/RedundantRegexpQuantifiers:
+  Enabled: true
+
 Naming/BlockForwarding:
   Enabled: true
 
@@ -446,6 +452,30 @@ Style/RedundantInitialize:
 Style/RedundantStringEscape:
   Enabled: true
 
+Style/ExactRegexpMatch:
+  Enabled: true
+
+Style/RedundantArrayConstructor:
+  Enabled: true
+
+Style/RedundantCurrentDirectoryInPath:
+  Enabled: true
+
+Style/RedundantFilterChain:
+  Enabled: true
+
+Style/RedundantRegexpArgument:
+  Enabled: true
+
+Style/RedundantRegexpConstructor:
+  Enabled: true
+
+Style/ReturnNilInPredicateMethodDefinition:
+  Enabled: true
+
+Style/YAMLFileRead:
+  Enabled: true
+
 RSpec/ExampleLength:
   Enabled: false
 
@@ -497,12 +527,6 @@ RSpec/SubjectDeclaration:
 RSpec/VerifiedDoubleReference:
   Enabled: true
 
-RSpec/FactoryBot/ConsistentParenthesesStyle:
-  Enabled: true
-
-RSpec/FactoryBot/SyntaxMethods:
-  Enabled: true
-
 RSpec/Rails/AvoidSetupHook:
   Enabled: true
 
@@ -518,9 +542,6 @@ RSpec/DuplicatedMetadata:
 RSpec/PendingWithoutReason:
   Enabled: true
 
-RSpec/FactoryBot/FactoryNameStyle:
-  Enabled: true
-
 RSpec/RedundantAround:
   Enabled: true
 
@@ -531,6 +552,39 @@ RSpec/Rails/MinitestAssertions:
   Enabled: true
 
 RSpec/Rails/TravelAround:
+  Enabled: true
+
+RSpec/BeEmpty:
+  Enabled: true
+
+RSpec/ContainExactly:
+  Enabled: true
+
+RSpec/EmptyMetadata:
+  Enabled: true
+
+RSpec/Eq:
+  Enabled: true
+
+RSpec/IndexedLet:
+  Enabled: false
+
+RSpec/MatchArray:
+  Enabled: true
+
+RSpec/MetadataStyle:
+  Enabled: true
+
+RSpec/ReceiveMessages:
+  Enabled: true
+
+RSpec/SpecFilePathFormat:
+  Enabled: false
+
+RSpec/SpecFilePathSuffix:
+  Enabled: true
+
+RSpec/Rails/NegationBeValid:
   Enabled: true
 
 Capybara/NegationMatcher:
@@ -546,4 +600,34 @@ Capybara/SpecificMatcher:
   Enabled: true
 
 Capybara/MatchStyle:
+  Enabled: true
+
+Capybara/ClickLinkOrButtonStyle:
+  Enabled: true
+
+Capybara/RSpec/HaveSelector:
+  Enabled: true
+
+Capybara/RSpec/PredicateMatcher:
+  Enabled: true
+
+FactoryBot/ConsistentParenthesesStyle:
+  Enabled: true
+
+FactoryBot/SyntaxMethods:
+  Enabled: true
+
+FactoryBot/FactoryNameStyle:
+  Enabled: true
+
+FactoryBot/AssociationStyle:
+  Enabled: true
+
+FactoryBot/FactoryAssociationWithStrategy:
+  Enabled: true
+
+FactoryBot/IdSequence:
+  Enabled: true
+
+FactoryBot/RedundantFactoryOption:
   Enabled: true
