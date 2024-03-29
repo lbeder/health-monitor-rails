@@ -46,8 +46,7 @@ module Providers
     allow_any_instance_of(Sidekiq::Workers).to receive(:size).and_return(5)
 
     queue = instance_double(Sidekiq::Queue)
-    allow(queue).to receive(:latency).and_return(5)
-    allow(queue).to receive(:size).and_return(5)
+    allow(queue).to receive_messages(latency: 5, size: 10)
     allow(Sidekiq::Queue).to receive(:new).and_return(queue)
 
     retry_set = instance_double(Sidekiq::RetrySet)

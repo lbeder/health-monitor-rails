@@ -1,5 +1,9 @@
 # Changelog
 
+## 12.1.0 (2024-03-29)
+
+- Make sidekiq maximum_amount_of_retries configurable
+
 ## 12.0.0 (2024-03-23)
 
 - Use "SELECT 1" to check for DB connectivity and liveness (thanks to @jayceekay)

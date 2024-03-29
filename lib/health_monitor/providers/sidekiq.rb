@@ -14,10 +14,13 @@ module HealthMonitor
         DEFAULT_QUEUES_SIZE = 100
         DEFAULT_RETRY_CHECK = 20
 
+        attr_accessor :maximum_amount_of_retries
         attr_reader :queues
 
         def initialize(provider)
           super(provider)
+
+          @maximum_amount_of_retries = DEFAULT_RETRY_CHECK
 
           @queues = {}
           @queues[DEFAULT_QUEUE_NAME] = { latency: DEFAULT_LATENCY_TIMEOUT, queue_size: DEFAULT_QUEUES_SIZE }
@@ -96,10 +99,13 @@ module HealthMonitor
       end
 
       def check_amount_of_retries!
-        maximum_amount_of_retries = ::HealthMonitor::Providers::Sidekiq::Configuration::DEFAULT_RETRY_CHECK
-        jobs_over_limit = ::Sidekiq::RetrySet.new.select { |job| job.item['retry_count'] >= maximum_amount_of_retries }
+        jobs_over_limit = ::Sidekiq::RetrySet.new.select do |job|
+          job.item['retry_count'] >= configuration.maximum_amount_of_retries
+        end
 
-        raise "amount of retries for a job is greater than #{maximum_amount_of_retries}" if jobs_over_limit.any?
+        return unless jobs_over_limit.any?
+
+        raise "amount of retries for a job is greater than #{configuration.maximum_amount_of_retries}"
       end
 
       def check_redis!
