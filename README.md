@@ -176,6 +176,7 @@ The following services are currently supported:
 * Sidekiq
 * Resque
 * Delayed Job
+* Solr
 
 ## Configuration
 
@@ -311,6 +312,10 @@ Please note that `url` or `connection` can't be used at the same time.
 #### Delayed Job
 
 * `queue_size`: the size (maximum) of a queue which is considered unhealthy (the default is 100).
+
+### Solr
+
+* `url`: the URL used to connect to your Solr instance - must be a string. You can also use `url` to explicitly configure authentication (e.g., `'http://user:pass@example.solr.com:8983/'`)
 
 ### Adding a Custom Provider
 

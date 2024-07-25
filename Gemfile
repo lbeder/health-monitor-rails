@@ -19,7 +19,8 @@ gem 'rubocop-rake'
 gem 'rubocop-rspec'
 gem 'sidekiq', '>= 3.0'
 gem 'spork'
-gem 'sqlite3', '>= 1.3'
+gem 'sqlite3', '~> 1.3'
 gem 'timecop'
+gem 'webmock'
 
 gemspec

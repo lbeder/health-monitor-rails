@@ -17,6 +17,7 @@ Spork.prefork do
   require 'timecop'
   require 'mock_redis'
   require 'sidekiq/testing'
+  require 'webmock/rspec'
 
   Dir[File.expand_path('../lib/**/*.rb', __dir__)].sort.each { |f| require f }
   Dir[File.expand_path('support/**/*.rb', __dir__)].sort.each { |f| require f }
