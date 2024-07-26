@@ -1,5 +1,10 @@
 # Changelog
 
+## 12.2.0 (2024-07-26)
+
+- Get rubocop and tests running locally #122 (thanks to @maxkadel)
+- Add solr monitor (thanks to @maxkadel)
+
 ## 12.1.0 (2024-03-29)
 
 - Make sidekiq maximum_amount_of_retries configurable
