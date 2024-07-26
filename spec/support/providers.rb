@@ -90,4 +90,28 @@ module Providers
     allow(retry_set).to receive(:select).and_return([item: { retry_count: retry_count }])
     allow(Sidekiq::RetrySet).to receive(:new).and_return(retry_set)
   end
+
+  def stub_solr
+    WebMock.stub_request(:get, 'http://www.example-solr.com:8983/solr/admin/cores?action=STATUS').to_return(
+      body: { responseHeader: { status: 0 } }.to_json, headers: { 'Content-Type' => 'text/json' }
+    )
+  end
+
+  def stub_solr_failure
+    WebMock.stub_request(:get, 'http://www.example-solr.com:8983/solr/admin/cores?action=STATUS').to_return(
+      body: { responseHeader: { status: 500 } }.to_json, headers: { 'Content-Type' => 'text/json' }
+    )
+  end
+
+  def stub_solr_with_auth
+    WebMock.stub_request(:get, 'http://localhost:8888/solr/admin/cores?action=STATUS')
+           .with(headers: { 'Authorization' => 'Basic c29scjpTb2xyUm9ja3M=', 'Host' => 'localhost:8888' })
+           .to_return(body: { responseHeader: { status: 0 } }.to_json, headers: { 'Content-Type' => 'text/json' })
+  end
+
+  def stub_solr_failure_with_auth
+    WebMock.stub_request(:get, 'http://localhost:8888/solr/admin/cores?action=STATUS')
+           .with(headers: { 'Authorization' => 'Basic c29scjpTb2xyUm9ja3M=', 'Host' => 'localhost:8888' })
+           .to_return(body: { responseHeader: { status: 500 } }.to_json, headers: { 'Content-Type' => 'text/json' })
+  end
 end
