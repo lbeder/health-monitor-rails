@@ -315,7 +315,7 @@ Please note that `url` or `connection` can't be used at the same time.
 
 ### Solr
 
-* `url`: the URL used to connect to your Solr instance - must be a string. You can also use `url` to explicitly configure authentication (e.g., `'http://user:pass@example.solr.com:8983/'`)
+* `url`: the URL used to connect to your Solr instance - must be a string. You can also use `url` to explicitly configure authentication (e.g., `'https://user:pass@example.solr.com:8983/'`)
 
 ### Adding a Custom Provider
 
