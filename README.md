@@ -439,6 +439,24 @@ nicolas@desktop:$ echo $?
 2
 ```
 
+## Development
+In order to work on development on the gem itself
+
+### Installing the gems
+Use the [appraisal gem](https://github.com/thoughtbot/appraisal) to install the bundles for different rails versions:
+
+```bash
+appraisal clean
+appraisal generate
+appraisal install
+```
+
+### Running the tests
+Use appraisal to run the tests using rake
+```bash
+appraisal rake
+```
+
 ## License
 
 The MIT License (MIT)
