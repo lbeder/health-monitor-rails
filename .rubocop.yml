@@ -2,6 +2,8 @@ require:
   - rubocop-rake
   - rubocop-rspec
   - rubocop-capybara
+  - rubocop-factory_bot
+  - rubocop-rspec_rails
 
 AllCops:
   TargetRubyVersion: 2.5
@@ -491,9 +493,6 @@ RSpec/NestedGroups:
 RSpec/AnyInstance:
   Enabled: false
 
-RSpec/FilePath:
-  Enabled: false
-
 RSpec/LeakyConstantDeclaration:
   Enabled: false
 
@@ -526,6 +525,9 @@ RSpec/SubjectDeclaration:
 
 RSpec/VerifiedDoubleReference:
   Enabled: true
+
+RSpec/ExpectInLet:
+  Enabled: false
 
 RSpec/Rails/AvoidSetupHook:
   Enabled: true
