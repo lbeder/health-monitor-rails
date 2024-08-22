@@ -316,6 +316,7 @@ Please note that `url` or `connection` can't be used at the same time.
 ### Solr
 
 * `url`: the URL used to connect to your Solr instance - must be a string. You can also use `url` to explicitly configure authentication (e.g., `'https://user:pass@example.solr.com:8983/'`)
+* `collection`: An optional parameter used to connect to your specific Solr collection - must be a string. By setting this parameter the code will check the status of this individual collection in your Solr instance instead of just the status of the overall Solr instance
 
 ### Adding a Custom Provider
 

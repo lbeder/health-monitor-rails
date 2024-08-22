@@ -103,6 +103,11 @@ module Providers
     )
   end
 
+  def stub_solr_collection(collection, status: 200, body: { responseHeader: { status: 0 }, status: 'OK' }.to_json)
+    WebMock.stub_request(:get, "http://www.example-solr.com:8983/solr/#{collection}/admin/ping")
+           .to_return(body: body, headers: { 'Content-Type' => 'text/json' }, status: status)
+  end
+
   def stub_solr_with_auth
     WebMock.stub_request(:get, 'http://localhost:8888/solr/admin/cores?action=STATUS')
            .with(headers: { 'Authorization' => 'Basic c29scjpTb2xyUm9ja3M=', 'Host' => 'localhost:8888' })
@@ -113,5 +118,11 @@ module Providers
     WebMock.stub_request(:get, 'http://localhost:8888/solr/admin/cores?action=STATUS')
            .with(headers: { 'Authorization' => 'Basic c29scjpTb2xyUm9ja3M=', 'Host' => 'localhost:8888' })
            .to_return(body: { responseHeader: { status: 500 } }.to_json, headers: { 'Content-Type' => 'text/json' })
+  end
+
+  def stub_solr_collection_with_auth(collection, status: 200, body: { responseHeader: { status: 0 }, status: 'OK' }.to_json)
+    WebMock.stub_request(:get, "http://localhost:8888/solr/#{collection}/admin/ping")
+           .with(headers: { 'Authorization' => 'Basic c29scjpTb2xyUm9ja3M=', 'Host' => 'localhost:8888' })
+           .to_return(body: body, headers: { 'Content-Type' => 'text/json' }, status: status)
   end
 end
