@@ -1,5 +1,9 @@
 # Changelog
 
+## 12.3.0 (2024-08-22)
+
+- Allowing a specific solr collection to be monitored (thanks to @carolyncole)
+
 ## 12.2.0 (2024-07-26)
 
 - Get rubocop and tests running locally #122 (thanks to @maxkadel)
