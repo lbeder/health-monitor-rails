@@ -177,6 +177,7 @@ The following services are currently supported:
 * Resque
 * Delayed Job
 * Solr
+* FileAbsence
 
 ## Configuration
 
@@ -317,6 +318,12 @@ Please note that `url` or `connection` can't be used at the same time.
 
 * `url`: the URL used to connect to your Solr instance - must be a string. You can also use `url` to explicitly configure authentication (e.g., `'https://user:pass@example.solr.com:8983/'`)
 * `collection`: An optional parameter used to connect to your specific Solr collection - must be a string. By setting this parameter the code will check the status of this individual collection in your Solr instance instead of just the status of the overall Solr instance
+
+### FileAbsence
+This check allows you to create a file on your server when you would like to force the check to fail.  For example if you are utilizing the health.json as you health check page for your load balancer and would like to force a machine offline.
+
+* `filename`: the file relative to the rails root that must remain absent for the health check to remain passing. For example `public/remove-from-nginx`
+
 
 ### Adding a Custom Provider
 

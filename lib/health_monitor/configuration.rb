@@ -2,7 +2,7 @@
 
 module HealthMonitor
   class Configuration
-    PROVIDERS = %i[cache database delayed_job redis resque sidekiq solr].freeze
+    PROVIDERS = %i[cache database delayed_job file_absence redis resque sidekiq solr].freeze
 
     attr_accessor :basic_auth_credentials,
                   :environment_variables,
