@@ -1,5 +1,9 @@
 # Changelog
 
+## 12.4.0 (2024-11-09)
+
+- Adding FileAbsence provider to check that a file remains absent (thanks to @carolyncole)
+
 ## 12.3.0 (2024-08-22)
 
 - Allowing a specific solr collection to be monitored (thanks to @carolyncole)

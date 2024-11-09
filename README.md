@@ -320,10 +320,10 @@ Please note that `url` or `connection` can't be used at the same time.
 * `collection`: An optional parameter used to connect to your specific Solr collection - must be a string. By setting this parameter the code will check the status of this individual collection in your Solr instance instead of just the status of the overall Solr instance
 
 ### FileAbsence
-This check allows you to create a file on your server when you would like to force the check to fail.  For example if you are utilizing the health.json as you health check page for your load balancer and would like to force a machine offline.
 
-* `filename`: the file relative to the rails root that must remain absent for the health check to remain passing. For example `public/remove-from-nginx`
+This check allows you to create a file on your server when you would like to force the check to fail. For example if you are utilizing the `health.json` as you health check page for your load balancer and would like to force a machine offline.
 
+* `filename`: the file relative to the rails root that must remain absent for the health check to remain passing. For example: `public/remove-from-nginx`
 
 ### Adding a Custom Provider
 
@@ -448,9 +448,11 @@ nicolas@desktop:$ echo $?
 ```
 
 ## Development
+
 In order to work on development on the gem itself
 
 ### Installing the gems
+
 Use the [appraisal gem](https://github.com/thoughtbot/appraisal) to install the bundles for different rails versions:
 
 ```bash
@@ -460,7 +462,9 @@ appraisal install
 ```
 
 ### Running the tests
+
 Use appraisal to run the tests using rake
+
 ```bash
 appraisal rake
 ```
