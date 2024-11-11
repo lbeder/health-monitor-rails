@@ -1,5 +1,9 @@
 # Changelog
 
+## 12.4.1 (2024-11-11)
+
+- Address #connection deprecation in favor of #lease_connection (thanks to @aaron-collier)
+
 ## 12.4.0 (2024-11-09)
 
 - Adding FileAbsence provider to check that a file remains absent (thanks to @carolyncole)
