@@ -8,7 +8,7 @@ module HealthMonitor
 
     class Cache < Base
       def check!
-        time = Time.now.to_s
+        time = Time.now.to_formatted_s(:rfc2822)
 
         Rails.cache.write(key, time)
         fetched = Rails.cache.read(key)

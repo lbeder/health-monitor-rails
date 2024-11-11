@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 describe HealthMonitor do
-  let(:time) { Time.local(1990) }
+  let(:time) { Time.now.to_formatted_s(:rfc2822) }
   let(:request) { test_request }
 
   before do
@@ -103,7 +103,7 @@ describe HealthMonitor do
             }
           ],
           status: :ok,
-          timestamp: time.to_formatted_s(:rfc2822)
+          timestamp: time
         )
       end
     end
@@ -142,7 +142,7 @@ describe HealthMonitor do
               }
             ],
             status: :ok,
-            timestamp: time.to_formatted_s(:rfc2822)
+            timestamp: time
           )
         end
       end
@@ -168,7 +168,7 @@ describe HealthMonitor do
             }
           ],
           status: :ok,
-          timestamp: time.to_formatted_s(:rfc2822)
+          timestamp: time
         )
       end
 
@@ -192,7 +192,7 @@ describe HealthMonitor do
               }
             ],
             status: :service_unavailable,
-            timestamp: time.to_formatted_s(:rfc2822)
+            timestamp: time
           )
         end
       end
@@ -217,7 +217,7 @@ describe HealthMonitor do
               }
             ],
             status: :ok,
-            timestamp: time.to_formatted_s(:rfc2822)
+            timestamp: time
           )
         end
       end
@@ -243,7 +243,7 @@ describe HealthMonitor do
               }
             ],
             status: :service_unavailable,
-            timestamp: time.to_formatted_s(:rfc2822)
+            timestamp: time
           )
         end
       end
@@ -279,7 +279,7 @@ describe HealthMonitor do
             }
           ],
           status: :service_unavailable,
-          timestamp: time.to_formatted_s(:rfc2822)
+          timestamp: time
         )
 
         expect(test).to be_truthy
