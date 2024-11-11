@@ -15,7 +15,7 @@ module HealthMonitor
         attr_accessor :url, :connection, :max_used_memory
 
         def initialize(provider)
-          super(provider)
+          super
 
           @url = DEFAULT_URL
         end

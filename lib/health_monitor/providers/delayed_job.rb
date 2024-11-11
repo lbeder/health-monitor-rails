@@ -14,7 +14,7 @@ module HealthMonitor
         attr_accessor :queue_size
 
         def initialize(provider)
-          super(provider)
+          super
 
           @queue_size = DEFAULT_QUEUES_SIZE
         end

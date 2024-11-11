@@ -12,7 +12,7 @@ module HealthMonitor
         attr_accessor :filename
 
         def initialize(provider)
-          super(provider)
+          super
 
           @filename = DEFAULT_FILENAME
         end

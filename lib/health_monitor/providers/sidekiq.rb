@@ -18,7 +18,7 @@ module HealthMonitor
         attr_reader :queues
 
         def initialize(provider)
-          super(provider)
+          super
 
           @maximum_amount_of_retries = DEFAULT_RETRY_CHECK
 

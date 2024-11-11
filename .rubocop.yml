@@ -397,6 +397,21 @@ Lint/MixedCaseRange:
 Lint/RedundantRegexpQuantifiers:
   Enabled: true
 
+Lint/DuplicateSetElement:
+  Enabled: true
+
+Lint/ItWithoutArgumentsInBlock:
+  Enabled: true
+
+Lint/LiteralAssignmentInCondition:
+  Enabled: true
+
+Lint/UnescapedBracketInRegexp:
+  Enabled: true
+
+Lint/UselessNumericOperation:
+  Enabled: true
+
 Naming/BlockForwarding:
   Enabled: true
 
@@ -407,6 +422,9 @@ Gemspec/DeprecatedAttributeAssignment:
   Enabled: true
 
 Gemspec/DevelopmentDependencies:
+  Enabled: true
+
+Gemspec/AddRuntimeDependency:
   Enabled: true
 
 Layout/LineContinuationLeadingSpace:
@@ -478,6 +496,39 @@ Style/ReturnNilInPredicateMethodDefinition:
 Style/YAMLFileRead:
   Enabled: true
 
+Style/AmbiguousEndlessMethodDefinition:
+  Enabled: true
+
+Style/BitwisePredicate:
+  Enabled: true
+
+Style/CombinableDefined:
+  Enabled: true
+
+Style/KeywordArgumentsMerging:
+  Enabled: true
+
+Style/MapIntoArray:
+  Enabled: true
+
+Style/RedundantInterpolationUnfreeze:
+  Enabled: true
+
+Style/SafeNavigationChainLength:
+  Enabled: true
+
+Style/SendWithLiteralMethodName:
+  Enabled: true
+
+Style/SingleLineDoEndBlock:
+  Enabled: true
+
+Style/SuperArguments:
+  Enabled: true
+
+Style/SuperWithArgsParentheses:
+  Enabled: true
+
 RSpec/ExampleLength:
   Enabled: false
 
@@ -529,13 +580,13 @@ RSpec/VerifiedDoubleReference:
 RSpec/ExpectInLet:
   Enabled: false
 
-RSpec/Rails/AvoidSetupHook:
+RSpecRails/AvoidSetupHook:
   Enabled: true
 
-RSpec/Rails/HaveHttpStatus:
+RSpecRails/HaveHttpStatus:
   Enabled: true
 
-RSpec/Rails/InferredSpecType:
+RSpecRails/InferredSpecType:
   Enabled: false
 
 RSpec/DuplicatedMetadata:
@@ -550,10 +601,10 @@ RSpec/RedundantAround:
 RSpec/SkipBlockInsideExample:
   Enabled: true
 
-RSpec/Rails/MinitestAssertions:
+RSpecRails/MinitestAssertions:
   Enabled: true
 
-RSpec/Rails/TravelAround:
+RSpecRails/TravelAround:
   Enabled: true
 
 RSpec/BeEmpty:
@@ -586,7 +637,10 @@ RSpec/SpecFilePathFormat:
 RSpec/SpecFilePathSuffix:
   Enabled: true
 
-RSpec/Rails/NegationBeValid:
+RSpecRails/NegationBeValid:
+  Enabled: true
+
+RSpec/StringAsInstanceDoubleConstant:
   Enabled: true
 
 Capybara/NegationMatcher:
@@ -613,6 +667,9 @@ Capybara/RSpec/HaveSelector:
 Capybara/RSpec/PredicateMatcher:
   Enabled: true
 
+Capybara/RedundantWithinFind:
+  Enabled: true
+
 FactoryBot/ConsistentParenthesesStyle:
   Enabled: true
 
@@ -632,4 +689,10 @@ FactoryBot/IdSequence:
   Enabled: true
 
 FactoryBot/RedundantFactoryOption:
+  Enabled: true
+
+FactoryBot/CreateList:
+  Enabled: true
+
+FactoryBot/ExcessiveCreateList:
   Enabled: true

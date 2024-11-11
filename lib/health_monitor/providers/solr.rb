@@ -13,7 +13,7 @@ module HealthMonitor
         attr_accessor :url, :collection
 
         def initialize(provider)
-          super(provider)
+          super
 
           @url = DEFAULT_URL
           @collection = DEFAULT_COLLECTION
