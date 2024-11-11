@@ -1,7 +1,6 @@
 Gemfile.lock
 pkg
 tmp
-coverage
 gemfiles/*gemfile.lock
 vendor/bundle
 .bundle
