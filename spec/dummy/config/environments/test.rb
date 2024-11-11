@@ -18,6 +18,8 @@ Dummy::Application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
+  config.active_support.to_time_preserves_timezone = :zone
+
   if Rails.version < '6.0' && config.active_record.sqlite3
     config.active_record.sqlite3.represent_boolean_as_integer = true
   end
