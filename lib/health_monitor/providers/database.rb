@@ -11,7 +11,11 @@ module HealthMonitor
         failed_databases = []
 
         ActiveRecord::Base.connection_handler.connection_pool_list(:all).each do |cp|
-          cp.lease_connection.execute('SELECT 1')
+          if Rails::VERSION::MAJOR >= 8
+            cp.lease_connection.execute('SELECT 1')
+          else
+            cp.connection.execute('SELECT 1')
+          end
         rescue Exception
           failed_databases << cp.db_config.name
         end
