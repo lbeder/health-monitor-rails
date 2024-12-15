@@ -1,5 +1,9 @@
 # Changelog
 
+## 12.4.2 (2024-12-15)
+
+- Fix compatibility with Rails 7 by conditionally using lease_connection (thanks to @mapreal19)
+
 ## 12.4.1 (2024-11-11)
 
 - Address #connection deprecation in favor of #lease_connection (thanks to @aaron-collier)
