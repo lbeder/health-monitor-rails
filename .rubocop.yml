@@ -412,6 +412,24 @@ Lint/UnescapedBracketInRegexp:
 Lint/UselessNumericOperation:
   Enabled: true
 
+Lint/ArrayLiteralInRegexp:
+  Enabled: true
+
+Lint/ConstantReassignment:
+  Enabled: true
+
+Lint/HashNewWithKeywordArgumentsAsDefault:
+  Enabled: true
+
+Lint/NumericOperationWithConstantResult:
+  Enabled: true
+
+Lint/SharedMutableDefault:
+  Enabled: true
+
+Lint/UselessDefined:
+  Enabled: true
+
 Naming/BlockForwarding:
   Enabled: true
 
@@ -529,6 +547,21 @@ Style/SuperArguments:
 Style/SuperWithArgsParentheses:
   Enabled: true
 
+Style/DigChain:
+  Enabled: true
+
+Style/FileNull:
+  Enabled: true
+
+Style/FileTouch:
+  Enabled: true
+
+Style/HashSlice:
+  Enabled: true
+
+Style/ItAssignment:
+  Enabled: true
+
 RSpec/ExampleLength:
   Enabled: false
 
@@ -638,9 +671,6 @@ RSpec/SpecFilePathSuffix:
   Enabled: true
 
 RSpecRails/NegationBeValid:
-  Enabled: true
-
-RSpec/StringAsInstanceDoubleConstant:
   Enabled: true
 
 Capybara/NegationMatcher:
