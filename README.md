@@ -322,7 +322,7 @@ Please note that `url` or `connection` can't be used at the same time.
 
 This check allows you to create a file on your server when you would like to force the check to fail. For example if you are utilizing the `health.json` as you health check page for your load balancer and would like to force a machine offline.
 
-* `filename`: the file relative to the rails root that must remain absent for the health check to remain passing. For example: `public/remove-from-nginx`
+* `filename`: the file relative to the rails root that must remain absent for the health check to remain passing. For example: `public/remove-from-nginx` (Can also be a full path `/opt/app/remove-from-nginx`)
 
 ### Adding a Custom Provider
 
