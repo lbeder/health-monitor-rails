@@ -74,5 +74,14 @@ describe HealthMonitor::Providers::Database do
         expect { subject.check! }.not_to raise_error
       end
     end
+
+    it 'fails when no connection with given config_name is checked' do
+      subject.configure do |config|
+        config.config_name = :not_existing_database_config
+      end
+      expect { subject.check! }.to raise_error(
+        HealthMonitor::Providers::DatabaseException, 'no connections checked with name: not_existing_database_config'
+      )
+    end
   end
 end
