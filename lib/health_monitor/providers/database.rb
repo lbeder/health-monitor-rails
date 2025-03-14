@@ -31,11 +31,7 @@ module HealthMonitor
           next unless check_connection_pool?(cp)
 
           checked = true
-          if cp.respond_to? :lease_connection
-            cp.lease_connection.execute('SELECT 1')
-          else
-            cp.connection.execute('SELECT 1')
-          end
+          check_connection(cp)
         rescue Exception
           failed_databases << cp.db_config.name
         end
@@ -54,6 +50,14 @@ module HealthMonitor
 
       def check_connection_pool?(connection_pool)
         configuration.config_name.nil? || configuration.config_name == connection_pool.db_config.name
+      end
+
+      def check_connection(connection_pool)
+        if connection_pool.respond_to?(:lease_connection)
+          connection_pool.lease_connection.execute('SELECT 1')
+        else
+          connection_pool.connection.execute('SELECT 1')
+        end
       end
     end
   end
