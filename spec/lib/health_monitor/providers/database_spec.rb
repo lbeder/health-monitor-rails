@@ -65,6 +65,14 @@ describe HealthMonitor::Providers::Database do
           subject.check!
         }.to raise_error(HealthMonitor::Providers::DatabaseException, 'unable to connect to: database2')
       end
+
+      it 'passes when only first database config is checked' do
+        subject.configure do |config|
+          config.config_name = :database1
+        end
+
+        expect { subject.check! }.not_to raise_error
+      end
     end
   end
 end
