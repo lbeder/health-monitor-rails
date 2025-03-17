@@ -202,6 +202,21 @@ HealthMonitor.configure do |config|
 end
 ```
 
+When you have multiple databases and and want to check each configuration separately you can use following method:
+```ruby
+HealthMonitor.configure do |config|
+  config.no_database # Disable default all databases check
+  config.database.configure do |provider_config|
+    provider_config.config_name = 'primary'
+  end
+  config.database.configure do |provider_config|
+    provider_config.name = 'Secondary'
+    provider_config.config_name = 'secondary'
+    provider_config.critical = false
+  end
+end
+```
+
 ### Provider Configuration
 
 All providers accept a general set of baseline configuration:
