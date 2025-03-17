@@ -1,5 +1,9 @@
 # Changelog
 
+## 12.6.0 (2025-03-17)
+
+- Add config_name configuration to database provider to check specific database config (thanks to @legendetm)
+
 ## 12.5.0 (2024-12-15)
 
 - Fix compatibility with Rails 7 by conditionally using lease_connection (thanks to @mapreal19)
