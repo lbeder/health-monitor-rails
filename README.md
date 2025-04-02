@@ -231,7 +231,7 @@ end
 ```
 
 * __name__: Custom name for the provider (Defaults to __class name__. Ex: 'Redis', 'Sidekiq')
-* __critical__: Whether or not the provider is a critical dependency (Defaults to: __true__). If set to __false__, the monitor will report its status but ignore it when determining overall application health status
+* __critical__: Whether or not the provider is a critical dependency (Defaults to: __true__). If set to __false__, the monitor will report its status as `WARNING` but ignore it when determining overall application health status. This could be used to send to a non critical notifications channel
 
 > The __critical__ option allows you to monitor for additional non-critical dependencies that are not fully required for your application to be operational, like a cache database for instance
 
