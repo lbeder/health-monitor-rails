@@ -231,7 +231,7 @@ end
 ```
 
 * __name__: Custom name for the provider (Defaults to __class name__. Ex: 'Redis', 'Sidekiq')
-* __critical__: Whether or not the provider is a critical dependency (Defaults to: __true__). If set to __false__, the monitor will report its status but ignore it when determining overall application health status
+* __critical__: Whether or not the provider is a critical dependency (Defaults to: __true__). If set to __false__, the monitor will report its status as `WARNING` but ignore it when determining overall application health status. This could be used to send to a non critical notifications channel
 
 > The __critical__ option allows you to monitor for additional non-critical dependencies that are not fully required for your application to be operational, like a cache database for instance
 
@@ -288,7 +288,7 @@ HealthMonitor.configure do |config|
 end
 ```
 
-For providers that can be configured with its endpoits/urls you can also add multiple declarations to ensure you are reporting across all dependencies:
+For providers that can be configured with its endpoints/urls you can also add multiple declarations to ensure you are reporting across all dependencies:
 
 ```ruby
 HealthMonitor.configure do |config|
@@ -335,7 +335,7 @@ Please note that `url` or `connection` can't be used at the same time.
 
 ### FileAbsence
 
-This check allows you to create a file on your server when you would like to force the check to fail. For example if you are utilizing the `health.json` as you health check page for your load balancer and would like to force a machine offline.
+This check allows you to create a file on your server when you would like to force the check to fail. For example, if utilizing the `health.json` as the health check page for your load balancer and would like to force a machine offline.
 
 * `filename`: the file relative to the rails root that must remain absent for the health check to remain passing. For example: `public/remove-from-nginx` (Can also be a full path `/opt/app/remove-from-nginx`)
 

@@ -133,12 +133,12 @@ describe HealthMonitor do
               {
                 name: 'Redis',
                 message: "different values (now: #{time}, fetched: false)",
-                status: 'ERROR'
+                status: 'WARNING'
               },
               {
                 name: 'Sidekiq',
                 message: 'Exception',
-                status: 'ERROR'
+                status: 'WARNING'
               }
             ],
             status: :ok,
