@@ -1,5 +1,9 @@
 # Changelog
 
+## 12.7.0 (2025-04-09)
+
+- Show warning status for non critical providers (thanks to @Erika-Barr)
+
 ## 12.6.0 (2025-03-17)
 
 - Add config_name configuration to database provider to check specific database config (thanks to @legendetm)
