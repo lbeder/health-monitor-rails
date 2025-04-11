@@ -24,7 +24,9 @@ describe HealthMonitor::Providers::Redis do
         end
       end
 
-      it 'succesfully checks' do
+      it_behaves_like 'expiring value in the redis'
+
+      it 'successfully checks' do
         expect {
           subject.check!
         }.not_to raise_error
@@ -50,7 +52,9 @@ describe HealthMonitor::Providers::Redis do
         end
       end
 
-      it 'succesfully checks' do
+      it_behaves_like 'expiring value in the redis'
+
+      it 'successfully checks' do
         expect {
           subject.check!
         }.not_to raise_error
@@ -91,7 +95,9 @@ describe HealthMonitor::Providers::Redis do
         end
       end
 
-      it 'succesfully checks' do
+      it_behaves_like 'expiring value in the redis'
+
+      it 'successfully checks' do
         expect {
           subject.check!
         }.not_to raise_error
@@ -117,7 +123,9 @@ describe HealthMonitor::Providers::Redis do
         end
       end
 
-      it 'succesfully checks' do
+      it_behaves_like 'expiring value in the redis'
+
+      it 'successfully checks' do
         expect {
           subject.check!
         }.not_to raise_error

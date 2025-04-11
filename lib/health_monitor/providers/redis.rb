@@ -9,6 +9,8 @@ module HealthMonitor
     class RedisException < StandardError; end
 
     class Redis < Base
+      EXPIRED_TIME_SECONDS = 3
+
       class Configuration < Base::Configuration
         DEFAULT_URL = nil
 
@@ -45,7 +47,7 @@ module HealthMonitor
       def check_values!
         time = Time.now.to_formatted_s(:rfc2822)
 
-        redis.with { |conn| conn.set(key, time) }
+        redis.with { |conn| conn.set(key, time, ex: EXPIRED_TIME_SECONDS) }
         fetched = redis.with { |conn| conn.get(key) }
 
         raise "different values (now: #{time}, fetched: #{fetched})" if fetched != time
