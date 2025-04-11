@@ -14,7 +14,20 @@ describe HealthMonitor::Providers::Cache do
 
     before { subject.request = test_request }
 
-    it 'succesfully checks' do
+    context 'when value will put in the Redis' do
+      it 'value has been removed' do
+        redis_key = subject.send(:key)
+        subject.check!
+
+        expect(Rails.cache.read(redis_key)).to be_present
+
+        travel_to(4.seconds.since)
+
+        expect(Rails.cache.read(redis_key)).to be_nil
+      end
+    end
+
+    it 'successfully checks' do
       expect {
         subject
       }.not_to raise_error

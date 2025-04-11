@@ -23,6 +23,7 @@ Spork.prefork do
   RSpec.configure do |config|
     config.mock_with :rspec
 
+    config.include ActiveSupport::Testing::TimeHelpers
     config.include Capybara::DSL
 
     config.before(:suite) do
