@@ -39,34 +39,61 @@ describe HealthMonitor::Configuration do
     end
   end
 
-  describe '#add_custom_provider' do
+  # TODO: consider defining/undefining between test runs
+  class Foo < HealthMonitor::Providers::Base; end
+  class Bar; end
+  class BazBuz < HealthMonitor::Providers::Base; end
+
+  # TODO: consider DRYing with in-house provider test cases
+  describe 'custom providers' do
+    CUSTOM_PROVIDERS = [Foo, BazBuz]
+
+    CUSTOM_PROVIDERS.each do |provider_name|
+      before do
+        subject.instance_variable_set('@providers', [])
+        subject.init_custom_providers([provider_name])
+        stub_const("HealthMonitor::Providers::#{provider_name}", Class.new)
+      end
+
+      it "responds to #{provider_name}" do
+        expect(subject).to respond_to(provider_name.to_s.underscore)
+      end
+
+      it "configures #{provider_name}" do
+        subject.send(provider_name.to_s.underscore)
+
+        expect(subject.providers.length).to be(1)
+        expect(subject.providers.first).to be_a("HealthMonitor::Providers::#{provider_name}".constantize)
+      end
+
+      it "returns #{provider_name}'s class" do
+        expect(subject.send(provider_name.to_s.underscore)).to be_a("HealthMonitor::Providers::#{provider_name}".constantize)
+      end
+    end
+  end
+
+  describe '#init_custom_providers' do
     before do
       subject.instance_variable_set('@providers', [])
     end
 
     context 'when inherits' do
-      class CustomProvider < HealthMonitor::Providers::Base
-      end
+     let(:provider_name) { Foo }
 
       it 'accepts' do
         expect {
-          subject.add_custom_provider(CustomProvider)
-        }.to change(subject, :providers).to([CustomProvider])
-      end
-
-      it 'returns CustomProvider class' do
-        expect(subject.add_custom_provider(CustomProvider)).to be_a(CustomProvider)
+          subject.init_custom_providers([provider_name])
+        }.to_not raise_error(ArgumentError)
       end
     end
 
     context 'when does not inherit' do
-      class TestClass
-      end
+      let(:provider_name) { Bar }
 
       it 'does not accept' do
         expect {
-          subject.add_custom_provider(TestClass)
-        }.to raise_error(ArgumentError)
+          subject.init_custom_providers([provider_name])
+        }.to raise_error(ArgumentError, "custom provider class #{provider_name} must implement HealthMonitor::Providers::Base")
       end
     end
   end
