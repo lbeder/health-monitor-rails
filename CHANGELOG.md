@@ -1,5 +1,9 @@
 # Changelog
 
+## 12.8.0 (2025-04-14)
+
+- Remove expired keys from the Redis (thanks to @Combos93)
+
 ## 12.7.0 (2025-04-09)
 
 - Show warning status for non critical providers (thanks to @Erika-Barr)
