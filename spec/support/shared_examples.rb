@@ -9,7 +9,7 @@ shared_examples 'expiring value in the redis' do
 
       expect(subject.send(:redis).with { |r| r.get(redis_key) }).to be_present
 
-      travel_to(4.seconds.since)
+      travel_to((described_class::EXPIRED_TIME_SECONDS + 1).seconds.since)
 
       expect(subject.send(:redis).with { |r| r.get(redis_key) }).to be_nil
     end

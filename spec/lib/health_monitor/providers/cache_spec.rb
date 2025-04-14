@@ -21,7 +21,7 @@ describe HealthMonitor::Providers::Cache do
 
         expect(Rails.cache.read(redis_key)).to be_present
 
-        travel_to(4.seconds.since)
+        travel_to((described_class::EXPIRED_TIME_SECONDS + 1).seconds.since)
 
         expect(Rails.cache.read(redis_key)).to be_nil
       end
