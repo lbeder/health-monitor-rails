@@ -30,7 +30,6 @@ module HealthMonitor
       end
     end
 
-    # TODO: update README.md
     def init_custom_providers(provider_names)
       provider_names.each do |provider_name|
         add_custom_provider(provider_name)
