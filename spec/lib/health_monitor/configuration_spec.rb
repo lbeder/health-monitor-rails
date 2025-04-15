@@ -46,7 +46,7 @@ describe HealthMonitor::Configuration do
 
   # TODO: consider DRYing with in-house provider test cases
   describe 'custom providers' do
-    CUSTOM_PROVIDERS = [Foo, BazBuz]
+    CUSTOM_PROVIDERS = [Foo, BazBuz].freeze
 
     CUSTOM_PROVIDERS.each do |provider_name|
       before do
@@ -78,12 +78,12 @@ describe HealthMonitor::Configuration do
     end
 
     context 'when inherits' do
-     let(:provider_name) { Foo }
+      let(:provider_name) { Foo }
 
       it 'accepts' do
         expect {
           subject.init_custom_providers([provider_name])
-        }.to_not raise_error(ArgumentError)
+        }.not_to raise_error(ArgumentError)
       end
     end
 
