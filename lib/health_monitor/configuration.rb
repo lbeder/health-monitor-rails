@@ -8,7 +8,8 @@ module HealthMonitor
                   :environment_variables,
                   :error_callback,
                   :hide_footer,
-                  :path
+                  :path,
+                  :response_threshold
     attr_reader :providers
 
     def initialize

@@ -28,6 +28,27 @@ describe 'Health Monitor' do
     end
   end
 
+  context 'when response threshold is configured' do
+    let(:response_threshold) { 0.5 }
+
+    before do
+      HealthMonitor.configure do |config|
+        config.response_threshold = response_threshold
+      end
+
+      allow(HealthMonitor).to receive(:measure_response_time).and_return(response_threshold)
+    end
+
+    it 'renders html' do
+      visit '/check'
+
+      expect(page).to have_css('h2', count: 1)
+      expect(page).to have_css('h2', text: 'Services')
+      expect(page).to have_css('.services dt.name', text: 'Database')
+      expect(page).to have_css('.services div.response', text: response_threshold)
+    end
+  end
+
   context 'when env variables are configured' do
     let(:environment_variables) { { build_number: '12', git_sha: 'example_sha' } }
 

@@ -116,6 +116,17 @@
         color: rgb(71 85 105);
       }
 
+      .response {
+        font-weight: 800;
+      }
+
+      .bordering {
+        border: solid 1px red;
+        width: auto;
+        margin: 0.5em;
+        padding: 0.5em;
+      }
+
       dt {
         min-width: 10vw;
         font-size: 0.875rem;
@@ -148,7 +159,7 @@
         <div class="border">
           <dl>
             <% @statuses[:results].each_with_index do |status, index| %>
-              <div class="<%= index.odd? ? 'bg-gray' : 'bg-white' %> item">
+              <div class="<%= index.odd? ? 'bg-gray' : 'bg-white' %> <%= 'bordering' if status[:slow_response] %> item">
                 <dt class="name">
                   <%= status[:name] %>
                 </dt>
@@ -157,6 +168,11 @@
                   <div class="state <%= 'red' if status[:status].downcase == 'error' %> font-bold">
                     <%= status[:status] %>
                   </div>
+                  <% if HealthMonitor.configuration.response_threshold %>
+                    <div class="response <%= 'red' if status[:slow_response] %> font-bold">
+                      <%= status[:response_time] %>
+                    </div>
+                  <% end %>
                   <% if !status[:message].empty? %>
                     <div class="message"><%= status[:message] %></div>
                   <% end %>

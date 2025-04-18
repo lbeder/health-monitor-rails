@@ -33,18 +33,25 @@ module HealthMonitor
     }
   end
 
+  def measure_response_time(&block)
+    start_time = Process.clock_gettime(Process::CLOCK_MONOTONIC)
+    block.call
+    (Process.clock_gettime(Process::CLOCK_MONOTONIC) - start_time).round(3)
+  end
+
   private
 
   def provider_result(provider, request)
     monitor = provider
     monitor.request = request
-    monitor.check!
 
-    {
-      name: provider.name,
-      message: '',
-      status: STATUSES[:ok]
-    }
+    if HealthMonitor.configuration.response_threshold
+      response_time = measure_response_time { monitor.check! }
+    else
+      monitor.check!
+    end
+
+    result_data(provider, response_time)
   rescue StandardError => e
     configuration.error_callback.try(:call, e)
 
@@ -53,6 +60,19 @@ module HealthMonitor
       message: e.message,
       status: provider.critical ? STATUSES[:error] : STATUSES[:warning]
     }
+  end
+
+  def result_data(provider, response_time)
+    {
+      name: provider.name,
+      message: '',
+      status: STATUSES[:ok]
+    }.tap do |result|
+      if response_time
+        result[:response_time] = response_time
+        result[:slow_response] = true if HealthMonitor.configuration.response_threshold < response_time
+      end
+    end
   end
 end
 
