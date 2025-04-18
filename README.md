@@ -361,7 +361,7 @@ class CustomBar < HealthMonitor::Providers::Base
 end
 ```
 
-* Add it's class to the configuration with `init_custom_providers`, then configure the same as in-house providers.
+* Add its class to the configuration with `init_custom_providers`, then configure the same as in-house providers.
 
 ```ruby
 HealthMonitor.configure do |config|
