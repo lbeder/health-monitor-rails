@@ -1,5 +1,9 @@
 # Changelog
 
+## 13.0.0 (2025-04-19)
+
+- Add baseline config interface for custom providers (thanks to @Erika-Barr)
+
 ## 12.8.0 (2025-04-14)
 
 - Remove expired keys from the Redis (thanks to @Combos93)
