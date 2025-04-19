@@ -348,18 +348,33 @@ To add a custom provider, you'd need to:
 * Implement the `HealthMonitor::Providers::Base` class and its `check!` method (a check is considered as failed if it raises an exception):
 
 ```ruby
-class CustomProvider < HealthMonitor::Providers::Base
+class CustomFoo < HealthMonitor::Providers::Base
+  def check!
+    raise 'Oh oh!'
+  end
+end
+
+class CustomBar < HealthMonitor::Providers::Base
   def check!
     raise 'Oh oh!'
   end
 end
 ```
 
-* Add its class to the configuration:
+* Add its class to the configuration with `init_custom_providers`, then configure the same as in-house providers.
 
 ```ruby
 HealthMonitor.configure do |config|
-  config.add_custom_provider(CustomProvider)
+  config.init_custom_providers([CustomFoo, CustomBar])
+
+  # Setting values for baseline configuration
+  config.custom_foo.configure do |custom_foo_config|
+    custom_foo_config.name = "Foo API"
+    custom_foo_config.critical = true
+  end
+
+  # Assuming defaults for baseline configuration
+  config.custom_bar 
 end
 ```
 

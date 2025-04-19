@@ -30,15 +30,23 @@ module HealthMonitor
       end
     end
 
-    def add_custom_provider(custom_provider_class)
-      unless custom_provider_class < HealthMonitor::Providers::Base
-        raise ArgumentError.new 'custom provider class must implement HealthMonitor::Providers::Base'
+    def init_custom_providers(provider_names)
+      provider_names.each do |provider_name|
+        add_custom_provider(provider_name)
       end
-
-      add_provider(custom_provider_class.new)
     end
 
     private
+
+    def add_custom_provider(provider_name)
+      unless provider_name < HealthMonitor::Providers::Base
+        raise ArgumentError.new "custom provider class #{provider_name} must implement HealthMonitor::Providers::Base"
+      end
+
+      self.class.define_method(provider_name.to_s.underscore) do |&_block|
+        add_provider("HealthMonitor::Providers::#{provider_name}".constantize.new)
+      end
+    end
 
     def add_provider(provider)
       (@providers ||= []) << provider
