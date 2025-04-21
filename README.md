@@ -430,15 +430,14 @@ end
 
 This will make the page to be served in the `/status` endpoint for instance (from where the engine was mounted).
 
-### Showing response time of checks
+### Showing Response Times of Checks
 
 ```ruby
 HealthMonitor.configure do |config|
   config.response_threshold = 0.8
 end
 ```
-
-By default, this setting is disable. You need is to enable to write a `Float` value in the setting like a threshold. After this, each provider will measure the theirs response time. And if response time exceeded the threshold - you will see that by the `/check` endpoint on the view.
+By default, this setting is disabled. Enable it and enter a floating‑point threshold value. Once enabled, each provider logs its response time; if a provider’s response time exceeds the threshold, the issue will be visible via the `/check` endpoint.
 
 ### Monitoring Script
 
