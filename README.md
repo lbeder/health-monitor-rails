@@ -415,6 +415,15 @@ end
 
 This will make the page to be served in the `/status` endpoint for instance (from where the engine was mounted).
 
+### Showing Response Times of Checks
+
+```ruby
+HealthMonitor.configure do |config|
+  config.response_threshold = 0.8
+end
+```
+By default, this setting is disabled. Enable it and enter a floating‑point threshold value. Once enabled, each provider logs its response time; if a provider’s response time exceeds the threshold, the issue will be visible via the `/check` endpoint.
+
 ### Monitoring Script
 
 A Nagios/Shinken/Icinga/Icinga2 plugin is available in `extra` directory.

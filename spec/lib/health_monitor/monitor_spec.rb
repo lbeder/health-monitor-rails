@@ -93,7 +93,7 @@ describe HealthMonitor do
 
   describe '#check' do
     context 'when default providers' do
-      it 'succesfully checks' do
+      it 'successfully checks' do
         expect(subject.check(request: request)).to eq(
           results: [
             {
@@ -153,7 +153,7 @@ describe HealthMonitor do
         subject.configure(&:redis)
       end
 
-      it 'succesfully checks' do
+      it 'successfully checks' do
         expect(subject.check(request: request)).to eq(
           results: [
             {
@@ -202,7 +202,7 @@ describe HealthMonitor do
           Providers.stub_sidekiq_workers_failure
         end
 
-        it 'succesfully checks' do
+        it 'successfully checks' do
           expect(subject.check(request: request)).to eq(
             results: [
               {
@@ -283,6 +283,63 @@ describe HealthMonitor do
         )
 
         expect(test).to be_truthy
+      end
+    end
+
+    context 'with response threshold is configured' do
+      context 'when threshold value exists' do
+        let(:response_time) { 0.5 }
+
+        before do
+          subject.configure do |config|
+            config.response_threshold = response_time
+          end
+
+          allow(described_class).to receive(:measure_response_time).and_return(response_time)
+        end
+
+        it 'successfully checks' do
+          expect(subject.check(request: request)).to eq(
+            results: [
+              {
+                name: 'Database',
+                message: '',
+                response_time: response_time,
+                status: 'OK'
+              }
+            ],
+            status: :ok,
+            timestamp: time
+          )
+        end
+      end
+
+      context 'when response value exceeded threshold value' do
+        let(:response_time) { 1 }
+
+        before do
+          subject.configure do |config|
+            config.response_threshold = 0.001
+          end
+
+          allow(described_class).to receive(:measure_response_time).and_return(response_time)
+        end
+
+        it 'successfully checks' do
+          expect(subject.check(request: request)).to eq(
+            results: [
+              {
+                name: 'Database',
+                message: '',
+                response_time: response_time,
+                slow_response: true,
+                status: 'OK'
+              }
+            ],
+            status: :ok,
+            timestamp: time
+          )
+        end
       end
     end
   end
