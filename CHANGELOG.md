@@ -1,5 +1,9 @@
 # Changelog
 
+## 12.9.0 (2025-04-27)
+
+- Add show response times for providers (thanks to @Combos93)
+
 ## 12.8.0 (2025-04-14)
 
 - Remove expired keys from the Redis (thanks to @Combos93)
